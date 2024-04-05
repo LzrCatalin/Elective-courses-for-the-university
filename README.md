@@ -7,7 +7,7 @@ Old Diagram:
 Updated Diagram:
 ![image](https://github.com/LzrCatalin/Elective-courses-for-the-university/assets/118479914/a39ae0d4-6bc6-462b-a3ef-055c3939595e)
 
-Entity Updates:
+Diagram Updates:
 
 - Added "user" table.
 - Implemented camelCase naming convention.
