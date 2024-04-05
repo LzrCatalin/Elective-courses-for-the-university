@@ -13,7 +13,7 @@ Diagram Updates:
 - Implemented camelCase naming convention.
 - Added the "application" table, which could function as the enrollments table. Through SQL queries, it will be possible to retrieve the number of students enrolled in a course based on their status, reassign students to another course, and retrieve students enrolled in the same course.
 
-- Removed: M:N relationships, i.e: Enrollments, Student Application and Application Preference tables.
+- Removed: M:N relationships, i.e: Enrollments, Student ElectiveChoices and Application Preference tables.
 - Removed: Notations as "Student_ID", "Course_ID" from tables as PK, now are define simply as "id"
 
 Questions:
