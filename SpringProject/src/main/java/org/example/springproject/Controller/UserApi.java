@@ -1,7 +1,6 @@
 package org.example.springproject.Controller;
 
 import org.example.springproject.Entity.User;
-import org.example.springproject.Repository.UserRepository;
 import org.example.springproject.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
