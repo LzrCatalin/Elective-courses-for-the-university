@@ -28,7 +28,8 @@ public class Student {
 	public Student() {}
 
 	// Constructor
-	public Student(User user, Float grade, Integer studyYear, String facultySection) {
+	public Student(Long id, User user, Float grade, Integer studyYear, String facultySection) {
+		this.userId = id;
 		this.user = user;
 		this.grade = grade;
 		this.studyYear = studyYear;
@@ -46,6 +47,10 @@ public class Student {
 
 	public String getFacultySection() {
 		return facultySection;
+	}
+
+	public User getUser() {
+		return user;
 	}
 
 	// Setters
