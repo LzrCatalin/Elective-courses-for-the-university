@@ -1,6 +1,6 @@
-package org.example.springproject.Services;
+package org.example.springproject.services;
 
-import org.example.springproject.Entity.User;
+import org.example.springproject.entity.User;
 
 import java.util.List;
 

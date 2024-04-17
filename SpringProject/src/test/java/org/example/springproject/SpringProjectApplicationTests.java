@@ -1,8 +1,8 @@
 package org.example.springproject;
 
-import org.example.springproject.Entity.Application;
-import org.example.springproject.Entity.Course;
-import org.example.springproject.Entity.User;
+import org.example.springproject.entity.Application;
+import org.example.springproject.entity.Course;
+import org.example.springproject.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

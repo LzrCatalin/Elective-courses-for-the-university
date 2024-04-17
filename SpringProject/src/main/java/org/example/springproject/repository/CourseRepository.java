@@ -1,6 +1,6 @@
-package org.example.springproject.Repository;
+package org.example.springproject.repository;
 
-import org.example.springproject.Entity.Course;
+import org.example.springproject.entity.Course;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CourseRepository extends CrudRepository<Course,Long> {
