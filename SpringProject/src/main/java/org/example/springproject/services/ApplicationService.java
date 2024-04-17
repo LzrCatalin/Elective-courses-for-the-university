@@ -1,6 +1,6 @@
-package org.example.springproject.Services;
+package org.example.springproject.services;
 
-import org.example.springproject.Entity.Application;
+import org.example.springproject.entity.Application;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package org.example.springproject.Services.Implementation;
+package org.example.springproject.services.implementation;
 
-import org.example.springproject.Entity.Application;
-import org.example.springproject.Repository.ApplicationRepository;
-import org.example.springproject.Services.ApplicationService;
+import org.example.springproject.entity.Application;
+import org.example.springproject.repository.ApplicationRepository;
+import org.example.springproject.services.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

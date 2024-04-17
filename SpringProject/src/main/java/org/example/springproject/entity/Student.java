@@ -1,7 +1,6 @@
-package org.example.springproject.Entity;
+package org.example.springproject.entity;
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 
 @Entity
 @Table(name = "students")

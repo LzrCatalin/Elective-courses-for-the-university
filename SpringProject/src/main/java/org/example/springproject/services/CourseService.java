@@ -1,6 +1,6 @@
-package org.example.springproject.Services;
+package org.example.springproject.services;
 
-import org.example.springproject.Entity.Course;
+import org.example.springproject.entity.Course;
 
 import java.util.List;
 
