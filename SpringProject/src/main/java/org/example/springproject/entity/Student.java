@@ -4,61 +4,46 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "students")
-public class Student {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long userId;
-
-	@MapsId
-	@OneToOne
-	@JoinColumn(name = "userId")
-	private User user;
+public class Student extends User{
+	@Column(name = "studyyear")
+	private Integer studyYear;
 
 	@Column(name = "grade")
 	private Float grade;
 
-	@Column(name = "studyYear")
-	private Integer studyYear;
-
 	@Column(name = "facultySection")
 	private String facultySection;
 
-	// Empty Constructor
-	public Student() {}
+	// Empty constructor
+	public Student() {};
 
-	// Constructor
-	public Student(Long id, User user, Float grade, Integer studyYear, String facultySection) {
-		this.userId = id;
-		this.user = user;
-		this.grade = grade;
+	// Constructoru
+	public Student(Integer studyYear, Float grade, String facultySection) {
 		this.studyYear = studyYear;
+		this.grade = grade;
 		this.facultySection = facultySection;
 	}
 
 	// Getters
-	public Float getGrade() {
-		return grade;
-	}
-
 	public Integer getStudyYear() {
 		return studyYear;
+	}
+
+	public Float getGrade() {
+		return grade;
 	}
 
 	public String getFacultySection() {
 		return facultySection;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
 	// Setters
-	public void setGrade(Float newGrade) {
-		this.grade = newGrade;
-	}
-
 	public void setStudyYear(Integer newStudyYear) {
 		this.studyYear = newStudyYear;
+	}
+
+	public void setGrade(Float newGrade) {
+		this.grade = newGrade;
 	}
 
 	public void setFacultySection(String newFacultySection) {
