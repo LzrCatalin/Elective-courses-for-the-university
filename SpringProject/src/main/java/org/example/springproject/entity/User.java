@@ -24,20 +24,20 @@ public abstract class User {
 	public Long getId() {
 		return id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public String getRole() {
 		return role;
 	}
 
 	// Setters
+	public void setId(Long newId) {
+		this.id = newId;
+	}
 	public void setName(String newName) {
 		this.name = newName;
 	}
-
 	public void setRole(String newRole) {
 		this.role = newRole;
 	}
