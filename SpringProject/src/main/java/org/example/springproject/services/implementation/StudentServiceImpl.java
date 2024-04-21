@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
+	// TODO : Make auto-insert role 'student' when adding a new student
 	@Autowired
 	public StudentRepository repository;
 
@@ -24,10 +25,9 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public ResponseEntity<String> addStudent(Long id, String name, String role, Integer studyYear, Float grade, String facultySection) {
+	public ResponseEntity<String> addStudent(String name, String role, Integer studyYear, Float grade, String facultySection) {
 		try {
 			Student newStudent = new Student(studyYear, grade, facultySection);
-			newStudent.setId(id);
 			newStudent.setName(name);
 			newStudent.setRole(role);
 

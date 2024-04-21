@@ -27,8 +27,8 @@ public class StudentApi {
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<String> addStudent(Long id, String name, String role, Integer studyYear, Float grade, String facultySection) {
-		return studentService.addStudent(id, name, role, studyYear, grade, facultySection);
+	public ResponseEntity<String> addStudent(String name, String role, Integer studyYear, Float grade, String facultySection) {
+		return studentService.addStudent(name, role, studyYear, grade, facultySection);
 	}
 
 	@PutMapping("/update/{id}")
