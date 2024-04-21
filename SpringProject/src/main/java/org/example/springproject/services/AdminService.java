@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AdminService {
 	List<Admin> getAllAdmins();
-	ResponseEntity<String> addAdmin(Long id, String name, String role);
+	ResponseEntity<String> addAdmin(String name, String role);
 	ResponseEntity<String> updateAdmin(Long id, String name, String role);
 	ResponseEntity<String> deleteAdmin(Long id);
 }

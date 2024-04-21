@@ -13,6 +13,8 @@ import java.util.List;
 @Service
 public class AdminServiceImpl implements AdminService {
 
+	// TODO : Make auto-insert role 'admin' when adding a new admin
+
 	@Autowired
 	public AdminRepository repository;
 
@@ -22,13 +24,12 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ResponseEntity<String> addAdmin(Long id, String name, String role) {
+	public ResponseEntity<String> addAdmin(String name, String role) {
 		try {
 			// Create admin object
 			Admin newAdmin = new Admin();
 
 			// Add new object values
-			newAdmin.setId(id);
 			newAdmin.setName(name);
 			newAdmin.setRole(role);
 

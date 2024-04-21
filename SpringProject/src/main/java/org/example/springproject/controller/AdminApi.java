@@ -22,8 +22,8 @@ public class AdminApi {
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<String> addAdmin(Long id, String name, String role) {
-		return adminService.addAdmin(id, name, role);
+	public ResponseEntity<String> addAdmin(String name, String role) {
+		return adminService.addAdmin(name, role);
 	}
 
 	@PutMapping("/update/{id}")

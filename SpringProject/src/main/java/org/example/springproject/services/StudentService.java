@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 public interface StudentService {
 	List<Student> getAllStudents();
-	ResponseEntity<String> addStudent(Long id, String name, String role, Integer studyYear, Float grade, String facultySection);
+	ResponseEntity<String> addStudent(String name, String role, Integer studyYear, Float grade, String facultySection);
 	ResponseEntity<String> updateStudent(Long id, String name, String role, Integer studyYear, Float grade, String facultySection);
 	ResponseEntity<String> deleteStudent(Long id);
 }

@@ -1,22 +1,39 @@
-//package org.example.springproject.controller;
-//
-//import org.example.springproject.entity.Application;
-//import org.example.springproject.services.ApplicationService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//
-//import java.util.List;
-//
-//@RestController
-//@RequestMapping("/applications")
-//public class ApplicationApi {
-//    @Autowired
-//    private ApplicationService applicationService;
-//
-//    @GetMapping("/")
-//    public List<Application> getAllApplications(){
-//        return applicationService.getAllApplications();
-//    }
-//}
+package org.example.springproject.controller;
+
+import org.example.springproject.entity.Application;
+import org.example.springproject.entity.Course;
+import org.example.springproject.entity.Student;
+import org.example.springproject.enums.Status;
+import org.example.springproject.services.ApplicationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/applications")
+public class ApplicationApi {
+
+	@Autowired
+	public ApplicationService applicationService;
+
+	@GetMapping("/")
+	public List<Application> getAllApplications() {
+		return applicationService.getAllApplications();
+	}
+	@PostMapping("/add")
+	public ResponseEntity<String> addApplication(Long studentId, Long courseId, Integer priority, Status status) {
+		return applicationService.addApplication(studentId, courseId, priority, status);
+	}
+
+	@PutMapping("/update/{id}")
+	public ResponseEntity<String> updateApplication(@PathVariable("id") Long id, Integer priority, Status status) {
+		return applicationService.updateApplication(id, priority, status);
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> deleteApplication(@PathVariable("id") Long id) {
+		return applicationService.deleteApplication(id);
+	}
+}
