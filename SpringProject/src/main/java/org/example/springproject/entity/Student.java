@@ -6,7 +6,7 @@ import org.example.springproject.enums.FacultySection;
 @Entity
 @Table(name = "students")
 public class Student extends User{
-	@Column(name = "studyyear")
+	@Column(name = "studyYear")
 	private Integer studyYear;
 
 	@Column(name = "grade")
@@ -18,7 +18,7 @@ public class Student extends User{
 	// Empty constructor
 	public Student() {};
 
-	// Constructoru
+	// Constructor
 	public Student(Integer studyYear, Float grade, FacultySection facultySection) {
 		this.studyYear = studyYear;
 		this.grade = grade;

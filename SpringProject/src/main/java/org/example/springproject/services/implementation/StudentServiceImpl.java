@@ -1,6 +1,7 @@
 package org.example.springproject.services.implementation;
 
 import org.example.springproject.entity.Student;
+import org.example.springproject.enums.FacultySection;
 import org.example.springproject.repository.StudentRepository;
 import org.example.springproject.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-	// TODO : Make auto-insert role 'student' when adding a new student
 	@Autowired
 	public StudentRepository repository;
 
@@ -25,11 +25,15 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public ResponseEntity<String> addStudent(String name, String role, Integer studyYear, Float grade, String facultySection) {
+	public ResponseEntity<String> addStudent(String name, Integer studyYear, Float grade, FacultySection facultySection) {
 		try {
 			Student newStudent = new Student(studyYear, grade, facultySection);
+			System.out.printf("Grade: %.2f\n Faculty: %s\n StudyYear: %d\n", grade, facultySection, studyYear);
 			newStudent.setName(name);
-			newStudent.setRole(role);
+			/*
+			Auto complete role, i.e: here we add a new student
+			 */
+			newStudent.setRole("student");
 
 			repository.save(newStudent);
 			return ResponseEntity.ok("Successfully added new student");
@@ -42,7 +46,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public ResponseEntity<String> updateStudent(Long id, String name, String role, Integer studyYear, Float grade, String facultySection) {
+	public ResponseEntity<String> updateStudent(Long id, String name, Integer studyYear, Float grade, FacultySection facultySection) {
 		try {
 			Student updateStudent = repository.findStudentById(id);
 
@@ -51,7 +55,6 @@ public class StudentServiceImpl implements StudentService {
 			}
 
 			updateStudent.setName(name);
-			updateStudent.setRole(role);
 			updateStudent.setGrade(grade);
 			updateStudent.setStudyYear(studyYear);
 			updateStudent.setFacultySection(facultySection);
