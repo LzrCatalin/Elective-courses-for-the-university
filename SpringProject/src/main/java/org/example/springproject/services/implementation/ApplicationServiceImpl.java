@@ -54,14 +54,23 @@ public class ApplicationServiceImpl implements ApplicationService {
 				return ResponseEntity.badRequest().body("Course with id:" + courseId + " not found");
 			}
 
-			Application newApplication = new Application(addedStudent, addedCourse, priority, status);
-			newApplication.setStudent(addedStudent);
-			newApplication.setCourse(addedCourse);
-			newApplication.setPriority(priority);
-			newApplication.setStatus(status);
-			applicationRepository.save(newApplication);
+			/*
+			Check if faculty section is the same for student and course
+			 */
+			if (addedStudent.getFacultySection().equals(addedCourse.getFacultySection())) {
+				Application newApplication = new Application(addedStudent, addedCourse, priority, status);
+				newApplication.setStudent(addedStudent);
+				newApplication.setCourse(addedCourse);
+				newApplication.setPriority(priority);
+				newApplication.setStatus(status);
 
-			return ResponseEntity.ok().body("Successfully added new application");
+				applicationRepository.save(newApplication);
+				return ResponseEntity.ok().body("Successfully added new application");
+
+			} else {
+				return ResponseEntity.ok().body("Failed adding application.\n Different faculty section not allowed for student and course.");
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

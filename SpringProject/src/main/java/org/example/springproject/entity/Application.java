@@ -2,6 +2,8 @@ package org.example.springproject.entity;
 
 import jakarta.persistence.*;
 import org.example.springproject.enums.Status;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "applications")
@@ -12,6 +14,7 @@ public class Application {
     private long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="studentId", nullable = false)
     private Student student;
 
@@ -19,6 +22,7 @@ public class Application {
      * ManyToOne relationship with the Course entity
      */
     @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="courseId", nullable = false)
     private Course course;
     @Column(name = "priority")
