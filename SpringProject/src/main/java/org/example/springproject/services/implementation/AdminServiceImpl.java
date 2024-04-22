@@ -13,8 +13,6 @@ import java.util.List;
 @Service
 public class AdminServiceImpl implements AdminService {
 
-	// TODO : Make auto-insert role 'admin' when adding a new admin
-
 	@Autowired
 	public AdminRepository repository;
 
@@ -24,14 +22,17 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ResponseEntity<String> addAdmin(String name, String role) {
+	public ResponseEntity<String> addAdmin(String name) {
 		try {
 			// Create admin object
 			Admin newAdmin = new Admin();
 
 			// Add new object values
 			newAdmin.setName(name);
-			newAdmin.setRole(role);
+			/*
+			Auto complete the user role, i.e: here we add a new admin
+			 */
+			newAdmin.setRole("admin");
 
 			// Save the object
 			repository.save(newAdmin);
@@ -45,7 +46,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ResponseEntity<String> updateAdmin(Long id, String name, String role) {
+	public ResponseEntity<String> updateAdmin(Long id, String name) {
 		try {
 			// Search the admin using id
 			Admin updateAdmin = repository.findAdminById(id);
@@ -57,7 +58,6 @@ public class AdminServiceImpl implements AdminService {
 
 			// Set the new values of attributes
 			updateAdmin.setName(name);
-			updateAdmin.setRole(role);
 			// Save updated object
 			repository.save(updateAdmin);
 
