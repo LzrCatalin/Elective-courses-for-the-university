@@ -22,17 +22,17 @@ public class ApplicationApi {
 	public List<Application> getAllApplications() {
 		return applicationService.getAllApplications();
 	}
-	@PostMapping("/add")
+	@PostMapping("/")
 	public ResponseEntity<String> addApplication(Long studentId, Long courseId, Integer priority, Status status) {
 		return applicationService.addApplication(studentId, courseId, priority, status);
 	}
 
-	@PutMapping("/update/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<String> updateApplication(@PathVariable("id") Long id, Integer priority, Status status) {
 		return applicationService.updateApplication(id, priority, status);
 	}
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteApplication(@PathVariable("id") Long id) {
 		return applicationService.deleteApplication(id);
 	}
