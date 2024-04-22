@@ -1,6 +1,7 @@
 package org.example.springproject.entity;
 
 import jakarta.persistence.*;
+import org.example.springproject.enums.FacultySection;
 
 @Entity
 @Table(name = "students")
@@ -12,13 +13,13 @@ public class Student extends User{
 	private Float grade;
 
 	@Column(name = "facultySection")
-	private String facultySection;
+	private FacultySection facultySection;
 
 	// Empty constructor
 	public Student() {};
 
 	// Constructoru
-	public Student(Integer studyYear, Float grade, String facultySection) {
+	public Student(Integer studyYear, Float grade, FacultySection facultySection) {
 		this.studyYear = studyYear;
 		this.grade = grade;
 		this.facultySection = facultySection;
@@ -33,7 +34,7 @@ public class Student extends User{
 		return grade;
 	}
 
-	public String getFacultySection() {
+	public FacultySection getFacultySection() {
 		return facultySection;
 	}
 
@@ -46,7 +47,7 @@ public class Student extends User{
 		this.grade = newGrade;
 	}
 
-	public void setFacultySection(String newFacultySection) {
+	public void setFacultySection(FacultySection newFacultySection) {
 		this.facultySection = newFacultySection;
 	}
 }
