@@ -26,14 +26,14 @@ public class CourseApi {
     public ResponseEntity<String> addCourse(String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection){
         return courseService.addCourse(name,category,studyYear,teacher,maxCapacity,facultySection);
     }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCourse(@PathVariable("id") Long id){
+        return courseService.deleteCourse(id);
+    }
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCourse( @PathVariable("id") Long id,String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection){
         return courseService.updateCourse(id,name,category,studyYear,teacher,maxCapacity,facultySection);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCourse(@PathVariable("id") Long id){
-        return courseService.deleteCourse(id);
-    }
+
 }
