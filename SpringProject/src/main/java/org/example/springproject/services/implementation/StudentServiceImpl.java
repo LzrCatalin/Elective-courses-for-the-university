@@ -28,7 +28,6 @@ public class StudentServiceImpl implements StudentService {
 	public ResponseEntity<String> addStudent(String name, Integer studyYear, Float grade, FacultySection facultySection) {
 		try {
 			Student newStudent = new Student(studyYear, grade, facultySection);
-			System.out.printf("Grade: %.2f\n Faculty: %s\n StudyYear: %d\n", grade, facultySection, studyYear);
 			newStudent.setName(name);
 			/*
 			Auto complete role, i.e: here we add a new student

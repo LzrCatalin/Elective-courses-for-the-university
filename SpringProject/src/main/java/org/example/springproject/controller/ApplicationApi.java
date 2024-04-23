@@ -1,8 +1,6 @@
 package org.example.springproject.controller;
 
 import org.example.springproject.entity.Application;
-import org.example.springproject.entity.Course;
-import org.example.springproject.entity.Student;
 import org.example.springproject.enums.Status;
 import org.example.springproject.services.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
