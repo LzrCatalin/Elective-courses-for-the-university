@@ -1,11 +1,10 @@
 package org.example.springproject.controller;
 
 import org.example.springproject.entity.Application;
-import org.example.springproject.entity.Course;
-import org.example.springproject.entity.Student;
 import org.example.springproject.enums.Status;
 import org.example.springproject.services.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,16 +23,19 @@ public class ApplicationApi {
 	}
 	@PostMapping("/")
 	public ResponseEntity<String> addApplication(Long studentId, Long courseId, Integer priority, Status status) {
-		return applicationService.addApplication(studentId, courseId, priority, status);
+		applicationService.addApplication(studentId, courseId, priority, status);
+		return new ResponseEntity<>("Application added successfully.", HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updateApplication(@PathVariable("id") Long id, Integer priority, Status status) {
-		return applicationService.updateApplication(id, priority, status);
+		applicationService.updateApplication(id, priority, status);
+		return new ResponseEntity<>("Application with id:" + id + " successfully updated.", HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteApplication(@PathVariable("id") Long id) {
-		return applicationService.deleteApplication(id);
+		applicationService.deleteApplication(id);
+		return new ResponseEntity<>("Application with id:" + id + " successfully deleted.", HttpStatus.OK);
 	}
 }

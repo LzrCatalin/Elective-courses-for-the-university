@@ -27,6 +27,7 @@ public class Application {
     private Course course;
     @Column(name = "priority")
     private Integer priority;
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
 
@@ -34,6 +35,15 @@ public class Application {
      * Empty Constructor
      */
     public Application(){}
+
+    // Constructor with id
+    public Application(Long id, Student student, Course course, Integer priority, Status status) {
+        this.id = id;
+        this.student = student;
+        this.course = course;
+        this.priority = priority;
+        this.status = status;
+    }
 
     /**
      * Constructor
@@ -47,6 +57,14 @@ public class Application {
         this.course = course;
         this.priority = priority;
         this.status = status;
+    }
+
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long newId) {
+        this.id = newId;
     }
 
     /**

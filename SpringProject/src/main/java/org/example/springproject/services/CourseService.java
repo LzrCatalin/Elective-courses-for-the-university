@@ -7,11 +7,11 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface CourseService {
-    public List<Course> getAllCourses();
+	public List<Course> getAllCourses();
 
-    Course addCourse(String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection);
+  Course addCourse(String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection);
 
-    void deleteCourse(Long id);
+  void deleteCourse(Long id);
 
-    Course updateCourse(Long id, String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection);
+   Course updateCourse(Long id, String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection);
 }
