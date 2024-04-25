@@ -9,9 +9,9 @@ import java.util.List;
 public interface CourseService {
 	public List<Course> getAllCourses();
 
-	ResponseEntity<String> addCourse(String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection);
+  Course addCourse(String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection);
 
-	ResponseEntity<String> deleteCourse(Long id);
+  void deleteCourse(Long id);
 
-	ResponseEntity<String> updateCourse(Long id, String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection);
+   Course updateCourse(Long id, String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection);
 }
