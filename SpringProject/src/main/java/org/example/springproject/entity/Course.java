@@ -20,6 +20,7 @@ public class Course {
     private String teacher;
     @Column(name ="maxCapacity")
     private Integer maxCapacity;
+    @Enumerated(EnumType.STRING)
     @Column(name ="facultySection")
     private FacultySection facultySection;
 
