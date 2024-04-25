@@ -29,16 +29,19 @@ public class StudentApi {
 
 	@PostMapping("/")
 	public ResponseEntity<String> addStudent(String name, Integer studyYear, Float grade, FacultySection facultySection) {
-		return studentService.addStudent(name, studyYear, grade, facultySection);
+		studentService.addStudent(name, studyYear, grade, facultySection);
+		return new ResponseEntity<>("Student added successfully.", HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updateStudent(@PathVariable("id") Long id, String name, Integer studyYear, Float grade, FacultySection facultySection) {
-		return studentService.updateStudent(id, name, studyYear, grade, facultySection);
+		studentService.updateStudent(id, name, studyYear, grade, facultySection);
+		return new ResponseEntity<>("Student with id:" + id + " successfully updated.", HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteStudent(@PathVariable("id") Long id) {
-		return studentService.deleteStudent(id);
+		studentService.deleteStudent(id);
+		return new ResponseEntity<>("Student with id:" + id + " successfully deleted.", HttpStatus.OK);
 	}
 }
