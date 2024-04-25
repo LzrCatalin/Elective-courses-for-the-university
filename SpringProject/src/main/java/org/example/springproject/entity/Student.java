@@ -3,6 +3,10 @@ package org.example.springproject.entity;
 import jakarta.persistence.*;
 import org.example.springproject.enums.FacultySection;
 
+/*
+TODO: RESOLVE DELETE CASCADIN: IF YOU DELETE STUDENT, DELETE APPLICATIONS OF STUDENT AND IF YOU DELETE AN APPLICATION,
+DO NOT DELETE THE STUDENT OBJ AND COURSE OBJ
+ */
 @Entity
 @Table(name = "students")
 public class Student extends User{
@@ -12,6 +16,7 @@ public class Student extends User{
 	@Column(name = "grade")
 	private Float grade;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "facultySection")
 	private FacultySection facultySection;
 

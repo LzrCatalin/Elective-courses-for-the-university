@@ -1,0 +1,88 @@
+{
+  "hash": "0beb665a",
+  "configHash": "d5ba77a7",
+  "lockfileHash": "ce4c1d11",
+  "browserHash": "8195b29f",
+  "optimized": {
+    "@angular/core": {
+      "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "9d8464e1",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "72e50b76",
+      "needsInterop": false
+    },
+    "@angular/platform-browser/animations": {
+      "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/animations.mjs",
+      "file": "@angular_platform-browser_animations.js",
+      "fileHash": "32af0cf6",
+      "needsInterop": false
+    },
+    "@angular/router": {
+      "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
+      "file": "@angular_router.js",
+      "fileHash": "2bf75f39",
+      "needsInterop": false
+    },
+    "primeng/button": {
+      "src": "../../../../../node_modules/primeng/fesm2022/primeng-button.mjs",
+      "file": "primeng_button.js",
+      "fileHash": "431263a6",
+      "needsInterop": false
+    },
+    "primeng/calendar": {
+      "src": "../../../../../node_modules/primeng/fesm2022/primeng-calendar.mjs",
+      "file": "primeng_calendar.js",
+      "fileHash": "7b86035a",
+      "needsInterop": false
+    },
+    "primeng/colorpicker": {
+      "src": "../../../../../node_modules/primeng/fesm2022/primeng-colorpicker.mjs",
+      "file": "primeng_colorpicker.js",
+      "fileHash": "c77d4429",
+      "needsInterop": false
+    },
+    "primeng/slider": {
+      "src": "../../../../../node_modules/primeng/fesm2022/primeng-slider.mjs",
+      "file": "primeng_slider.js",
+      "fileHash": "715fdc08",
+      "needsInterop": false
+    },
+    "@angular/forms": {
+      "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
+      "file": "@angular_forms.js",
+      "fileHash": "b5582b80",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-ALAUTBVM": {
+      "file": "chunk-ALAUTBVM.js"
+    },
+    "chunk-WDMQUIH6": {
+      "file": "chunk-WDMQUIH6.js"
+    },
+    "chunk-JGPWNBN2": {
+      "file": "chunk-JGPWNBN2.js"
+    },
+    "chunk-DI4U2PTN": {
+      "file": "chunk-DI4U2PTN.js"
+    },
+    "chunk-4YRNQPBX": {
+      "file": "chunk-4YRNQPBX.js"
+    },
+    "chunk-36MDLXUE": {
+      "file": "chunk-36MDLXUE.js"
+    },
+    "chunk-AZ3HOKLR": {
+      "file": "chunk-AZ3HOKLR.js"
+    },
+    "chunk-P6BN7I6E": {
+      "file": "chunk-P6BN7I6E.js"
+    }
+  }
+}
