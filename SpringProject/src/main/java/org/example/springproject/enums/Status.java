@@ -1,7 +1,7 @@
 package org.example.springproject.enums;
 
 public enum Status {
-	accepted,
-	pending,
-	rejected
+	ACCEPTED,
+	PENDING,
+	REJECTED;
 }
