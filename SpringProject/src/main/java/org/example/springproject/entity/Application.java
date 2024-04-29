@@ -13,7 +13,7 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="studentId", nullable = false)
     private Student student;
@@ -21,7 +21,7 @@ public class Application {
     /**
      * ManyToOne relationship with the Course entity
      */
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="courseId", nullable = false)
     private Course course;
