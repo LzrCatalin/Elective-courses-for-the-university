@@ -2,14 +2,14 @@ package org.example.springproject.services.implementation;
 
 import org.example.springproject.entity.Student;
 import org.example.springproject.enums.FacultySection;
+import org.example.springproject.exceptions.InvalidGradeException;
+import org.example.springproject.exceptions.InvalidNameException;
+import org.example.springproject.exceptions.NoSuchObjectExistsException;
 import org.example.springproject.repository.StudentRepository;
 import org.example.springproject.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.ReactiveQueryByExampleExecutor;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -26,58 +26,65 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Student addStudent(String name, Integer studyYear, Float grade, FacultySection facultySection) {
-		try {
-			Student newStudent = new Student(studyYear, grade, facultySection);
-			newStudent.setName(name);
-			/*
-			Auto complete role, i.e: here we add a new student
-			 */
-			newStudent.setRole("student");
 
-			return repository.save(newStudent);
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		// Verify inserted name
+		for (char c : name.toCharArray()) {
+			if (Character.isDigit(c)) {
+				throw new InvalidNameException("The provided name contains invalid characters or format. Names cannot include numbers.", HttpStatus.BAD_REQUEST);
+			}
 		}
 
-		return null;
+		// Verify inserted grade
+		if (grade < 1 || grade > 10) {
+			throw new InvalidGradeException("Ensure that the grade falls within the range of 1 to 10.", HttpStatus.BAD_REQUEST);
+		}
+
+		Student newStudent = new Student(studyYear, grade, facultySection);
+		newStudent.setName(name);
+		/*
+		Auto complete role, i.e: here we add a new student
+		 */
+		newStudent.setRole("student");
+
+		return repository.save(newStudent);
+
 	}
 
 	@Override
 	public Student updateStudent(Long id, String name, Integer studyYear, Float grade, FacultySection facultySection) {
-		try {
-			Student updateStudent = repository.findStudentById(id);
-
-//			if (updateStudent == null) {
-//				// Exception Handling
-//			}
-
-			updateStudent.setName(name);
-			updateStudent.setGrade(grade);
-			updateStudent.setStudyYear(studyYear);
-			updateStudent.setFacultySection(facultySection);
-			return repository.save(updateStudent);
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		// Verify inserted name
+		for (char c : name.toCharArray()) {
+			if (Character.isDigit(c)) {
+				throw new InvalidNameException("The provided name contains invalid characters or format. Names cannot include numbers.", HttpStatus.BAD_REQUEST);
+			}
 		}
 
-		return null;
+		Student updateStudent = repository.findStudentById(id);
+		if (updateStudent == null) {
+			throw new NoSuchObjectExistsException("Student with id: " + id + " not found.", HttpStatus.NOT_FOUND);
+		}
+
+		// Verify inserted grade
+		if (grade < 1 || grade > 10) {
+			throw new InvalidGradeException("Grade needs to be between 1 and 10.", HttpStatus.BAD_REQUEST);
+		}
+
+		updateStudent.setName(name);
+		updateStudent.setGrade(grade);
+		updateStudent.setStudyYear(studyYear);
+		updateStudent.setFacultySection(facultySection);
+
+		return repository.save(updateStudent);
 	}
 
 	@Override
 	public void deleteStudent(Long id) {
-		try {
-			Student deleteStudent = repository.findStudentById(id);
+		Student deleteStudent = repository.findStudentById(id);
 
-//			if (deleteStudent == null) {
-//				return ResponseEntity.badRequest().body("Student with id: " + id + " not found");
-//			}
-
-			repository.deleteById(id);
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (deleteStudent == null) {
+			throw new NoSuchObjectExistsException("Student with id: " + id + " not found.", HttpStatus.NOT_FOUND);
 		}
+
+		repository.deleteById(id);
 	}
 }
