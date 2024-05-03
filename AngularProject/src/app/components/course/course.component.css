@@ -6,14 +6,15 @@ body{
     margin-right: 20px;
 }
 .title{
+    padding-top: 20px;
     color: white;
-    text-align: center;
-    font-size: 85px;
-    font-family: Montserrat;
+}
+.subtitle-enrol{
+    padding-top: 10px;
+    margin-top: 20px;
 }
 .subtitle{
     color: white;
-    text-align: center;
-    font-size: 35px;
-    font-family: Montserrat;
+    margin-top: 10px;
+    line-height: 0.25;
 }

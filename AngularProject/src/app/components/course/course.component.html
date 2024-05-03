@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./course.component.css">
+    <title>Home</title>
+</head>
+<body>
+
+    <!-- Toolbar from PrimeNg -->
+    <p-toolbar styleClass="bg-gray-900 shadow-2" [style]="{ 'border-radius': '3rem', 'background-image': 'linear-gradient(to right, var(--bluegray-500), var(--bluegray-800))' }">
+        <ng-template pTemplate="start">
+            <img src="https://i.pinimg.com/736x/3e/d3/09/3ed3096fc5dc13cdc56e7b5afc5d52b2.jpg" width="75" height="75"/>
+        </ng-template>
+        <ng-template pTemplate="center">
+            <div class="flex flex-wrap align-items-center gap-3">
+                <a href="http://localhost:4200"  class="p-button font-bold">Home</a>
+                <a href="http://localhost:4200/course"  class="p-button font-bold">Courses</a>
+                <a href="http://localhost:4200"  class="p-button font-bold">About</a>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="end">
+            <div class="flex align-items-center gap-2">
+                <span class="font-bold text-bluegray-50">ElectiveCourses</span>
+            </div>
+        </ng-template>
+        
+    </p-toolbar>
+    <!-- Toolbar from PrimeNg -->
+
+    <!-- Main Content -->
+    <div class="">
+        <h1 class="title">LET'S HAVE A LOOK AT THE AVAILABLE COURSES</h1>
+    </div>
+
+    <!--TableFilterRow(in tabel pe linia 40 trb sa fie value="")-->
+    <p-table
+    #dt2
+    
+    scrollable="true"
+    dataKey="id"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [loading]="loading"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    >
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt2.filterGlobal($event.target, 'contains')" placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:14%; text-align: center;">ID</th>
+            <th style="width:14%; text-align: center;">Name</th>
+            <th style="width:14%; text-align: center;">Category</th>
+            <th style="width:14%; text-align: center;">Study year</th>
+            <th style="width:14%; text-align: center;">Teacher</th>
+            <th style="width:14%; text-align: center;">Max capacity</th>
+            <th style="width:14%; text-align: center;">Faculty section</th>
+        </tr>
+        <!-- 
+        <tr>
+            <th>
+                <p-columnFilter type="text" field="name"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="country.name"></p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter field="representative" matchMode="in" [showMenu]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                            <ng-template let-option pTemplate="item">
+                                <div class="inline-block vertical-align-middle">
+                                    <img [alt]="option.label" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ option.image }}" width="24" class="vertical-align-middle" />
+                                    <span class="ml-1 mt-1">{{ option.name }}</span>
+                                </div>
+                            </ng-template>
+                        </p-multiSelect>
+                    </ng-template>
+                </p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
+                    <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                        <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any" [showClear]="true">
+                            <ng-template let-option pTemplate="item">
+                                <p-tag [value]="option.value" [severity]="getSeverity(option.label)"></p-tag>
+                            </ng-template>
+                        </p-dropdown>
+                    </ng-template>
+                </p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="boolean" field="verified"></p-columnFilter>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customer>
+        <tr>
+            <td>
+                {{ customer.name }}
+            </td>
+            <td>
+                <img src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" style="width: 20px" />
+                <span class="ml-1 vertical-align-middle">{{ customer.country.name }}</span>
+            </td>
+            <td>
+                <img [alt]="customer.representative.name" src="https://primefaces.org/cdn/primeng/images/demo/avatar/{{ customer.representative.image }}" width="32" style="vertical-align: middle" />
+                <span class="ml-1 vertical-align-middle">{{ customer.representative.name }}</span>
+            </td>
+            <td>
+                <p-tag [value]="customer.status" [severity]="getSeverity(customer.status)"></p-tag>
+            </td>
+            <td>
+                <i class="pi" [ngClass]="{ 'text-green-500 pi-check-circle': customer.verified, 'text-red-500 pi-times-circle': !customer.verified }"></i>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="5">No customers found.</td>
+        </tr> -->
+    </ng-template>
+</p-table>
+<!--TableFilterRow(in tabel pe linia 40 trb sa fie value="")-->
+
+<div class="">
+    <h1 class="title">Do you want to apply? Choose a discipline: </h1>
+</div>
+
+<!--CascadeSelect-->
+<span class="p-float-label">
+    <p-cascadeSelect
+        inputId="cs-discipline"
+        
+        [options]=""
+        optionLabel="cname"
+        optionGroupLabel="name"
+        [optionGroupChildren]="['states', 'cities']"
+        [style]="{ minWidth: '14rem' }"
+        placeholder="Select a Discipline"
+    ></p-cascadeSelect>
+    <label for="cs-discipline">Discipline</label>
+</span>
+<!--CascadeSelect-->
+
+<div class="subtitle-enrol">
+    <h1></h1>
+    <h1 class="subtitle">You can see your enrollments in your selected order here: </h1>
+    <h1 class="subtitle">You can modify the order or delete the enrollment if you want. </h1>
+    <h1 class="subtitle">Be aware that you can do that only if the application period is open!</h1>
+</div>
+
+<!--TableReorder-->
+<p-table 
+    [value]="courses" 
+    [columns]="cols" 
+    [reorderableColumns]="true" 
+    [tableStyle]="{'max-width': '30rem'}">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th style="width:3rem"></th>
+                <th *ngFor="let col of columns" pReorderableColumn>
+                    {{col.header}}
+                </th>
+                <th>Delete</th> <!-- Add a new column for delete button -->
+            </tr>
+        </ng-template>
+        <ng-template 
+            pTemplate="body" 
+            let-rowData 
+            let-columns="columns" 
+            let-index="index"> <!-- Use let-index="index" to get the row index -->
+                <tr>
+                    <td>
+                        <span class="pi pi-bars" pReorderableRowHandle></span>
+                    </td>
+                    <td *ngFor="let col of columns">
+                        {{rowData[col.field]}}
+                    </td>
+                    <td>
+                        <button (click)="deleteRow(index)">X</button>
+                    </td>
+                </tr>
+        </ng-template>
+</p-table>
+<!--TableReorder-->
+
+</body>
+</html>
