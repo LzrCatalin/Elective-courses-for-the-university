@@ -13,13 +13,17 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { DragDropModule } from 'primeng/dragdrop';
+import { AdminComponent } from './components/admin/admin.component';
+import { GetCoursesComponent } from './components/get-courses/get-courses.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CourseComponent
+    CourseComponent,
+    AdminComponent,
+    GetCoursesComponent
   ],
   imports: [
     BrowserModule,

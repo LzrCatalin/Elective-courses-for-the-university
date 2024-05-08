@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" type = "text/css" href = "./get-courses.component.css" />
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>category</th>
+                <th>studyYear</th>
+                <th>teacher</th>
+                <th>maxCapacity</th>
+                <th>facultySection</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let course of courses"> <!-- Loop through all the courses -->
+                <td>{{course.name}}</td>
+                <td>{{course.category}}</td>
+                <td>{{course.studyYear}}</td>
+                <td>{{course.teacher}}</td>
+                <td>{{course.maxCapacity}}</td>
+                <td>{{course.facultySection}}</td>
+                
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
