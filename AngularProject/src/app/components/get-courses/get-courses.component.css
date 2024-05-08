@@ -1,0 +1,76 @@
+/* Resetting default browser styles */
+body, h1, h2, h3, p, ul, ol, li, figure, figcaption, blockquote, dl, dd, fieldset, legend, input, textarea, button, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  
+  /* Ensuring proper box-sizing */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  /* Setting body font and background */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+  
+  /* Styling button */
+  .btn-new {
+    display: block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  /* Styling table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+  }
+  
+  /* Styling table head */
+  thead {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  /* Styling table head cells */
+  th {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  /* Styling table body cells */
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Styling action column */
+  .action-column {
+    text-align: center;
+  }
+  
+  /* Styling action buttons */
+  .action-button {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  /* Styling action buttons on hover */
+  .action-button:hover {
+    background-color: #c82333;
+  }
+  
