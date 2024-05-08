@@ -7,6 +7,7 @@ import org.example.springproject.exceptions.MismatchedFacultySectionException;
 import org.example.springproject.exceptions.MismatchedIdTypeException;
 import org.example.springproject.exceptions.NoSuchObjectExistsException;
 import org.example.springproject.services.ApplicationService;
+import org.example.springproject.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,8 @@ public class ApplicationApi {
 
 	@Autowired
 	public ApplicationService applicationService;
+	@Autowired
+	public EmailService emailService;
 
 	@GetMapping("/")
 	public List<Application> getAllApplications() {
@@ -27,9 +30,12 @@ public class ApplicationApi {
 	}
 	@PostMapping("/")
 	public ResponseEntity<String> addApplication(@RequestParam Long studentId,
-												 @RequestParam Long courseId, Integer priority, Status status) {
+												 @RequestParam Long courseId,
+												 @RequestParam Integer priority,
+												 @RequestParam Status status) {
 		try {
 			applicationService.addApplication(studentId, courseId, priority, status);
+			emailService.sendNewApplicationMail(studentId, courseId, priority, status.toString());
 			return new ResponseEntity<>("Application added successfully.", HttpStatus.CREATED);
 
 		} catch (NoSuchObjectExistsException e) {
