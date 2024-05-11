@@ -24,6 +24,9 @@ public class Course {
     @Column(name ="facultySection")
     private FacultySection facultySection;
 
+    @Column(name = "applicationsCount")
+    private Integer applicationsCount;
+
     /**
      * Empty Constructor
      */
@@ -39,7 +42,7 @@ public class Course {
      * @param maxCapacity of the course
      * @param facultySection of the course
      */
-    public Course(Long id,String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection) {
+    public Course(Long id,String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection, Integer applicationsCount) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -47,6 +50,7 @@ public class Course {
         this.teacher = teacher;
         this.maxCapacity = maxCapacity;
         this.facultySection = facultySection;
+        this.applicationsCount = applicationsCount;
     }
     public Course(String courseName, String courseCategory, Integer courseStudyYear, String courseTeacher, Integer courseMaxCapacity, FacultySection courseFacultySection){
         this.name = courseName;
@@ -119,7 +123,9 @@ public class Course {
     public FacultySection getFacultySection() {
         return facultySection;
     }
-
+    public Integer getApplicationsCount() {
+        return applicationsCount;
+    }
     /**
      * Setter for the name of the course
      * @param name of the course
@@ -166,5 +172,8 @@ public class Course {
      */
     public void setFacultySection(FacultySection facultySection) {
         this.facultySection = facultySection;
+    }
+    public void setApplicationsCount(Integer newCount) {
+        this.applicationsCount = newCount;
     }
 }
