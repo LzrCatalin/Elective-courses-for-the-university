@@ -14,4 +14,6 @@ public interface CourseService {
   void deleteCourse(Long id);
 
    Course updateCourse(Long id, String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection);
+
+   Course getCourse(String courseName);
 }

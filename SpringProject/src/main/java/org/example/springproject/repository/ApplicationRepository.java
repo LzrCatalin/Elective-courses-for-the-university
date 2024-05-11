@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
-    Application findApplicationByCourseId(Long id);
-	Application findApplicationById(Long id);
-	Application findApplicationByStudentId(Long id);
+    Application findByCourseId(Long id);
+	Application findByStudentId(Long id);
 	List<Application> findApplicationsByStudentId(Long id);
+	Application findByStudentIdAndCourseId(Long studentId, Long courseId);
 }

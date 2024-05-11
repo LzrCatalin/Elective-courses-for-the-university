@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,10 +17,8 @@ import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { DragDropModule } from 'primeng/dragdrop';
 import { AdminComponent } from './components/admin/admin.component';
 import { GetCoursesComponent } from './components/get-courses/get-courses.component';
-import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
-import { GetStudentsComponent } from './components/get-students/get-students.component';
-import { PostCourseComponent } from './components/post-course/post-course.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { StudentComponent } from './components/student/student.component';
+import { GetApplicationsComponent } from './components/get-applications/get-applications.component';
 
 
 @NgModule({
@@ -28,11 +28,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     CourseComponent,
     AdminComponent,
     GetCoursesComponent,
-    GetStudentsComponent,
-    PostCourseComponent,
+    StudentComponent,
+    GetApplicationsComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToolbarModule,
@@ -42,9 +43,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     InputTextModule,
     CascadeSelectModule,
     DragDropModule,
-    HttpClientModule,
-    ReactiveFormsModule
-    
+    HttpClientModule
   ],
   providers: [
     provideClientHydration(),

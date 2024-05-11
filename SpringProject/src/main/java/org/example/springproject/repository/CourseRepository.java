@@ -11,6 +11,4 @@ public interface CourseRepository extends CrudRepository<Course,Long> {
      * @return the course with the given name
      */
     Course findByName(String name);
-    Course findCourseById(Long id);
-
 }

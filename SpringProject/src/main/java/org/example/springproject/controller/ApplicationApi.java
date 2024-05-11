@@ -12,30 +12,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.google.gson.Gson;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/applications")
+@CrossOrigin
 public class ApplicationApi {
-
+	/*
+	Added gson import helping on sending JSON data to Angular part
+	 */
+	private static final Gson gson = new Gson();
 	@Autowired
 	public ApplicationService applicationService;
 	@Autowired
 	public EmailService emailService;
-
 	@GetMapping("/")
 	public List<Application> getAllApplications() {
 		return applicationService.getAllApplications();
 	}
-	@PostMapping("/")
-	public ResponseEntity<String> addApplication(@RequestParam Long studentId,
-												 @RequestParam Long courseId,
-												 @RequestParam Integer priority,
-												 @RequestParam Status status) {
+
+	@GetMapping("/{id}")
+	public List<Application> getStudentApplications(@PathVariable("id") Long id) {
+		return applicationService.getStudentApplications(id);
+	}
+
+	@PostMapping("/stud")
+	public ResponseEntity<String> addApplication(@RequestBody Map<String, Object> requestBody){
 		try {
-			applicationService.addApplication(studentId, courseId, priority, status);
-			emailService.sendNewApplicationMail(studentId, courseId, priority, status.toString());
+			Long studentId = Long.valueOf((Integer) requestBody.get("studentId"));
+			String courseName = (String) requestBody.get("courseName");
+			Integer priority = (Integer) requestBody.get("priority");
+			applicationService.addApplicationAsStudent(studentId, courseName, priority);
+			emailService.sendNewApplicationMail(studentId, courseName, priority);
 			return new ResponseEntity<>("Application added successfully.", HttpStatus.CREATED);
 
 		} catch (NoSuchObjectExistsException e) {
@@ -66,11 +77,25 @@ public class ApplicationApi {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteApplication(@PathVariable("id") Long id) {
 		try {
+			emailService.sendDeleteApplicationMail(id);
 			applicationService.deleteApplication(id);
-			return new ResponseEntity<>("Application with id:" + id + " successfully deleted.", HttpStatus.OK);
+			return new ResponseEntity<>(gson.toJson("Application with id:" + id + " successfully deleted."), HttpStatus.OK);
 
 		} catch (NoSuchObjectExistsException e) {
 			return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+		}
+	}
+
+	@PutMapping("/stud/{id}")
+	public ResponseEntity<String> updateApplicationAsStudent(@PathVariable("id") Long id,
+															 @RequestBody Map<String, Object> requestBody) {
+		try {
+			Integer priority = (Integer) requestBody.get("priority");
+			applicationService.updateApplicationAsStudent(id, priority);
+			return new ResponseEntity<>(gson.toJson("Application updated successfully."), HttpStatus.OK);
+
+		} catch (NoSuchObjectExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 }
