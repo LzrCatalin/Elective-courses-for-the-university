@@ -3,8 +3,10 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'] 
+  styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  title = 'Home';
+	handleButtonClick(): void {
+		console.log('Button clicked!');
+	  }
 }

@@ -1,3 +1,4 @@
+<router-outlet></router-outlet>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,9 +16,9 @@
         </ng-template>
         <ng-template pTemplate="center">
             <div class="flex flex-wrap align-items-center gap-3">
-                <a href="http://localhost:4200"  class="p-button font-bold">Home</a>
-                <a href="http://localhost:4200/course"  class="p-button font-bold">Courses</a>
-                <a href="http://localhost:4200"  class="p-button font-bold">About</a>
+                <a routerLink="/" class="p-button font-bold">Home</a>
+                <a routerLink="/course" class="p-button font-bold">Courses</a>
+                <a routerLink="/" class="p-button font-bold">About</a>
             </div>
         </ng-template>
         <ng-template pTemplate="end">

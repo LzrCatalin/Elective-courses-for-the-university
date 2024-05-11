@@ -1,34 +1,41 @@
 import { Component } from '@angular/core';
+import { CourseService } from '../../services/course.service';
 
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
-  styleUrls: ['./course.component.css']
+  styleUrl: './course.component.css'
 })
+
 export class CourseComponent {
-  title="Courses"
-  value: any;
-  loading: boolean = false;
+  [x: string]: any;
+
   courses: any[] = [];
-  cols: any[] = [];
-  
 
-  constructor() {
-    this.courses = [
-      {name: 'Curs 1'},
-      {name: 'Curs 2'},
-      {name: 'Curs 3'},
-      {name: 'Curs 4'},
-      {name: 'Curs 5'},
-      {name: 'Curs 6'},
-    ];
-
-    this.cols = [
-      { field: 'name', header: 'Name' },
-    ];
+  constructor(private courseService: CourseService) {}
+  ngOnInit() {
+    this.getAllCourses();
   }
-
-  deleteRow(Index: number) {
-    this.courses.splice(Index, 1);
+  getAllCourses() {
+    this.courseService.getAllCourses().subscribe((res) =>{
+      this.courses = res;
+      console.log(res);
+    })
+  }
+  deleteCourse(id: number){
+    console.log("Inside deletion function...")
+    console.log(id)
+    if(confirm("Are you sure that you want to delete this course?")){
+      console.log("In if statement")
+      this.courseService.deleteCourse(id).subscribe(()=>{
+        console.log("Course deleted successfully")
+        location.reload()
+      },
+      (error) => {
+        console.error("Error deleting the course: ", error);
+        console.log("Error deleting the course")
+        location.reload()
+      });
+    }
   }
 }
