@@ -39,7 +39,7 @@ export class PostCourseComponent {
     console.log(this.postCourseForm.value);
     this.courseService.postCourse(this.postCourseForm.value).subscribe((res: any) => {
       console.log(res);
-      this.router.navigate(['']);
+      this.router.navigate(['/admin/courses/']);
     });
   }
 }

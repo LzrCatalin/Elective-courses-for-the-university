@@ -8,6 +8,10 @@ const BASIC_URL = ["http://localhost:8080"];
 providedIn: 'root'
 })
 export class StudentService {
+  getAllStudents() {
+    return this.http.get(BASIC_URL + "/students");
+  }
 
 	constructor(private http: HttpClient) { }
+
 }
