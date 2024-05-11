@@ -11,6 +11,8 @@ export class CourseComponent {
   loading: boolean = false;
   courses: any[] = [];
   cols: any[] = [];
+  
+
   constructor() {
     this.courses = [
       {name: 'Curs 1'},
@@ -25,6 +27,7 @@ export class CourseComponent {
       { field: 'name', header: 'Name' },
     ];
   }
+
   deleteRow(Index: number) {
     this.courses.splice(Index, 1);
   }
