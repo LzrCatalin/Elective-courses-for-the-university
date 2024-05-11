@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -60,7 +61,7 @@ public class AdminServiceImpl implements AdminService {
 		}
 
 		// Search the admin using id
-		Admin updateAdmin = repository.findAdminById(id);
+		Admin updateAdmin = repository.findById(id).orElse(null);
 
 		 //Check if admin not exists
 		if (updateAdmin == null) {
@@ -77,7 +78,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void deleteAdmin(Long id) {
 		// Search wanted admin by id
-		Admin deleteAdmin = repository.findAdminById(id);
+		Admin deleteAdmin = repository.findById(id).orElse(null);
 
 		// Check if admin not exists
 		if (deleteAdmin == null) {

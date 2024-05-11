@@ -1,9 +1,15 @@
 package org.example.springproject.services.implementation;
 
+import org.example.springproject.entity.Application;
+import org.example.springproject.entity.Course;
 import org.example.springproject.entity.EmailDetails;
+import org.example.springproject.enums.Status;
+import org.example.springproject.exceptions.NoSuchObjectExistsException;
+import org.example.springproject.repository.ApplicationRepository;
 import org.example.springproject.repository.CourseRepository;
 import org.example.springproject.repository.StudentRepository;
 import org.example.springproject.services.EmailService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +22,8 @@ public class EmailServiceImpl implements EmailService {
 	private StudentRepository studentRepository;
 	@Autowired
 	private CourseRepository courseRepository;
+	@Autowired
+	private ApplicationRepository applicationRepository;
 	@Autowired
 	private JavaMailSender javaMailSender;
 
@@ -39,7 +47,7 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	@Override
-	public void sendNewApplicationMail(Long studentId, Long courseId, Integer priority, String status) {
+	public void sendNewApplicationMail(Long studentId, String courseName, Integer priority) {
 		// Creating a simple mail message
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 
@@ -50,17 +58,46 @@ public class EmailServiceImpl implements EmailService {
 		mailMessage.setTo("florin.lazar02@e-uvt.ro");
 
 		// Customizing email text
-		String courseName = courseRepository.findCourseById(courseId).getName();
 		String emailText = "Hi!\n\n";
 		emailText += "Your application for the course \"" + courseName + "\" has been received.\n";
 		emailText += "Priority: " + priority + "\n";
-		emailText += "Status: " + status + "\n";
+		emailText += "Status: " + Status.PENDING + "\n";
 		emailText += "\nHave a good day!\n\nBest regards,\nYour University";
 
 		mailMessage.setText(emailText);
 
 		// Customizing email subject
 		String emailSubject = "Application Received: " + courseName;
+		mailMessage.setSubject(emailSubject);
+
+		// Sending the mail
+		javaMailSender.send(mailMessage);
+	}
+
+	@Override
+	public void sendDeleteApplicationMail(Long id) {
+		Application application = applicationRepository.findById(id).orElse(null);
+
+		// Creating a simple mail message
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+		// Setting up necessary details
+		mailMessage.setFrom(sender);
+//		String recipient = foundedApplication.getStudent().getName();
+//		mailMessage.setTo(recipient);
+		mailMessage.setTo("florin.lazar02@e-uvt.ro");
+
+		// Customizing email text
+		assert application != null;
+		String courseName = application.getCourse().getName();
+		String emailText = "Hi!\n\n";
+		emailText += "Your application for the course \"" + courseName + "\" has been deleted.\n";
+		emailText += "\nHave a good day!\n\nBest regards,\nYour University";
+
+		mailMessage.setText(emailText);
+
+		// Customizing email subject
+		String emailSubject = "Deletion Received: " + courseName;
 		mailMessage.setSubject(emailSubject);
 
 		// Sending the mail

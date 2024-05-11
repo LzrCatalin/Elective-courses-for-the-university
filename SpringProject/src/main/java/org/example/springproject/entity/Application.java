@@ -59,7 +59,13 @@ public class Application {
         this.status = status;
     }
 
-    public Long getId() {
+	public Application(Student addedStudent, Course addedCourse, Integer priority) {
+        this.student = addedStudent;
+        this.course = addedCourse;
+        this.priority = priority;
+	}
+
+	public Long getId() {
         return id;
     }
     
