@@ -13,6 +13,7 @@
             <th>teacher</th>
             <th>maxCapacity</th>
             <th>facultySection</th>
+            <th>Count of applications</th>
         </tr>
         </ng-template>
         <ng-template pTemplate="body" let-course>
@@ -24,6 +25,7 @@
             <td>{{course.teacher}}</td>
             <td>{{course.maxCapacity}}</td>
             <td>{{course.facultySection}}</td>
+            <td>{{ course.applicationsCount }}</td>
             <td>
                 <p-button severity="danger" [raised]="true" (click)="deleteCourse(course.id)">Delete</p-button>
             </td>

@@ -17,6 +17,7 @@ export class CourseService {
       catchError(this.handleError)
     );
   }
+
   postCourse(course: any): Observable<any> {
     const url = `${BASE_URL}/courses`;
     const params = new HttpParams()
@@ -25,12 +26,14 @@ export class CourseService {
       .set('studyYear', course.studyYear)
       .set('teacher', course.teacher)
       .set('maxCapacity', course.maxCapacity)
-      .set('facultySection', course.facultySection);
+      .set('facultySection', course.facultySection)
+      .set('applicationsCount', course.applicationsCount);
   
     return this.http.post(url, {}, { params }).pipe(
       catchError(this.handleError)
     );
   }
+
   getFacultySections(): Observable<any> {
     return this.http.get<string[]>(BASE_URL + "/facultysections").pipe(
       catchError(this.handleError)
@@ -45,7 +48,8 @@ export class CourseService {
       .set('studyYear', course.studyYear)
       .set('teacher', course.teacher)
       .set('maxCapacity', course.maxCapacity)
-      .set('facultySection', course.facultySection);
+      .set('facultySection', course.facultySection)
+      .set('applicationsCount', course.applicationsCount);
   
     return this.http.post(url, {}, { params }).pipe(
       catchError(this.handleError)
@@ -59,11 +63,13 @@ export class CourseService {
       catchError(this.handleError)
     );
   }
+
   getCourseById(id: number): Observable<any> {
     return this.http.get(BASE_URL + "/courses/" + id).pipe(
       catchError(this.handleError)
     );
   }
+  
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // Client-side error

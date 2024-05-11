@@ -95,6 +95,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 	public Application addApplicationAsStudent(Long studentId, String courseName, Integer priority) {
 		Student student = studentRepository.findById(studentId).orElse(null);
 		Course course = courseRepository.findByName(courseName);
+		Integer count = course.getApplicationsCount();
+		course.setApplicationsCount(count + 1);
 
 		assert student != null;
 		if (!student.getFacultySection().equals(course.getFacultySection())) {

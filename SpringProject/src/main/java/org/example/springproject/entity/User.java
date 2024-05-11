@@ -8,14 +8,16 @@ public abstract class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
 	protected String name;
+	protected String email;
 	protected String role;
 
 	// Empty constructor
 	public User() {};
 
 	// Constructor
-	public User(Long id, String name, String role) {
+	public User(Long id, String email, String name, String role) {
 		this.id = id;
+		this.email = email;
 		this.name = name;
 		this.role = role;
 	}
@@ -27,6 +29,9 @@ public abstract class User {
 	public String getName() {
 		return name;
 	}
+	public String getEmail() {
+		return email;
+	}
 	public String getRole() {
 		return role;
 	}
@@ -37,6 +42,9 @@ public abstract class User {
 	}
 	public void setName(String newName) {
 		this.name = newName;
+	}
+	public void setEmail(String newEmail) {
+		this.email = newEmail;
 	}
 	public void setRole(String newRole) {
 		this.role = newRole;

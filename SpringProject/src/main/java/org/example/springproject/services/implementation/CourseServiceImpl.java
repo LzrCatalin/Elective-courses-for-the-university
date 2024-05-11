@@ -61,6 +61,7 @@ public class CourseServiceImpl implements CourseService {
         }
 
         Course newCourse = new Course(name,category,studyYear,teacher,maxCapacity,facultySection);
+        newCourse.setApplicationsCount(0);
         return repository.save(newCourse);
     }
 
@@ -77,7 +78,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course updateCourse(Long id,String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection){
+    public Course updateCourse(Long id,String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection, Integer applicationsCount){
         // verify course name
         for (char c : name.toCharArray()) {
             if (Character.isDigit(c)) {
