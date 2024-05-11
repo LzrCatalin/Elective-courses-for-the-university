@@ -46,7 +46,8 @@ import { GetApplicationsComponent } from './components/get-applications/get-appl
     HttpClientModule
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]
 })
