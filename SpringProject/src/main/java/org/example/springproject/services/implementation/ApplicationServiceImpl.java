@@ -4,7 +4,6 @@ import org.example.springproject.entity.Application;
 import org.example.springproject.entity.Course;
 import org.example.springproject.entity.Student;
 import org.example.springproject.enums.Status;
-import org.example.springproject.exceptions.DuplicatePriorityException;
 import org.example.springproject.exceptions.MismatchedFacultySectionException;
 import org.example.springproject.exceptions.MismatchedIdTypeException;
 import org.example.springproject.exceptions.NoSuchObjectExistsException;
@@ -37,7 +36,12 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
 	@Override
-	public Application addApplication(Long studentId, Long courseId, Integer priority, Status status) {
+	public List<Application> getStudentApplications(Long id) {
+		return applicationRepository.findApplicationsByStudentId(id);
+	}
+
+	@Override
+	public Application addApplication(Long studentId, Long courseId, Integer priority) {
 		// Verify inserted IDs
 		if (!(studentId instanceof Long) && !(courseId instanceof Long)) {
 			throw new MismatchedIdTypeException("IDs must be of type Long.", HttpStatus.BAD_REQUEST);
@@ -50,8 +54,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 		}
 
 		// Retrieve data based on IDs
-		Student addedStudent = studentRepository.findStudentById(studentId);
-		Course addedCourse = courseRepository.findCourseById(courseId);
+		Student addedStudent = studentRepository.findById(studentId).orElse(null);
+		Course addedCourse = courseRepository.findById(courseId).orElse(null);
 
 		// Check existing ids
 		if(addedStudent == null && addedCourse == null) {
@@ -72,16 +76,33 @@ public class ApplicationServiceImpl implements ApplicationService {
 		}
 
 		// Check if student wants to add new application with an existing priority
-		List<Application> existingApplications = applicationRepository.findApplicationsByStudentId(studentId);
-		for (Application exitingApplication : existingApplications) {
-			if (exitingApplication.getPriority().equals(priority)) {
-				throw new DuplicatePriorityException("Duplicate priority detected. A student cannot apply for more than one course with the same priority.",
-						HttpStatus.BAD_REQUEST
-				);
-			}
+//		List<Application> existingApplications = applicationRepository.findApplicationsByStudentId(studentId);
+//		for (Application exitingApplication : existingApplications) {
+//			if (exitingApplication.getPriority().equals(priority)) {
+//				throw new DuplicatePriorityException("Duplicate priority detected. A student cannot apply for more than one course with the same priority.",
+//						HttpStatus.BAD_REQUEST
+//				);
+//			}
+//		}
+
+		// All the above will be featured by unique constraint :)
+		Application addApplication = new Application(addedStudent, addedCourse, priority);
+		addApplication.setStatus(Status.PENDING);
+		return applicationRepository.save(addApplication);
+	}
+
+	@Override
+	public Application addApplicationAsStudent(Long studentId, String courseName, Integer priority) {
+		Student student = studentRepository.findById(studentId).orElse(null);
+		Course course = courseRepository.findByName(courseName);
+
+		assert student != null;
+		if (!student.getFacultySection().equals(course.getFacultySection())) {
+			throw new MismatchedFacultySectionException("Can not assign application for different faculty section.", HttpStatus.BAD_REQUEST);
 		}
 
-		Application addApplication = new Application(addedStudent, addedCourse, priority, status);
+		Application addApplication = new Application(student, course, priority);
+		addApplication.setStatus(Status.PENDING);
 		return applicationRepository.save(addApplication);
 	}
 
@@ -89,7 +110,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	public Application updateApplication(Long id, Integer newPriority, Status newStatus) {
 
 		// Check if application exists by id
-		Application application = applicationRepository.findApplicationById(id);
+		Application application = applicationRepository.findById(id).orElse(null);
 		if (application == null) {
 			throw new NoSuchObjectExistsException("Application with id: " + id + " not found.", HttpStatus.NOT_FOUND);
 		}
@@ -101,10 +122,22 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
+	public Application updateApplicationAsStudent(Long id, Integer priority) {
+		Application application = applicationRepository.findById(id).orElse(null);
+
+		if (application == null) {
+			throw new NoSuchObjectExistsException("Application with id: " + id + " not found.");
+		}
+
+		application.setPriority(priority);
+		return applicationRepository.save(application);
+	}
+
+	@Override
 	public void deleteApplication(Long id) {
 
 		// Check if application exists by id
-		Application application = applicationRepository.findApplicationById(id);
+		Application application = applicationRepository.findById(id).orElse(null);
 		if (application == null) {
 			throw new NoSuchObjectExistsException("Application with id: " + id + " not found.", HttpStatus.NOT_FOUND);
 		}

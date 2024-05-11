@@ -26,6 +26,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public Course getCourse(String courseName) {
+        return repository.findByName(courseName);
+    }
+
+    @Override
     public Course addCourse(String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection){
         // Verify inserted name
         for (char c : name.toCharArray()) {
@@ -62,7 +67,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void deleteCourse(Long id){
 
-        Course courseToBeDeleted = repository.findCourseById(id);
+        Course courseToBeDeleted = repository.findById(id).orElse(null);
 
         if(courseToBeDeleted == null){
             throw new NoSuchObjectExistsException("Course with id: " + id + " not found.", HttpStatus.NOT_FOUND);
@@ -87,7 +92,7 @@ public class CourseServiceImpl implements CourseService {
             }
         }
 
-        Course courseToBeUpdated = repository.findCourseById(id);
+        Course courseToBeUpdated = repository.findById(id).orElse(null);
         if(courseToBeUpdated == null){
             throw new NoSuchObjectExistsException("Course with id: " + id + " not found.", HttpStatus.NOT_FOUND);
         }

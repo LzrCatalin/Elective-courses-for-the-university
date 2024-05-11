@@ -4,12 +4,17 @@ import { HomeComponent } from './components/home/home.component';
 import { CourseComponent } from './components/course/course.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { GetCoursesComponent } from './components/get-courses/get-courses.component';
+import { StudentComponent } from './components/student/student.component';
+import { GetApplicationsComponent } from './components/get-applications/get-applications.component';
 
 const routes: Routes = [
   {path : '', component : HomeComponent},
   {path : 'course', component : CourseComponent},
   {path : 'admin', component: AdminComponent},
-  {path : 'admin/courses', component: GetCoursesComponent}
+  {path : 'admin/courses', component: GetCoursesComponent},
+  {path : 'student', component : StudentComponent},
+  {path : 'student/applications', component : GetApplicationsComponent},
+  {path : 'student/:studentId/applications', component : GetApplicationsComponent}
 ];
 
 @NgModule({

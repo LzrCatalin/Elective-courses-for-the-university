@@ -59,7 +59,7 @@ public class StudentServiceImpl implements StudentService {
 			}
 		}
 
-		Student updateStudent = repository.findStudentById(id);
+		Student updateStudent = repository.findById(id).orElse(null);
 		if (updateStudent == null) {
 			throw new NoSuchObjectExistsException("Student with id: " + id + " not found.", HttpStatus.NOT_FOUND);
 		}
@@ -79,7 +79,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public void deleteStudent(Long id) {
-		Student deleteStudent = repository.findStudentById(id);
+		Student deleteStudent = repository.findById(id).orElse(null);
 
 		if (deleteStudent == null) {
 			throw new NoSuchObjectExistsException("Student with id: " + id + " not found.", HttpStatus.NOT_FOUND);

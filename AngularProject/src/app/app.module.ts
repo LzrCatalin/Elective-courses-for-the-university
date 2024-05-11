@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +17,8 @@ import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { DragDropModule } from 'primeng/dragdrop';
 import { AdminComponent } from './components/admin/admin.component';
 import { GetCoursesComponent } from './components/get-courses/get-courses.component';
+import { StudentComponent } from './components/student/student.component';
+import { GetApplicationsComponent } from './components/get-applications/get-applications.component';
 
 
 @NgModule({
@@ -23,10 +27,13 @@ import { GetCoursesComponent } from './components/get-courses/get-courses.compon
     HomeComponent,
     CourseComponent,
     AdminComponent,
-    GetCoursesComponent
+    GetCoursesComponent,
+    StudentComponent,
+    GetApplicationsComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToolbarModule,
@@ -36,6 +43,7 @@ import { GetCoursesComponent } from './components/get-courses/get-courses.compon
     InputTextModule,
     CascadeSelectModule,
     DragDropModule,
+    HttpClientModule
   ],
   providers: [
     provideClientHydration()
