@@ -15,6 +15,10 @@ import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { DragDropModule } from 'primeng/dragdrop';
 import { AdminComponent } from './components/admin/admin.component';
 import { GetCoursesComponent } from './components/get-courses/get-courses.component';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { GetStudentsComponent } from './components/get-students/get-students.component';
+import { PostCourseComponent } from './components/post-course/post-course.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -23,7 +27,9 @@ import { GetCoursesComponent } from './components/get-courses/get-courses.compon
     HomeComponent,
     CourseComponent,
     AdminComponent,
-    GetCoursesComponent
+    GetCoursesComponent,
+    GetStudentsComponent,
+    PostCourseComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,9 +42,13 @@ import { GetCoursesComponent } from './components/get-courses/get-courses.compon
     InputTextModule,
     CascadeSelectModule,
     DragDropModule,
+    HttpClientModule,
+    ReactiveFormsModule
+    
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]
 })

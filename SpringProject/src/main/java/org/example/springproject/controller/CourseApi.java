@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/courses")
 
@@ -22,11 +23,14 @@ public class CourseApi {
     @Autowired
     private CourseService courseService;
 
-    @GetMapping("/")
+    @CrossOrigin
+    @GetMapping
     public List<Course> getAllCourses(){
         return courseService.getAllCourses();
     }
 
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST)
     @PostMapping("/")
     public ResponseEntity<String> addCourse(@RequestParam String name, String category, Integer studyYear,
                                             @RequestParam String teacher,
@@ -46,6 +50,8 @@ public class CourseApi {
         }
     }
 
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.PATCH)
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCourse(@PathVariable("id") Long id,
                                                @RequestParam String name, String category,
