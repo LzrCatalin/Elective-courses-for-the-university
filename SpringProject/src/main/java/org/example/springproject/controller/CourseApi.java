@@ -1,5 +1,6 @@
 package org.example.springproject.controller;
 
+import com.google.gson.Gson;
 import org.example.springproject.entity.Course;
 import org.example.springproject.enums.FacultySection;
 import org.example.springproject.exceptions.InvalidCapacityException;
@@ -15,21 +16,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+@CrossOrigin
 @RestController
 @RequestMapping("/courses")
 
 public class CourseApi {
 
+    private static final Gson gson = new Gson();
     @Autowired
     private CourseService courseService;
 
-    @CrossOrigin
     @GetMapping
     public List<Course> getAllCourses(){
         return courseService.getAllCourses();
     }
 
-    @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
     @PostMapping("/")
     public ResponseEntity<String> addCourse(@RequestParam String name, String category, Integer studyYear,
@@ -37,7 +38,7 @@ public class CourseApi {
                                             @RequestParam Integer maxCapacity, FacultySection facultySection){
         try {
             courseService.addCourse(name, category, studyYear, teacher, maxCapacity, facultySection);
-            return new ResponseEntity<>("Course added successfully!", HttpStatus.CREATED);
+            return new ResponseEntity<>(gson.toJson("Course added successfully!"), HttpStatus.CREATED);
 
         } catch (InvalidNameException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
@@ -50,8 +51,7 @@ public class CourseApi {
         }
     }
 
-    @CrossOrigin
-    @RequestMapping(method = RequestMethod.PATCH)
+    @RequestMapping(method = RequestMethod.PUT)
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCourse(@PathVariable("id") Long id,
                                                @RequestParam String name, String category,
@@ -68,12 +68,13 @@ public class CourseApi {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
         }
     }
-
+    //@RequestMapping(method = RequestMethod.DELETE)
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCourse(@PathVariable("id") Long id){
+    public ResponseEntity<String> deleteCourse(@PathVariable("id") Long id) {
         try {
+            //emailService.sendDeleteApplicationMail(id);
             courseService.deleteCourse(id);
-            return new ResponseEntity<>("Course with id: " + id + " successfully deleted!", HttpStatus.OK);
+            return new ResponseEntity<>(gson.toJson("Application with id:" + id + " successfully deleted."), HttpStatus.OK);
 
         } catch (NoSuchObjectExistsException e) {
             return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());

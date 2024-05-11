@@ -1,8 +1,12 @@
 
-<button class="btn-new" routerLink="/admin/courses/post">Add course</button>
-<table>
-    <thead>
+<p-button routerLink="/admin/courses/post">Add course</p-button>
+<p-table 
+    [value]="courses" 
+    styleClass="p-datatable-gridlines" 
+    [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
         <tr>
+            <th>id</th>
             <th>name</th>
             <th>category</th>
             <th>studyYear</th>
@@ -10,9 +14,10 @@
             <th>maxCapacity</th>
             <th>facultySection</th>
         </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let course of courses"> <!-- Loop through all the courses -->
+        </ng-template>
+        <ng-template pTemplate="body" let-course>
+        <tr>
+            <td>{{course.id}}</td>
             <td>{{course.name}}</td>
             <td>{{course.category}}</td>
             <td>{{course.studyYear}}</td>
@@ -20,10 +25,8 @@
             <td>{{course.maxCapacity}}</td>
             <td>{{course.facultySection}}</td>
             <td>
-                <button class="btn-new" routerLink="/admin/courses/{{course.id}}">Edit</button>
-
+                <p-button severity="danger" [raised]="true" (click)="deleteCourse(course.id)">Delete</p-button>
             </td>
         </tr>
-    </tbody>
-</table>
-
+        </ng-template>
+</p-table>

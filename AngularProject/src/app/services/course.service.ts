@@ -37,12 +37,33 @@ export class CourseService {
     );
   }
 
-  updateCourse(data: any, id: string):Observable<any> {
-    return this.http.patch(BASE_URL + "/courses/" + id, data).pipe(
+  updateCourse(course: any): Observable<any> {
+    const url = `${BASE_URL}/courses`;
+    const params = new HttpParams()
+      .set('name', course.name)
+      .set('category', course.category)
+      .set('studyYear', course.studyYear)
+      .set('teacher', course.teacher)
+      .set('maxCapacity', course.maxCapacity)
+      .set('facultySection', course.facultySection);
+  
+    return this.http.post(url, {}, { params }).pipe(
       catchError(this.handleError)
     );
   }
-
+  
+  deleteCourse(id: number):Observable<any> {
+    console.log("in delete course in service")
+    console.log("Id is: " + id)
+    return this.http.delete(BASE_URL + "/courses/" + id).pipe(
+      catchError(this.handleError)
+    );
+  }
+  getCourseById(id: number): Observable<any> {
+    return this.http.get(BASE_URL + "/courses/" + id).pipe(
+      catchError(this.handleError)
+    );
+  }
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // Client-side error
@@ -57,4 +78,5 @@ export class CourseService {
     // Return an observable with a user-facing error message
     return throwError('Something bad happened; please try again later.');
   }
+
 }
