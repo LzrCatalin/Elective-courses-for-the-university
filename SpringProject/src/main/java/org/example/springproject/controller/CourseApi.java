@@ -1,6 +1,7 @@
 package org.example.springproject.controller;
 
 import com.google.gson.Gson;
+import jakarta.validation.constraints.Email;
 import org.example.springproject.entity.Course;
 import org.example.springproject.enums.FacultySection;
 import org.example.springproject.exceptions.InvalidCapacityException;
@@ -8,6 +9,7 @@ import org.example.springproject.exceptions.InvalidNameException;
 import org.example.springproject.exceptions.InvalidStudyYearException;
 import org.example.springproject.exceptions.NoSuchObjectExistsException;
 import org.example.springproject.services.CourseService;
+import org.example.springproject.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ public class CourseApi {
     private static final Gson gson = new Gson();
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping
     public List<Course> getAllCourses(){
@@ -38,6 +42,7 @@ public class CourseApi {
                                             @RequestParam Integer maxCapacity, FacultySection facultySection){
         try {
             courseService.addCourse(name, category, studyYear, teacher, maxCapacity, facultySection);
+            emailService.sendNewCourseMail(name);
             return new ResponseEntity<>(gson.toJson("Course added successfully!"), HttpStatus.CREATED);
 
         } catch (InvalidNameException e) {
@@ -56,9 +61,9 @@ public class CourseApi {
     public ResponseEntity<String> updateCourse(@PathVariable("id") Long id,
                                                @RequestParam String name, String category,
                                                @RequestParam Integer studyYear,
-                                               @RequestParam String teacher, Integer maxCapacity, FacultySection facultySection){
+                                               @RequestParam String teacher, Integer maxCapacity, FacultySection facultySection, Integer applicationsCount){
         try {
-            courseService.updateCourse(id, name, category, studyYear, teacher, maxCapacity, facultySection);
+            courseService.updateCourse(id, name, category, studyYear, teacher, maxCapacity, facultySection, applicationsCount);
             return new ResponseEntity<>("Course with id: " + id + " successfully updated!", HttpStatus.OK);
 
         } catch (NoSuchObjectExistsException e) {
