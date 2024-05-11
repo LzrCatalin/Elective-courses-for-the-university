@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -19,6 +18,8 @@ import { AdminComponent } from './components/admin/admin.component';
 import { GetCoursesComponent } from './components/get-courses/get-courses.component';
 import { StudentComponent } from './components/student/student.component';
 import { GetApplicationsComponent } from './components/get-applications/get-applications.component';
+import { PostCourseComponent } from './components/post-course/post-course.component';
+import { GetStudentsComponent } from './components/get-students/get-students.component';
 
 
 @NgModule({
@@ -29,7 +30,10 @@ import { GetApplicationsComponent } from './components/get-applications/get-appl
     AdminComponent,
     GetCoursesComponent,
     StudentComponent,
-    GetApplicationsComponent
+    GetApplicationsComponent,
+    PostCourseComponent,
+    GetStudentsComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -43,10 +47,12 @@ import { GetApplicationsComponent } from './components/get-applications/get-appl
     InputTextModule,
     CascadeSelectModule,
     DragDropModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]
 })

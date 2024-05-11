@@ -20,12 +20,13 @@ public class StudentApi {
 	@Autowired
 	public StudentService studentService;
 
-	@GetMapping
-	public String displayGreetings() {
-		return "Welcome to students";
-	}
+//	@GetMapping
+//	public String displayGreetings() {
+//		return "Welcome to students";
+//	}
 
-	@GetMapping("/")
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping
 	public List<Student> getAllStudents() {
 		return studentService.getAllStudents();
 	}
