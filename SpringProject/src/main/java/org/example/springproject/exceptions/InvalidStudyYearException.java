@@ -7,6 +7,10 @@ public class InvalidStudyYearException extends RuntimeException{
 
 	public InvalidStudyYearException() {}
 
+	public InvalidStudyYearException(String message) {
+		super(message);
+	}
+
 	public InvalidStudyYearException(String message, HttpStatus httpStatus) {
 		super(message);
 		this.httpStatus = httpStatus;

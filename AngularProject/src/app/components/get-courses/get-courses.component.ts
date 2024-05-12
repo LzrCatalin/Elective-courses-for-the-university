@@ -35,6 +35,7 @@ export class GetCoursesComponent implements OnInit {
     } else {
       console.error('Invalid response format from course service.');
     }
+
   }
   // Group courses by category
   groupCoursesByCategory() {
@@ -42,6 +43,7 @@ export class GetCoursesComponent implements OnInit {
     this.courses.forEach(course => {
       if (!coursesByCategory[course.category]) {
         coursesByCategory[course.category] = [];
+
       }
       coursesByCategory[course.category].push({ label: course.name, value: course });
     });
