@@ -17,6 +17,11 @@ export class CourseService {
       catchError(this.handleError)
     );
   }
+  getCourseDetails(id: number): Observable<any> {
+    return this.http.get(BASE_URL + "/courses/" + id).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   postCourse(course: any): Observable<any> {
     const url = `${BASE_URL}/courses`;
@@ -39,7 +44,7 @@ export class CourseService {
       catchError(this.handleError)
     );
   }
-
+  
   updateCourse(course: any): Observable<any> {
     const url = `${BASE_URL}/courses`;
     const params = new HttpParams()
