@@ -25,7 +25,7 @@ public class Application {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="courseId", nullable = false)
     private Course course;
-    @Column(name = "priority")
+    @Column(name = "priority", unique = true)
     private Integer priority;
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
