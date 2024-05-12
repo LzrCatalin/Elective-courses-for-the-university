@@ -22,6 +22,7 @@ export class GetCoursesComponent {
         console.log(res);
       })
     }
+    
     deleteCourse(id: number){
       console.log("Inside deletion function...")
       console.log(id)
