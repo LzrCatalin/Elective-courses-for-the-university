@@ -20,6 +20,7 @@ import { StudentComponent } from './components/student/student.component';
 import { GetApplicationsComponent } from './components/get-applications/get-applications.component';
 import { PostCourseComponent } from './components/post-course/post-course.component';
 import { GetStudentsComponent } from './components/get-students/get-students.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { GetStudentsComponent } from './components/get-students/get-students.com
     GetApplicationsComponent,
     PostCourseComponent,
     GetStudentsComponent,
+    
 
   ],
   imports: [
@@ -48,7 +50,8 @@ import { GetStudentsComponent } from './components/get-students/get-students.com
     CascadeSelectModule,
     DragDropModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DropdownModule
   ],
   providers: [
     provideClientHydration(),
