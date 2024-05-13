@@ -25,6 +25,11 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	public Student getData(Long id) {
+		return repository.findById(id).orElse(null);
+	}
+
+	@Override
 	public Student addStudent(String name, Integer studyYear, Float grade, FacultySection facultySection) {
 
 		// Verify inserted name
