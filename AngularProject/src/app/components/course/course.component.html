@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <router-outlet></router-outlet>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,6 +85,42 @@
     </ng-template>
     </p-table>
     <!--TableFilterRow-->
+=======
+<p-table 
+    #dt [columns]="cols" [value]="courses" responsiveLayout="scroll"
+    [paginator]="true"
+    [rows]="5"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rowsPerPageOptions]="[5, 10, 20]"> 
+    <ng-template pTemplate="header" let-columns> 
+        <tr> 
+            <th *ngFor="let col of columns"> 
+                {{ col.header }} 
+            </th> 
+        </tr> 
+        <tr> 
+            <th *ngFor="let col of columns">
+                <p-columnFilter
+                    *ngIf="col.field !== 'extraDetail'"
+                    type="text"
+                    [field]="col.field" 
+                    [matchModeOptions]="matchModeOptions" 
+                ></p-columnFilter> 
+            </th> 
+            <!-- Add header for the extra column -->
+            <th>Applications Count</th>
+        </tr> 
+    </ng-template> 
+    <ng-template pTemplate="body" let-rowData let-columns="columns"> 
+        <tr [pSelectableRow]="rowData"> 
+            <td *ngFor="let col of columns"> 
+                {{ rowData[col.field] }} 
+            </td> 
+            <!-- Add extra column for displaying additional details -->
+            <td>{{ rowData.applicationsCount }}</td> 
+        </tr> 
+    </ng-template> 
+</p-table>
+>>>>>>> 7b9ab533af33e6f06032a6d69d0ba84fea038246
 
-</body>
-</html>
+<button class="btn-display-app" routerLink="/student/1/applications" (click)="handleButtonClick()">View Applications</button>
