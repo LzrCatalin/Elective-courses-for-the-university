@@ -42,6 +42,11 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
+	public List<Student> getStudentsOfCourse(Long courseId) {
+		return applicationRepository.findStudentsIdThatAppliedCourse(courseId);
+	}
+
+	@Override
 	public Application addApplication(Long studentId, Long courseId, Integer priority) {
 		// Verify inserted IDs
 		if (!(studentId instanceof Long) && !(courseId instanceof Long)) {
