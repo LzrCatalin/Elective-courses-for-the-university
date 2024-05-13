@@ -9,8 +9,13 @@ providedIn: 'root'
 })
 export class StudentService {
   
-  getAllStudents() {
-    return this.http.get(BASIC_URL + "/students");
-  }
 	constructor(private http: HttpClient) { }
+
+	getAllStudents() {
+		return this.http.get(BASIC_URL + "/students");
+	}
+	
+	getData(id: number): Observable<any> {
+		return this.http.get(`${BASIC_URL}/students/${id}`)
+	}
 }

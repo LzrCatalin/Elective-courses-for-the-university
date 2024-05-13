@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../../services/course.service';
+import { max } from 'rxjs';
 
 @Component({
   selector: 'app-get-courses',
@@ -11,6 +12,8 @@ export class GetCoursesComponent implements OnInit {
   courses: any[] = [];
   courseOptions: any[] = [];
   selectedCourse: any;
+  studentIds: string[] = [];
+  editedCourse: any;
 
   constructor(private courseService: CourseService) {}
 
@@ -39,11 +42,11 @@ export class GetCoursesComponent implements OnInit {
   }
   // Group courses by category
   groupCoursesByCategory() {
-    const coursesByCategory: {[key: string]: any[]} = {};
+    console.log("E bine... Am intrat unde trebuie...")
+    const coursesByCategory: { [key: string]: any[] } = {};
     this.courses.forEach(course => {
       if (!coursesByCategory[course.category]) {
         coursesByCategory[course.category] = [];
-
       }
       coursesByCategory[course.category].push({ label: course.name, value: course });
     });
@@ -52,6 +55,43 @@ export class GetCoursesComponent implements OnInit {
       label: category,
       items: coursesByCategory[category]
     }));
+  }
+
+  onCourseSelect() {
+    if (this.selectedCourse) {
+      const courseId = this.selectedCourse.id;
+      this.courseService.getPendingIDs(courseId).subscribe((data: string[]) => {
+        this.studentIds = data;
+      });
+    }
+  }
+
+  editCourse(course: any) {
+    this.editedCourse = { ...course }
+  }
+
+  cancelEdit() {
+    this.editedCourse = null;
+  }
+
+  updateCourse() {
+    console.log("Update course...")
+    if(this.editedCourse) {
+      console.log("Inside if ...")
+      console.log(this.editedCourse.studyYear)
+      const { id, name, category, studyYear, teacher, maxCapacity, facultySection, applicationsCount } = this.editedCourse;
+      this.courseService.updateCourse(id, name, category, studyYear, teacher, maxCapacity, facultySection, applicationsCount)
+      .subscribe(
+        () => {
+          console.log("Successfully edited course")
+          this.cancelEdit();
+          location.reload();
+        },
+        (error) => {
+          console.log("Pula , eroare...")
+        }
+      )
+    }
   }
 
   deleteCourse(id: number) {

@@ -6,7 +6,8 @@
     [options]="courseOptions" 
     [(ngModel)]="selectedCourse" 
     placeholder="Select a course" 
-    [group]="true">
+    [group]="true"
+    (onChange)="onCourseSelect()">
     <ng-template let-group pTemplate="group">
         <div class="flex align-items-center">
             <img 
@@ -18,9 +19,9 @@
     </ng-template>
 </p-dropdown>
 
-
 <p-table
-    [value]="[selectedCourse]"
+    *ngIf="studentIds"
+    [value]="studentIds"
     [paginator]="true"
     [rows]="5"
     [tableStyle]="{ 'min-width': '50rem' }"
@@ -28,19 +29,18 @@
 >
     <ng-template pTemplate="header">
         <tr>
-            <th style="width:25%">StudentName</th>
-            <th style="width:25%">StudentId</th>
-        
-            
+            <th style="width:25%">Course Name</th>
+            <th style="width:25%">Pending IDs</th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-course>
+    <ng-template pTemplate="body" let-studentId>
         <tr>
-            <td>{{ course.name }}</td>
-            <td>{{ course.id }}</td>   
+            <td>{{ selectedCourse.name }}</td> 
+            <td>{{ studentId.id }}</td>   
         </tr>
     </ng-template>
 </p-table>
+
 
 
 <p-table 
@@ -70,8 +70,26 @@
             <td>{{course.facultySection}}</td>
             <td>{{ course.applicationsCount }}</td>
             <td>
+                <p-button label="Edit" (click)="editCourse(course)"></p-button>
                 <p-button severity="danger" [raised]="true" (click)="deleteCourse(course.id)">Delete</p-button>
             </td>
         </tr>
         </ng-template>
 </p-table>
+
+<div *ngIf="editedCourse">
+    <h3>Edit Course</h3>
+    <form>
+        <!-- Input fields for editing course details -->
+        <input type="text" [(ngModel)]="editedCourse.name" name="name" placeholder="Name"><br>
+        <input type="text" [(ngModel)]="editedCourse.category" name="category" placeholder="Category"><br>
+        <input type="number" [(ngModel)]="editedCourse.studyYear" name="studyYear" placeholder="Study Year"><br>
+        <input type="text" [(ngModel)]="editedCourse.teacher" name="teacher" placeholder="Teacher"><br>
+        <input type="number" [(ngModel)]="editedCourse.maxCapacity" name="maxCapacity" placeholder="Capacity"><br>
+        <input type="text" [(ngModel)]="editedCourse.facultySection" name="facultySection" placeholder="Faculty Section"><br>
+        <input type="number" [(ngModel)]="editedCourse.applicationsCount" name="applicationsCount" placeholder="Count"><br>
+        <!-- Button functionalities for each course -->
+        <button type="button" (click)="updateCourse()">Update</button>
+        <button type="button" (click)="cancelEdit()">Cancel</button>
+    </form>
+</div>

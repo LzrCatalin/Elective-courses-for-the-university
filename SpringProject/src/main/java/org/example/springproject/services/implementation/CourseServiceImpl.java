@@ -104,6 +104,7 @@ public class CourseServiceImpl implements CourseService {
         courseToBeUpdated.setTeacher(teacher);
         courseToBeUpdated.setMaxCapacity(maxCapacity);
         courseToBeUpdated.setFacultySection(facultySection);
+        courseToBeUpdated.setApplicationsCount(applicationsCount);
 
         return repository.save(courseToBeUpdated);
     }

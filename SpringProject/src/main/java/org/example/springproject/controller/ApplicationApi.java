@@ -1,6 +1,7 @@
 package org.example.springproject.controller;
 
 import org.example.springproject.entity.Application;
+import org.example.springproject.entity.Student;
 import org.example.springproject.enums.Status;
 import org.example.springproject.exceptions.*;
 import org.example.springproject.services.ApplicationService;
@@ -29,6 +30,11 @@ public class ApplicationApi {
 	@GetMapping("/")
 	public List<Application> getAllApplications() {
 		return applicationService.getAllApplications();
+	}
+
+	@GetMapping("/pendingIDs/{courseId}")
+	public List<Student> getIds(@PathVariable("courseId") Long courseId) {
+		return applicationService.getStudentsOfCourse(courseId);
 	}
 
 	@GetMapping("/{id}")

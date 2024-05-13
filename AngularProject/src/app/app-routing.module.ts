@@ -8,6 +8,7 @@ import { StudentComponent } from './components/student/student.component';
 import { GetApplicationsComponent } from './components/get-applications/get-applications.component';
 import { PostCourseComponent } from './components/post-course/post-course.component';
 import { GetStudentsComponent } from './components/get-students/get-students.component';
+import { MyprofileComponent } from './components/myprofile/myprofile.component';
 
 const routes: Routes = [
   {path : '', component : HomeComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path : 'student', component : StudentComponent},
   {path : 'student/applications', component : GetApplicationsComponent},
   {path : 'student/:studentId/applications', component : GetApplicationsComponent}, 
+  {path : 'student/:studentId/myprofile', component : MyprofileComponent}
 ];
 
 @NgModule({
