@@ -1,11 +1,9 @@
 package org.example.springproject.controller;
 
 import org.example.springproject.entity.Application;
+import org.example.springproject.entity.Student;
 import org.example.springproject.enums.Status;
-import org.example.springproject.exceptions.DuplicatePriorityException;
-import org.example.springproject.exceptions.MismatchedFacultySectionException;
-import org.example.springproject.exceptions.MismatchedIdTypeException;
-import org.example.springproject.exceptions.NoSuchObjectExistsException;
+import org.example.springproject.exceptions.*;
 import org.example.springproject.services.ApplicationService;
 import org.example.springproject.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +32,11 @@ public class ApplicationApi {
 		return applicationService.getAllApplications();
 	}
 
+	@GetMapping("/pendingIDs/{courseId}")
+	public List<Student> getIds(@PathVariable("courseId") Long courseId) {
+		return applicationService.getStudentsOfCourse(courseId);
+	}
+
 	@GetMapping("/{id}")
 	public List<Application> getStudentApplications(@PathVariable("id") Long id) {
 		return applicationService.getStudentApplications(id);
@@ -60,6 +63,9 @@ public class ApplicationApi {
 
 		} catch (DuplicatePriorityException e) {
 			return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+
+		} catch (InvalidStudyYearException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 

@@ -15,20 +15,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/students")
+@CrossOrigin(origins = "http://localhost:4200")
 public class StudentApi {
 
 	@Autowired
 	public StudentService studentService;
 
-//	@GetMapping
-//	public String displayGreetings() {
-//		return "Welcome to students";
-//	}
-
-	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping
 	public List<Student> getAllStudents() {
 		return studentService.getAllStudents();
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Student> getStudentData(@PathVariable("id") Long id) {
+		return new ResponseEntity<>(studentService.getData(id), HttpStatus.OK);
 	}
 
 	@PostMapping("/")

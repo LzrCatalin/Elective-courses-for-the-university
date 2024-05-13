@@ -4,6 +4,7 @@ import org.example.springproject.entity.Application;
 import org.example.springproject.entity.Course;
 import org.example.springproject.entity.Student;
 import org.example.springproject.enums.Status;
+import org.example.springproject.exceptions.InvalidStudyYearException;
 import org.example.springproject.exceptions.MismatchedFacultySectionException;
 import org.example.springproject.exceptions.MismatchedIdTypeException;
 import org.example.springproject.exceptions.NoSuchObjectExistsException;
@@ -41,6 +42,11 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
+	public List<Student> getStudentsOfCourse(Long courseId) {
+		return applicationRepository.findStudentsIdThatAppliedCourse(courseId);
+	}
+
+	@Override
 	public Application addApplication(Long studentId, Long courseId, Integer priority) {
 		// Verify inserted IDs
 		if (!(studentId instanceof Long) && !(courseId instanceof Long)) {
@@ -75,16 +81,6 @@ public class ApplicationServiceImpl implements ApplicationService {
 			throw new MismatchedFacultySectionException("Can not assign application for different faculty section.", HttpStatus.BAD_REQUEST);
 		}
 
-		// Check if student wants to add new application with an existing priority
-//		List<Application> existingApplications = applicationRepository.findApplicationsByStudentId(studentId);
-//		for (Application exitingApplication : existingApplications) {
-//			if (exitingApplication.getPriority().equals(priority)) {
-//				throw new DuplicatePriorityException("Duplicate priority detected. A student cannot apply for more than one course with the same priority.",
-//						HttpStatus.BAD_REQUEST
-//				);
-//			}
-//		}
-
 		// All the above will be featured by unique constraint :)
 		Application addApplication = new Application(addedStudent, addedCourse, priority);
 		addApplication.setStatus(Status.PENDING);
@@ -95,12 +91,17 @@ public class ApplicationServiceImpl implements ApplicationService {
 	public Application addApplicationAsStudent(Long studentId, String courseName, Integer priority) {
 		Student student = studentRepository.findById(studentId).orElse(null);
 		Course course = courseRepository.findByName(courseName);
+		// Increase counter after an application add
 		Integer count = course.getApplicationsCount();
 		course.setApplicationsCount(count + 1);
 
 		assert student != null;
 		if (!student.getFacultySection().equals(course.getFacultySection())) {
 			throw new MismatchedFacultySectionException("Can not assign application for different faculty section.", HttpStatus.BAD_REQUEST);
+		}
+
+		if (!student.getStudyYear().equals(course.getStudyYear())) {
+			throw new InvalidStudyYearException("Can not assign application for different study year.");
 		}
 
 		Application addApplication = new Application(student, course, priority);
@@ -144,6 +145,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 			throw new NoSuchObjectExistsException("Application with id: " + id + " not found.", HttpStatus.NOT_FOUND);
 		}
 
+		// Decrease counter after an application deletion
+		Course course = application.getCourse();
+		Integer counter = course.getApplicationsCount();
+		course.setApplicationsCount(counter - 1);
 		applicationRepository.delete(application);
 	}
 }
