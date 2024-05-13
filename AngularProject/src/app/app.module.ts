@@ -21,6 +21,10 @@ import { GetApplicationsComponent } from './components/get-applications/get-appl
 import { PostCourseComponent } from './components/post-course/post-course.component';
 import { GetStudentsComponent } from './components/get-students/get-students.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { SidebarModule } from 'primeng/sidebar';
+import { AvatarModule } from 'primeng/avatar';
+import { IconFieldModule } from 'primeng/iconfield';
+import { TagModule} from 'primeng/tag';
 import { MyprofileComponent } from './components/myprofile/myprofile.component';
 
 
@@ -52,7 +56,13 @@ import { MyprofileComponent } from './components/myprofile/myprofile.component';
     DragDropModule,
     HttpClientModule,
     ReactiveFormsModule,
-    DropdownModule
+    DropdownModule,
+    SidebarModule,
+    AvatarModule,
+    IconFieldModule,
+    InputTextModule,
+    TagModule,
+    
   ],
   providers: [
     provideClientHydration(),

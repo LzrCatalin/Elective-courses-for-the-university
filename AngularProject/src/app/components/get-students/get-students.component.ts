@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { StudentService } from '../../services/student.service';
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { FilterMatchMode, SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-get-students',
@@ -12,12 +10,17 @@ import { Observable } from 'rxjs';
 export class GetStudentsComponent {
 
   students: any[] = [];
+  matchModeOptions!: SelectItem[]; 
 
   constructor(private studentService: StudentService) {}
 
   ngOnInit(){
     console.log('GetStudentsComponent initialized');
     this.getAllStudents();
+    this.matchModeOptions = [ 
+      { label: "Starts With", value: FilterMatchMode.STARTS_WITH }, 
+      { label: "Contains", value: FilterMatchMode.CONTAINS } 
+  ]; 
   }
   getAllStudents() {
     console.log('Getting all students');
