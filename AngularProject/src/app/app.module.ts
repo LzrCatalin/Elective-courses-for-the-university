@@ -21,7 +21,7 @@ import { GetApplicationsComponent } from './components/get-applications/get-appl
 import { PostCourseComponent } from './components/post-course/post-course.component';
 import { GetStudentsComponent } from './components/get-students/get-students.component';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { GalleriaModule } from 'primeng/galleria';
 
 @NgModule({
   declarations: [
@@ -34,8 +34,6 @@ import { DropdownModule } from 'primeng/dropdown';
     GetApplicationsComponent,
     PostCourseComponent,
     GetStudentsComponent,
-    
-
   ],
   imports: [
     BrowserModule,
@@ -51,7 +49,8 @@ import { DropdownModule } from 'primeng/dropdown';
     DragDropModule,
     HttpClientModule,
     ReactiveFormsModule,
-    DropdownModule
+    DropdownModule,
+    GalleriaModule,
   ],
   providers: [
     provideClientHydration(),

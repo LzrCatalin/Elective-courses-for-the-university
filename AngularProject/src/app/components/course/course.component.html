@@ -10,23 +10,25 @@
 <body>
 
     <!-- Toolbar from PrimeNg -->
-    <p-toolbar styleClass="bg-gray-900 shadow-2" [style]="{ 'border-radius': '3rem', 'background-image': 'linear-gradient(to right, var(--bluegray-500), var(--bluegray-800))' }">
+    <p-toolbar styleClass="bg-gray-900 shadow-2" [style]="{ 'border-radius': '3rem', 'background-image': 'linear-gradient(to right, #808080,#000000)' }">
         <ng-template pTemplate="start">
-            <img src="https://i.pinimg.com/736x/3e/d3/09/3ed3096fc5dc13cdc56e7b5afc5d52b2.jpg" width="75" height="75"/>
+            <a routerLink="/" class="font-bold buttonLogo">ElectiveCourses</a>
         </ng-template>
         <ng-template pTemplate="center">
             <div class="flex flex-wrap align-items-center gap-3">
                 <a routerLink="/" class="p-button font-bold">Home</a>
                 <a routerLink="/course" class="p-button font-bold">Courses</a>
-                <a routerLink="/" class="p-button font-bold">About</a>
+                <a routerLink="/student/applications" class="p-button font-bold">Enrollments</a>
             </div>
         </ng-template>
         <ng-template pTemplate="end">
             <div class="flex align-items-center gap-2">
-                <span class="font-bold text-bluegray-50">ElectiveCourses</span>
+                <a routerLink="/" class="font-bold buttonProfile">
+                    <img src="data:image/png;base64,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" alt="Profile Image">
+                </a>
             </div>
         </ng-template>
-        
+
     </p-toolbar>
     <!-- Toolbar from PrimeNg -->
 
@@ -35,117 +37,53 @@
         <h1 class="title">LET'S HAVE A LOOK AT THE AVAILABLE COURSES</h1>
     </div>
 
-<!--TableFilterRow)-->
-<p-table
-[value]="courses"
-styleClass="p-datatable-gridlines"
-[tableStyle]="{ 'min-width': '75rem' }"
-[paginator]="true"
-[rows]="10"
-[showCurrentPageReport]="true"
-[rowsPerPageOptions]="[10, 25, 50]"
-currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-[globalFilterFields]="['name', 'category', 'studyYear', 'teacher', 'maxCapacity', 'facultySection']"
->
-<ng-template pTemplate="caption">
-  <div class="flex">
-    <span class="p-input-icon-left ml-auto">
-      <i class="pi pi-search"></i>
-      <!--<input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" /> -->
-    </span>
-  </div>
-</ng-template>
-<ng-template pTemplate="header">
-  <tr>
-    <th style="width:16.6%; text-align: center;">Name</th>
-    <th style="width:16.6%; text-align: center;">Category</th>
-    <th style="width:16.6%; text-align: center;">Study year</th>
-    <th style="width:16.6%; text-align: center;">Teacher</th>
-    <th style="width:16.6%; text-align: center;">Max capacity</th>
-    <th style="width:16.6%; text-align: center;">Faculty section</th>
-  </tr>
-</ng-template>
-<ng-template pTemplate="body" let-course>
-  <tr>
-    <td>{{ course.name }}</td>
-    <td>{{ course.category }}</td>
-    <td>{{ course.studyYear }}</td>
-    <td>{{ course.teacher }}</td>
-    <td>{{ course.maxCapacity }}</td>
-    <td>{{ course.facultySection }}</td>
-  </tr>
-</ng-template>
-<ng-template pTemplate="emptymessage">
-  <tr>
-    <td colspan="6">No courses found.</td>
-  </tr>
-</ng-template>
-</p-table>
-<!--TableFilterRow-->
-
-<h1></h1>
-<a href="http://localhost:4200/student/applications"  class="p-button font-bold">Applications</a>
-
-<div class="">
-    <h1 class="title">Do you want to apply? Choose a discipline: </h1>
-</div>
-
-<!--CascadeSelect-->
-<span class="p-float-label">
-    <p-cascadeSelect
-        inputId="cs-discipline"
-        
-        [options]=""
-        optionLabel="cname"
-        optionGroupLabel="name"
-        [optionGroupChildren]="['states', 'cities']"
-        [style]="{ minWidth: '14rem' }"
-        placeholder="Select a Discipline"
-    ></p-cascadeSelect>
-    <label for="cs-discipline">Discipline</label>
-</span>
-<!--CascadeSelect-->
-
-<div class="subtitle-enrol">
-    <h1></h1>
-    <h1 class="subtitle">You can see your enrollments in your selected order here: </h1>
-    <h1 class="subtitle">You can modify the order or delete the enrollment if you want. </h1>
-    <h1 class="subtitle">Be aware that you can do that only if the application period is open!</h1>
-</div>
-
-<!--TableReorder-->
-<p-table 
-    [value]="courses" 
-    [reorderableColumns]="true" 
-    [tableStyle]="{'max-width': '30rem'}">
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th style="width:3rem"></th>
-                <th *ngFor="let col of columns" pReorderableColumn>
-                    {{col.header}}
-                </th>
-                <th>Delete</th> <!-- Add a new column for delete button -->
-            </tr>
-        </ng-template>
-        <ng-template 
-            pTemplate="body" 
-            let-rowData 
-            let-columns="columns" 
-            let-index="index"> <!-- Use let-index="index" to get the row index -->
-                <tr>
-                    <td>
-                        <span class="pi pi-bars" pReorderableRowHandle></span>
-                    </td>
-                    <td *ngFor="let col of columns">
-                        {{rowData[col.field]}}
-                    </td>
-                    <td>
-                        <button>X</button>
-                    </td>
-                </tr>
-        </ng-template>
-</p-table>
-<!--TableReorder-->
+    <!--TableFilterRow)-->
+    <p-table
+    [value]="courses"
+    styleClass="p-datatable-gridlines"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['name', 'category', 'studyYear', 'teacher', 'maxCapacity', 'facultySection']"
+    >
+    <ng-template pTemplate="caption">
+    <div class="flex">
+        <span class="p-input-icon-left ml-auto">
+        <i class="pi pi-search"></i>
+        <!--<input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" /> -->
+        </span>
+    </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+    <tr>
+        <th style="width:16.6%; text-align: center;">Name</th>
+        <th style="width:16.6%; text-align: center;">Category</th>
+        <th style="width:16.6%; text-align: center;">Study year</th>
+        <th style="width:16.6%; text-align: center;">Teacher</th>
+        <th style="width:16.6%; text-align: center;">Max capacity</th>
+        <th style="width:16.6%; text-align: center;">Faculty section</th>
+    </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-course>
+    <tr>
+        <td>{{ course.name }}</td>
+        <td>{{ course.category }}</td>
+        <td>{{ course.studyYear }}</td>
+        <td>{{ course.teacher }}</td>
+        <td>{{ course.maxCapacity }}</td>
+        <td>{{ course.facultySection }}</td>
+    </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+    <tr>
+        <td colspan="6">No courses found.</td>
+    </tr>
+    </ng-template>
+    </p-table>
+    <!--TableFilterRow-->
 
 </body>
 </html>

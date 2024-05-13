@@ -9,4 +9,5 @@ export class HomeComponent {
 	handleButtonClick(): void {
 		console.log('Button clicked!');
 	  }
+  
 }
