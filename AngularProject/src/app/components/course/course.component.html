@@ -1,5 +1,5 @@
 <app-toolbar></app-toolbar>
-
+<h2 class ="title">Let's have a look at the available courses</h2>
 <div class="container">
     <p-table 
         #dt [columns]="cols" [value]="courses" responsiveLayout="scroll"
@@ -37,4 +37,7 @@
         </ng-template> 
     </p-table>
 </div>
-<button class="btn-display-app" routerLink="/student/1/applications" (click)="handleButtonClick()">View Applications</button>
+<div class="btn-container">
+    <button class="btn-display-app" routerLink="/student/1/applications" (click)="handleButtonClick()">View Applications</button>
+</div>
+
