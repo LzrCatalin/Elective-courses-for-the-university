@@ -1,6 +1,7 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+<app-toolbar></app-toolbar>
 <div class="container">
     <div class="profile-container">
         <h2 class="title">Student Profile</h2>
@@ -9,21 +10,32 @@
                 <img src="https://e7.pngegg.com/pngimages/49/613/png-clipart-computer-icons-avatar-user-profile-avatar-heroes-dark.png" alt="Student Photo">
             </div>
             <div class="profile-details">
-                <label>Student ID:</label>
-                <p>{{ 'I' + student.id }}</p>
-                <label>Name:</label>
-                <p>{{ student.name }}</p>
-                <label>Email:</label>
-                <p>{{ student.email }}</p>
-                <label>Faculty Section:</label>
-                <p>{{ student.facultySection }}</p>
-                <label>Grade:</label>
-                <p>{{ student.grade }}</p>
+                <div class="profile-details-row">
+                    <label>Student ID:</label>
+                    <p class="data">{{ 'I' + student.id }}</p>
+                </div>
+                <div class="profile-details-row">
+                    <label>Name:</label>
+                    <p class="data">{{ student.name }}</p>
+                </div>
+                <div class="profile-details-row">
+                    <label>Email:</label>
+                    <p class="data">{{ student.email }}</p>
+                </div>
+                <div class="profile-details-row">
+                    <label>Faculty Section:</label>
+                    <p class="data">{{ student.facultySection }}</p>
+                </div>
+                <div class="profile-details-row">
+                    <label>Grade:</label>
+                    <p class="data">{{ student.grade }}</p>
+                </div>
             </div>
         </div>
-    <div class="button-container">
-        <a routerLink="/student/1/applications"  class="p-button font-bold">View Application</a>
-        <a routerLink="/student/1/myprofile"  class="p-button font-bold">PDF Extractor</a>
-    </div>
+        <div class="button-container">
+            <a routerLink="/student/1/applications" class="p-button font-bold">View Application</a>
+            <a routerLink="/student/1/myprofile" class="p-button font-bold">PDF Extractor</a>
+        </div>
     </div>
 </div>
+

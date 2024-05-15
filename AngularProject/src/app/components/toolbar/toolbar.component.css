@@ -31,3 +31,8 @@
     width: 100%;
     height: auto;
 }
+
+.btn-container {
+    align-items: center;
+    margin-left: 135px;
+}

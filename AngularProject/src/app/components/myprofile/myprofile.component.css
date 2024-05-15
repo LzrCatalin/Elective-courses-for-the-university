@@ -49,6 +49,20 @@
     font-family: Montserrat;
 }
 
+.profile-details-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.profile-details-row label {
+    width: 200px; /* Adjust as needed */
+}
+
+.data {
+    margin: 0;
+}
+
 .p-button{
     width: 173px;
     text-decoration: none;

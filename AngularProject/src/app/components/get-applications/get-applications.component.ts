@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApplicationsService } from '../../services/applications.service';
 import { ActivatedRoute } from '@angular/router';
+import { SortEvent } from 'primeng/api';
 
 @Component({
 	selector: 'app-get-applications',
@@ -9,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class GetApplicationsComponent {
 	applications: any[] = [];
+	cols: any[] = []; 
 	studentId?: number;
 	showForm: boolean = false;
 	showEditForm: boolean = false;
@@ -30,6 +32,12 @@ export class GetApplicationsComponent {
 				this.getApplications();
 			}
 		});
+
+		this.cols = [ 
+            { field: 'firstname', header: 'First Name' }, 
+            { field: 'lastname', header: 'Last Name' }, 
+            { field: 'age', header: 'Age' }, 
+        ]; 
 	}
 
 	toggleFormVisibility() {
@@ -157,4 +165,29 @@ export class GetApplicationsComponent {
 			);
 		}
 	}
+
+	onSort(event: any) {
+		const field = event.field; // Field to sort by
+		const order = event.order; // Sort order: 1 for ascending, -1 for descending
+	
+		if (field && order) {
+			this.applications.sort((a: any, b: any) => {
+				const valueA = a[field];
+				const valueB = b[field];
+	
+				if (valueA === valueB) {
+					return 0;
+				}
+	
+				if (typeof valueA === 'string' && typeof valueB === 'string') {
+					// Sort string values
+					return order * valueA.localeCompare(valueB);
+				} else {
+					// Sort numeric values
+					return order * (valueA < valueB ? -1 : 1);
+				}
+			});
+		}
+	}
+	
 }
