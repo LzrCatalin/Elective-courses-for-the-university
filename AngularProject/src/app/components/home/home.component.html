@@ -1,40 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./home.component.css">
-    <title>Home</title>
-</head>
-<body>
+<app-toolbar></app-toolbar>
 
-    <!-- Toolbar from PrimeNg -->
-    <p-toolbar styleClass="bg-gray-900 shadow-2" [style]="{ 'border-radius': '3rem', 'background-image': 'linear-gradient(to right, var(--bluegray-500), var(--bluegray-800))' }">
-        <ng-template pTemplate="start">
-            <img src="https://i.pinimg.com/736x/3e/d3/09/3ed3096fc5dc13cdc56e7b5afc5d52b2.jpg" width="75" height="75"/>
-        </ng-template>
-        <ng-template pTemplate="center">
-            <div class="flex flex-wrap align-items-center gap-3">
-                <a href="http://localhost:4200"  class="p-button font-bold">Home</a>
-                <a href="http://localhost:4200/course"  class="p-button font-bold">Courses</a>
-                <a href="http://localhost:4200"  class="p-button font-bold">About</a>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="end">
-            <div class="flex align-items-center gap-2">
-                <span class="font-bold text-bluegray-50">ElectiveCourses</span>
-            </div>
-        </ng-template>
-        
-    </p-toolbar>
-    <!-- Toolbar from PrimeNg -->
-
-    <!-- Main Content -->
-    <div class="">
-        <h1 class="title">STUDY AND DEVELOP</h1>
-        <p class="subtitle">A web application designed for university students to explore and apply for available elective courses</p>
-        <a href="http://localhost:4200/admin"  class="p-button font-bold">Admin</a>
-    </div>
-
-</body>
-</html>
+<!-- Main Content -->
+<div class="">
+    <h1 class="title">STUDY AND DEVELOP</h1>
+    <p class="subtitle">A web application designed for university students to explore and apply for available elective courses</p>
+</div>

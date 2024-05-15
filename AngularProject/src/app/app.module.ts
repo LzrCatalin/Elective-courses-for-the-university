@@ -26,6 +26,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { IconFieldModule } from 'primeng/iconfield';
 import { TagModule} from 'primeng/tag';
 import { MyprofileComponent } from './components/myprofile/myprofile.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { MyprofileComponent } from './components/myprofile/myprofile.component';
     PostCourseComponent,
     GetStudentsComponent,
     MyprofileComponent,
+    ToolbarComponent,
 
   ],
   imports: [

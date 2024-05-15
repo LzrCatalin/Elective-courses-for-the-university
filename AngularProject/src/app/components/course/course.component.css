@@ -1,20 +1,55 @@
-body{
-    background-color: black;
+/* Container for centering */
+.container {
+    display: flex;
+    padding-top: 100px;
+    justify-content: center;
+    border: 1px solid #ee0000;
+    height: 100vh; /* Adjust as needed */
+
+    
 }
-.p-button{
-    text-decoration: none;
-    margin-right: 20px;
+
+/* Style for p-table */
+:host ::ng-deep .p-datatable {
+    font-family: Arial, sans-serif;
+    width: 100%;
 }
-.title{
-    padding-top: 20px;
-    color: white;
+
+/* Style for table headers */
+:host ::ng-deep .p-datatable thead th {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
 }
-.subtitle-enrol{
-    padding-top: 10px;
+
+/* Style for table cells */
+:host ::ng-deep .p-datatable tbody td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+/* Style for selectable rows */
+:host ::ng-deep .p-datatable tbody tr.p-highlight td {
+    background-color: #f0f0f0;
+}
+
+/* Style for paginator */
+:host ::ng-deep .p-paginator {
+    margin-top: 10px;
+}
+
+/* Style for button */
+.btn-display-app {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
     margin-top: 20px;
 }
-.subtitle{
-    color: white;
-    margin-top: 10px;
-    line-height: 0.25;
+
+.btn-display-app:hover {
+    background-color: #0056b3;
 }

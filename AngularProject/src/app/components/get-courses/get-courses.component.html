@@ -1,6 +1,7 @@
 
+<h2>Display enrolled students</h2>
 
-<!-- <p-dropdown 
+<p-dropdown 
     [options]="courseOptions" 
     [(ngModel)]="selectedCourse" 
     placeholder="Select a course" 
@@ -27,24 +28,31 @@
 >
     <ng-template pTemplate="header">
         <tr>
-            <th style="width:25%">Course Name</th>
-            <th style="width:25%">Pending IDs</th>
+            <th style="width:25%">ID</th>
+            <th style="width:25%">Name</th>
+            <th style="width:25%">Email</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-studentId>
         <tr>
-            <td>{{ selectedCourse.name }}</td> 
-            <td>{{ studentId.id }}</td>   
+            <td>{{ studentId.id }}</td> 
+            <td>{{ studentId.name }}</td>   
+            <td>{{ studentId.email }}</td>
         </tr>
     </ng-template>
-</p-table> -->
+</p-table>
 
 
 
 <p-table 
     [value]="courses" 
     styleClass="p-datatable-gridlines" 
-    [tableStyle]="{ 'min-width': '50rem' }">
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [paginator]="true"
+    [rows]="5"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rowsPerPageOptions]="[5, 10, 20]">
+    
         <ng-template pTemplate="header">
         <tr>
             <th>id</th>
