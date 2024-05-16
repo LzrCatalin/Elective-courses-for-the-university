@@ -24,7 +24,8 @@ export class CourseComponent implements OnInit {
             { field: "name", header: "Name" }, 
             { field: "category", header: "Category" }, 
             { field: "studyYear", header: "Study Year" }, 
-			{ field: "maxCapacity", header: "Capacity"}
+			{ field: "maxCapacity", header: "Capacity"},
+			{ field: "facultySection", header: "Section"}
         ]; 
   
         this.matchModeOptions = [ 
