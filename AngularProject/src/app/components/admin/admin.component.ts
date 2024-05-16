@@ -6,8 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './admin.component.css'
 })
 export class AdminComponent {
-  sidebarVisible: boolean = false;
-  dt: any[] = [];
   
-  constructor() {}
 }
