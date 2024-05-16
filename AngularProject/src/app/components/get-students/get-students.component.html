@@ -1,75 +1,81 @@
-<p-table
-    [value]="students"
-    [paginator]="true"
-    [rows]="5"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    [rowsPerPageOptions]="[5, 10, 20]"
->
-    <ng-template pTemplate="header">
-        <tr>
-            <th>
-                ID
-                <p-columnFilter
-                    
-                    type="text"
-                    field="id"
-                    placeholder="Search by id"
-                    ariaLabel="Filter Id"
-                    [matchModeOptions]="matchModeOptions"
-                ></p-columnFilter>
-            </th>
-            <th>
-                Name
-                <p-columnFilter
-                    type="text"
-                    field="name"
-                    placeholder="Search by name"
-                    ariaLabel="Filter Name"
-                    [matchModeOptions]="matchModeOptions"
-                ></p-columnFilter>
-            </th>
-            <th>
-                Faculty Section
-                <p-columnFilter
-                    type="text"
-                    field="facultySection"
-                    placeholder="Search by faculty section"
-                    ariaLabel="Filter Faculty Section"
-                    [matchModeOptions]="matchModeOptions"
+<app-sidebar></app-sidebar>
 
-                ></p-columnFilter>
-            </th>
-            <th>
-                Study Year
-                <p-columnFilter
-                    type="text"
-                    field="studyYear"
-                    placeholder="Search by study year"
-                    ariaLabel="Filter Study Year"
-                    [matchModeOptions]="matchModeOptions"
+<h2 class="title">The student are displayed here</h2>
 
-                ></p-columnFilter>
-            </th>
-            <th>
-                Grade
-                <p-columnFilter
-                    type="text"
-                    field="grade"
-                    placeholder="Search by grade"
-                    ariaLabel="Filter Grade"
-                    [matchModeOptions]="matchModeOptions"
+<div class="main-container">
+    <p-table
+        [value]="students"
+        [paginator]="true"
+        [rows]="5"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [rowsPerPageOptions]="[5, 10, 20]"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th>
+                    ID
+                    <p-columnFilter
+                        
+                        type="text"
+                        field="id"
+                        placeholder="Search by id"
+                        ariaLabel="Filter Id"
+                        [matchModeOptions]="matchModeOptions"
+                    ></p-columnFilter>
+                </th>
+                <th>
+                    Name
+                    <p-columnFilter
+                        type="text"
+                        field="name"
+                        placeholder="Search by name"
+                        ariaLabel="Filter Name"
+                        [matchModeOptions]="matchModeOptions"
+                    ></p-columnFilter>
+                </th>
+                <th>
+                    Faculty Section
+                    <p-columnFilter
+                        type="text"
+                        field="facultySection"
+                        placeholder="Search by faculty section"
+                        ariaLabel="Filter Faculty Section"
+                        [matchModeOptions]="matchModeOptions"
 
-                ></p-columnFilter>
-            </th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-student>
-        <tr>
-            <td>{{ student.id }}</td>
-            <td>{{ student.name }}</td>
-            <td>{{ student.facultySection }}</td>
-            <td>{{ student.studyYear }}</td>
-            <td>{{ student.grade }}</td>
-        </tr>
-    </ng-template>
-</p-table>
+                    ></p-columnFilter>
+                </th>
+                <th>
+                    Study Year
+                    <p-columnFilter
+                        type="text"
+                        field="studyYear"
+                        placeholder="Search by study year"
+                        ariaLabel="Filter Study Year"
+                        [matchModeOptions]="matchModeOptions"
+
+                    ></p-columnFilter>
+                </th>
+                <th>
+                    Grade
+                    <p-columnFilter
+                        type="text"
+                        field="grade"
+                        placeholder="Search by grade"
+                        ariaLabel="Filter Grade"
+                        [matchModeOptions]="matchModeOptions"
+
+                    ></p-columnFilter>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-student>
+            <tr>
+                <td>{{ student.id }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.facultySection }}</td>
+                <td>{{ student.studyYear }}</td>
+                <td>{{ student.grade }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

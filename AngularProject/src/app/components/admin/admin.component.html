@@ -1,83 +1,21 @@
+<app-sidebar></app-sidebar>
 
-<p-sidebar #sidebarRef [(visible)]="sidebarVisible">
-    <ng-template pTemplate="headless">
-        <div class="flex flex-column h-full">
-            <div class="flex align-items-center justify-content-between px-4 pt-3 flex-shrink-0">
-                <span class="inline-flex align-items-center gap-2">
-                    <svg width="33" height="35" viewBox="0 0 33 35" fill="none" xmlns="http://www.w3.org/2000/svg" class="block mx-auto">
-                        <!-- Your logo SVG -->
-                    </svg>
-                    <span class="font-semibold text-2xl text-primary">Your Logo</span>
-                </span>
-            </div>
-            <div class="overflow-y-auto">
-                <ul class="list-none p-3 m-0">
-                    <li>
-                        <div
-                            pRipple
-                            pStyleClass="@next"
-                            enterClass="hidden"
-                            enterActiveClass="slidedown"
-                            leaveToClass="hidden"
-                            leaveActiveClass="slideup"
-                            class="p-3 flex align-items-center justify-content-between text-600 cursor-pointer p-ripple"
-                        >
-                            <span class="font-medium">Courses</span>
-                            <i class="pi pi-chevron-down"></i>
-                        </div>
-                        <ul class="list-none p-0 m-0 overflow-hidden">
-                            <li>
-                                <a routerLink="/admin/courses/post" pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                    <i class="pi pi-plus-circle mr-2"></i>
-                                    <span class="font-medium">Add Course</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a routerLink="/admin/courses" pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                    <i class="pi pi-list mr-2"></i>
-                                    <span class="font-medium">View Courses</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <div
-                            pRipple
-                            pStyleClass="@next"
-                            enterClass="hidden"
-                            enterActiveClass="slidedown"
-                            leaveToClass="hidden"
-                            leaveActiveClass="slideup"
-                            class="p-3 flex align-items-center justify-content-between text-600 cursor-pointer p-ripple"
-                        >
-                            <span class="font-medium">Students</span>
-                            <i class="pi pi-chevron-down"></i>
-                        </div>
-                        <ul class="list-none p-0 m-0 overflow-hidden">
-                            <li>
-                                <a routerLink="/admin/students/post" pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                    <i class="pi pi-plus-circle mr-2"></i>
-                                    <span class="font-medium">Add Student</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a routerLink="/admin/students" pRipple class="flex align-items-center cursor-pointer p-3 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                                    <i class="pi pi-list mr-2"></i>
-                                    <span class="font-medium">View Students</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="mt-auto">
-            <hr class="mb-3 mx-3 border-top-1 border-none surface-border" />
-            <a pRipple class="m-3 flex align-items-center cursor-pointer p-3 gap-2 border-round text-700 hover:surface-100 transition-duration-150 transition-colors p-ripple">
-                <p-avatar image="https://i.pinimg.com/564x/cb/e7/02/cbe7022aefd9b4825077d9aa99d4808d.jpg" shape="circle" />
-                <span class="font-bold">PawPatrol</span>
-            </a>
-        </div>
-    </ng-template>
-</p-sidebar>
-<p-button (click)="sidebarVisible = true" icon="pi pi-arrow-right"></p-button>
+<h2 class="title">Dashboard</h2>
+
+<div class="counter-container">
+    <div class="small-container">Container 1</div>
+    <div class="small-container">Container 2</div>
+    <div class="small-container">Container 3</div>
+    <div class="small-container">Container 4</div>
+</div>
+
+<h2 class="subtitle">Changes</h2>
+
+<div class="main-container">
+    <div class="first-container">
+        Container 1
+    </div>
+    <div class="second-container">
+        Container 2
+    </div>
+</div>
