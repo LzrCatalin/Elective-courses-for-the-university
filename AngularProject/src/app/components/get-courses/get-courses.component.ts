@@ -109,4 +109,9 @@ export class GetCoursesComponent implements OnInit {
       });
     }
   }
+
+  clearDropdown() {
+    this.selectedCourse = null; 
+}
+
 }
