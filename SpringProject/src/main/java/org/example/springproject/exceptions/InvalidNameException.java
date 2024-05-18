@@ -13,6 +13,10 @@ public class InvalidNameException extends RuntimeException{
 		this.httpStatus = httpStatus;
 	}
 
+	public InvalidNameException(String s) {
+		super(s);
+	}
+
 	public HttpStatusCode getHttpStatus() {
 		return httpStatus;
 	}
