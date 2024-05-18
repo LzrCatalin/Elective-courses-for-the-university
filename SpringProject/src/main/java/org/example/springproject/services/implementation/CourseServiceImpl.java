@@ -1,16 +1,15 @@
 package org.example.springproject.services.implementation;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.example.springproject.entity.Course;
 import org.example.springproject.enums.FacultySection;
 import org.example.springproject.exceptions.InvalidCapacityException;
 import org.example.springproject.exceptions.InvalidNameException;
 import org.example.springproject.exceptions.InvalidStudyYearException;
-import org.example.springproject.exceptions.NoSuchObjectExistsException;
 import org.example.springproject.repository.CourseRepository;
 import org.example.springproject.services.CourseService;
+import org.example.springproject.utilities.NameValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,32 +31,29 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course addCourse(String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection){
-        // Verify inserted name
-        for (char c : name.toCharArray()) {
-            if (Character.isDigit(c)) {
-                throw new InvalidNameException("Verify inserted course name. Can not use numbers.", HttpStatus.BAD_REQUEST);
-            }
+        // Verify name
+        if(!NameValidator.validateString(name)) {
+            throw new InvalidNameException("Error: Name string contains only digits.");
         }
 
-        // Verify teacher name
-        for (char c : teacher.toCharArray()) {
-            if (Character.isDigit(c)) {
-                throw new InvalidNameException("Verify inserted teacher name. Can not use numbers.", HttpStatus.BAD_REQUEST);
-            }
+        // Verify category
+        if(!NameValidator.validateString(category)) {
+            throw new InvalidNameException("Error: Category string contains only digits.");
+        }
+
+        // Verify teacher
+        if(!NameValidator.validateString(teacher)) {
+            throw new InvalidNameException("Error: Teacher string contains only digits.");
         }
 
         // Verify course's capacity info
         if (maxCapacity <= 0 || maxCapacity > 50) {
-            throw new InvalidCapacityException("The provided capacity value is unrealistic. Capacity must be a realistic number, typically not greater than 50.",
-                    HttpStatus.BAD_REQUEST
-            );
+            throw new InvalidCapacityException("The provided capacity value is unrealistic. Capacity must be a realistic number, typically not greater than 50.");
         }
 
         // Verify study year
         if (studyYear <= 0 || studyYear > 4) {
-            throw new InvalidStudyYearException("The provided study year is invalid. Study year must be a positive integer between 1 and 4 (inclusive).",
-                    HttpStatus.BAD_REQUEST
-            );
+            throw new InvalidStudyYearException("The provided study year is invalid. Study year must be a positive integer between 1 and 4 (inclusive).");
         }
 
         Course newCourse = new Course(name,category,studyYear,teacher,maxCapacity,facultySection);
@@ -66,36 +62,32 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteCourse(Long id){
+    public Course updateCourse(Long id,String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection, Integer applicationsCount){
+        Course courseToBeUpdated = repository.findById(id).orElseThrow(EntityNotFoundException::new);
 
-        Course courseToBeDeleted = repository.findById(id).orElse(null);
-
-        if(courseToBeDeleted == null){
-            throw new NoSuchObjectExistsException("Course with id: " + id + " not found.", HttpStatus.NOT_FOUND);
+        // verify course name
+        if(!NameValidator.validateString(name)) {
+            throw new InvalidNameException("Error: Name string contains only digits.");
         }
 
-        repository.deleteById(id);
-    }
-
-    @Override
-    public Course updateCourse(Long id,String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection, Integer applicationsCount){
-        // verify course name
-        for (char c : name.toCharArray()) {
-            if (Character.isDigit(c)) {
-                throw new InvalidNameException("Verify inserted teacher name. Can not use numbers.", HttpStatus.BAD_REQUEST);
-            }
+        // Verify category
+        if(!NameValidator.validateString(category)) {
+            throw new InvalidNameException("Error: Category string contains only digits.");
         }
 
         // Verify teacher name
-        for (char c : teacher.toCharArray()) {
-            if (Character.isDigit(c)) {
-                throw new InvalidNameException("Verify inserted teacher name. Can not use numbers.", HttpStatus.BAD_REQUEST);
-            }
+        if(!NameValidator.validateString(teacher)) {
+            throw new InvalidNameException("Error: Teacher string contains only digits.");
         }
 
-        Course courseToBeUpdated = repository.findById(id).orElse(null);
-        if(courseToBeUpdated == null){
-            throw new NoSuchObjectExistsException("Course with id: " + id + " not found.", HttpStatus.NOT_FOUND);
+        // Verify study year
+        if (studyYear <= 0 || studyYear > 4) {
+            throw new InvalidStudyYearException("The provided study year is invalid. Study year must be a positive integer between 1 and 4 (inclusive).");
+        }
+
+        // Verify course's capacity info
+        if (maxCapacity <= 0 || maxCapacity > 50) {
+            throw new InvalidCapacityException("The provided capacity value is unrealistic. Capacity must be a realistic number, typically not greater than 50.");
         }
 
         courseToBeUpdated.setName(name);
@@ -107,5 +99,11 @@ public class CourseServiceImpl implements CourseService {
         courseToBeUpdated.setApplicationsCount(applicationsCount);
 
         return repository.save(courseToBeUpdated);
+    }
+
+    @Override
+    public void deleteCourse(Long id){
+        repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        repository.deleteById(id);
     }
 }

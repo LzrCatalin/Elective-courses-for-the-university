@@ -12,6 +12,10 @@ public class MismatchedIdTypeException extends RuntimeException{
 		this.httpStatus = httpStatus;
 	}
 
+	public MismatchedIdTypeException(String s) {
+		super(s);
+	}
+
 	public HttpStatus getHttpStatus() {
 		return httpStatus;
 	}

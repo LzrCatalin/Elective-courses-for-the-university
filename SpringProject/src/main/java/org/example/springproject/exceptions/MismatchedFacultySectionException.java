@@ -12,6 +12,10 @@ public class MismatchedFacultySectionException extends RuntimeException{
 		this.httpStatus = httpStatus;
 	}
 
+	public MismatchedFacultySectionException(String s) {
+		super(s);
+	}
+
 	public HttpStatus getHttpStatus() {
 		return httpStatus;
 	}

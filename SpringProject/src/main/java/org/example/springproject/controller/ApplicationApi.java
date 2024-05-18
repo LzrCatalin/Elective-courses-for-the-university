@@ -1,11 +1,14 @@
 package org.example.springproject.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.example.springproject.entity.Application;
 import org.example.springproject.entity.Student;
 import org.example.springproject.enums.Status;
 import org.example.springproject.exceptions.*;
 import org.example.springproject.services.ApplicationService;
 import org.example.springproject.services.EmailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,7 @@ import java.util.Map;
 @RequestMapping("/applications")
 @CrossOrigin
 public class ApplicationApi {
+	private static final Logger logger = LoggerFactory.getLogger(CourseApi.class);
 	/*
 	Added gson import helping on sending JSON data to Angular part
 	 */
@@ -52,19 +56,10 @@ public class ApplicationApi {
 			emailService.sendNewApplicationMail(studentId, courseName, priority);
 			return new ResponseEntity<>("Application added successfully.", HttpStatus.CREATED);
 
-		} catch (NoSuchObjectExistsException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 
-		} catch (MismatchedFacultySectionException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-
-		} catch (MismatchedIdTypeException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-
-		} catch (DuplicatePriorityException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-
-		} catch (InvalidStudyYearException e) {
+		} catch (MismatchedFacultySectionException | MismatchedIdTypeException | InvalidStudyYearException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -75,8 +70,8 @@ public class ApplicationApi {
 			applicationService.updateApplication(id, priority, status);
 			return new ResponseEntity<>("Application with id:" + id + " successfully updated.", HttpStatus.OK);
 
-		} catch (NoSuchObjectExistsException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<>("Application id: " + id + " not found.", HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -87,8 +82,9 @@ public class ApplicationApi {
 			applicationService.deleteApplication(id);
 			return new ResponseEntity<>(gson.toJson("Application with id:" + id + " successfully deleted."), HttpStatus.OK);
 
-		} catch (NoSuchObjectExistsException e) {
-			return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+		} catch (EntityNotFoundException e) {
+			logger.info("Inside exception...");
+			return new ResponseEntity<>("Application id: " + id + " not found.", HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -101,8 +97,8 @@ public class ApplicationApi {
 			emailService.sendUpdateApplicationMail(id, priority);
 			return new ResponseEntity<>(gson.toJson("Application updated successfully."), HttpStatus.OK);
 
-		} catch (NoSuchObjectExistsException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<>("Application id: " + id + " not found.", HttpStatus.NOT_FOUND);
 		}
 	}
 }

@@ -78,7 +78,6 @@ export class GetCoursesComponent implements OnInit {
     console.log("Update course...")
     if(this.editedCourse) {
       console.log("Inside if ...")
-      console.log(this.editedCourse.studyYear)
       const { id, name, category, studyYear, teacher, maxCapacity, facultySection, applicationsCount } = this.editedCourse;
       this.courseService.updateCourse(id, name, category, studyYear, teacher, maxCapacity, facultySection, applicationsCount)
       .subscribe(
@@ -88,7 +87,7 @@ export class GetCoursesComponent implements OnInit {
           location.reload();
         },
         (error) => {
-          console.log("Pula , eroare...")
+          console.log("Error ! ! !")
         }
       )
     }

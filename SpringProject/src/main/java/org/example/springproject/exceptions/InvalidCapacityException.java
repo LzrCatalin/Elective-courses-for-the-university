@@ -12,6 +12,10 @@ public class InvalidCapacityException extends RuntimeException{
 		this.httpStatus = httpStatus;
 	}
 
+	public InvalidCapacityException(String s) {
+		super(s);
+	}
+
 	public HttpStatus getHttpStatus() {
 		return httpStatus;
 	}

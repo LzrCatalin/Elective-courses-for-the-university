@@ -13,6 +13,10 @@ public class InvalidGradeException extends RuntimeException{
 		this.httpStatus = httpStatus;
 	}
 
+	public InvalidGradeException(String s) {
+		super(s);
+	}
+
 	public HttpStatusCode getHttpStatus() {
 		return httpStatus;
 	}

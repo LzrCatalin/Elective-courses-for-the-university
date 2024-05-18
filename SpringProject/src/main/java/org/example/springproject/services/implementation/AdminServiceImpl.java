@@ -1,21 +1,23 @@
 package org.example.springproject.services.implementation;
 
+import jakarta.persistence.EntityNotFoundException;
+import org.example.springproject.controller.CourseApi;
 import org.example.springproject.entity.Admin;
 import org.example.springproject.exceptions.InvalidNameException;
-import org.example.springproject.exceptions.NoSuchObjectExistsException;
 import org.example.springproject.repository.AdminRepository;
 import org.example.springproject.services.AdminService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.example.springproject.utilities.NameValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
 public class AdminServiceImpl implements AdminService {
+	private static final Logger logger = LoggerFactory.getLogger(CourseApi.class);
 
 	@Autowired
 	public AdminRepository repository;
@@ -27,17 +29,13 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Admin addAdmin(String name) {
-
 		// Verify inserted name
-		for (char c : name.toCharArray()) {
-			if (Character.isDigit(c)) {
-				throw new InvalidNameException("Verify inserted name. Can not use integers in it.", HttpStatus.BAD_REQUEST);
-			}
+		if(!NameValidator.validateString(name)) {
+			throw new InvalidNameException("Error: The string contains only digits.");
 		}
 
 		// Create admin object
 		Admin newAdmin = new Admin();
-
 		// Add new object values
 		newAdmin.setName(name);
 		/*
@@ -47,25 +45,16 @@ public class AdminServiceImpl implements AdminService {
 
 		// Save the object
 		return repository.save(newAdmin);
-
 	}
 
 	@Override
 	public Admin updateAdmin(Long id, String name) {
+		// Search the admin using id
+		Admin updateAdmin = repository.findById(id).orElseThrow(EntityNotFoundException::new);
 
 		// Verify inserted name
-		for (char c : name.toCharArray()) {
-			if (Character.isDigit(c)) {
-				throw new InvalidNameException("Verify inserted name. Can not use integers in it.", HttpStatus.BAD_REQUEST);
-			}
-		}
-
-		// Search the admin using id
-		Admin updateAdmin = repository.findById(id).orElse(null);
-
-		 //Check if admin not exists
-		if (updateAdmin == null) {
-			throw new NoSuchObjectExistsException("Admin with id: " + id + " not found.", HttpStatus.NOT_FOUND);
+		if(!NameValidator.validateString(name)) {
+			throw new InvalidNameException("Error: The string contains only digits.");
 		}
 
 		// Set the new values of attributes
@@ -78,12 +67,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void deleteAdmin(Long id) {
 		// Search wanted admin by id
-		Admin deleteAdmin = repository.findById(id).orElse(null);
-
-		// Check if admin not exists
-		if (deleteAdmin == null) {
-			throw new NoSuchObjectExistsException("Admin with id: " + id + " not found.", HttpStatus.NOT_FOUND);
-		}
+		repository.findById(id).orElseThrow(EntityNotFoundException::new);
 
 		// Delete found id
 		repository.deleteById(id);

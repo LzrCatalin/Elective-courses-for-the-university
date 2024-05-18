@@ -1,5 +1,6 @@
 package org.example.springproject.services.implementation;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.example.springproject.entity.Application;
 import org.example.springproject.entity.Course;
 import org.example.springproject.entity.EmailDetails;
@@ -80,7 +81,7 @@ public class EmailServiceImpl implements EmailService {
 
 	@Override
 	public void sendDeleteApplicationMail(Long id) {
-		Application deleteApplication = applicationRepository.findById(id).orElse(null);
+		Application deleteApplication = applicationRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
 		// Creating a simple mail message
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -108,7 +109,7 @@ public class EmailServiceImpl implements EmailService {
 
 	@Override
 	public void sendUpdateApplicationMail(Long id, Integer priority) {
-		Application application = applicationRepository.findById(id).orElse(null);
+		Application application = applicationRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
 		// Creating a simple mail message
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -138,36 +139,31 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public void sendNewCourseMail(String courseName) {
 		logger.info("Inside course mail sender...");
-		List<Student> students = studentRepository.findAll();
-		if (students.isEmpty()) {
-			logger.info("Students not found.");
-		}
-
 		Course course = courseRepository.findByName(courseName);
+		// Get all students within course study year and faculty section
+		List<Student> recipientStudents = studentRepository.findByStudyYearAndFacultySection(course.getStudyYear(), course.getFacultySection());
 
 		// Creating a simple mail message
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 
-		for (Student student : students) {
+		// Take each student
+		for (Student student : recipientStudents) {
 			logger.info("Student: " + student.getName() + ", Email: " + student.getEmail());
-			if (student.getFacultySection().equals(course.getFacultySection()) &&
-					student.getStudyYear().equals(course.getStudyYear())) {
-				mailMessage.setFrom(sender);
-				mailMessage.setTo(student.getEmail());
+			mailMessage.setFrom(sender);
+			mailMessage.setTo(student.getEmail());
 
-				String emailText = "Hi, " + student.getName() + " !\n\n";
-				emailText += "We added new course that could interests you.\n\n";
-				emailText += "Name: " + course.getName();
-				emailText += "\nCategory: " + course.getCategory();
-				emailText += "\nTeacher: " + course.getTeacher();
-				emailText += "\nCapacity: " + course.getMaxCapacity();
-				emailText += "\nHave a good day!\n\nBest regards,\nYour University";
-				mailMessage.setText(emailText);
+			String emailText = "Hi, " + student.getName() + " !\n\n";
+			emailText += "We added new course that could interests you.\n\n";
+			emailText += "Name: " + course.getName();
+			emailText += "\nCategory: " + course.getCategory();
+			emailText += "\nTeacher: " + course.getTeacher();
+			emailText += "\nCapacity: " + course.getMaxCapacity();
+			emailText += "\nHave a good day!\n\nBest regards,\nYour University";
+			mailMessage.setText(emailText);
 
-				String emailSubject = "New Course Alert: " + courseName;
-				mailMessage.setSubject(emailSubject);
-				javaMailSender.send(mailMessage);
-			}
+			String emailSubject = "New Course Alert: " + courseName;
+			mailMessage.setSubject(emailSubject);
+			javaMailSender.send(mailMessage);
 		}
 	}
 
