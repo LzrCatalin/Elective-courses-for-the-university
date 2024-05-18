@@ -23,20 +23,19 @@ export class CourseService {
     );
   }
 
-  postCourse(course: any): Observable<any> {
-    const url = `${BASE_URL}/courses`;
-    const params = new HttpParams()
-      .set('name', course.name)
-      .set('category', course.category)
-      .set('studyYear', course.studyYear)
-      .set('teacher', course.teacher)
-      .set('maxCapacity', course.maxCapacity)
-      .set('facultySection', course.facultySection)
-      .set('applicationsCount', course.applicationsCount);
-  
-    return this.http.post(url, {}, { params }).pipe(
-      catchError(this.handleError)
-    );
+  postCourse(name: string, category: string,
+    studyYear: number, facultySection: string, teacher: string, 
+    maxCapacity: number): Observable<any> {
+    const body = {
+      name: name, 
+      category: category,
+      studyYear: studyYear,
+      facultySection: facultySection, 
+      teacher: teacher,
+      maxCapacity: maxCapacity,
+    };
+
+    return this.http.post(`${BASE_URL}/courses/`, body, { responseType: 'text' });
   }
 
   getFacultySections(): Observable<any> {
