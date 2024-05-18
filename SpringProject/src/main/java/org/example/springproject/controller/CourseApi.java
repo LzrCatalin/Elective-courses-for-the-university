@@ -1,6 +1,7 @@
 package org.example.springproject.controller;
 
 import com.google.gson.Gson;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.Email;
 import org.example.springproject.entity.Course;
 import org.example.springproject.enums.FacultySection;
@@ -39,60 +40,67 @@ public class CourseApi {
         return courseService.getAllCourses();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
     @PostMapping("/")
-    public ResponseEntity<String> addCourse(@RequestParam String name, String category, Integer studyYear,
-                                            @RequestParam String teacher,
-                                            @RequestParam Integer maxCapacity, FacultySection facultySection){
+    public ResponseEntity<String> addCourse(@RequestBody Map<String, Object> requestBody){
         try {
+            logger.info("Add course: LOGGER");
+            String name = (String) requestBody.get("name");
+            logger.info("Received name: " + name);
+            String category = (String) requestBody.get("category");
+            logger.info("Received category: " + category);
+            Integer studyYear = (Integer) requestBody.get("studyYear");
+            logger.info("Received studyYear: " + studyYear);
+            String teacher = (String) requestBody.get("teacher");
+            logger.info("Received teacher: " + teacher);
+            Integer maxCapacity = (Integer) requestBody.get("maxCapacity");
+            logger.info("Received capacity: " + maxCapacity);
+            String facultySectionString = (String) requestBody.get("facultySection");
+            FacultySection facultySection = FacultySection.valueOf(facultySectionString);
+            logger.info("Received facultySection: " + facultySection);
+
             courseService.addCourse(name, category, studyYear, teacher, maxCapacity, facultySection);
+            logger.info("Before mail sender...");
             emailService.sendNewCourseMail(name);
+            logger.info("After mail sender...");
             return new ResponseEntity<>(gson.toJson("Course added successfully!"), HttpStatus.CREATED);
 
-        } catch (InvalidNameException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-
-        } catch (InvalidCapacityException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
-
-        } catch (InvalidStudyYearException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (InvalidNameException | InvalidCapacityException | InvalidStudyYearException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-    }
+	}
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCourse(@PathVariable("id") Long id,
                                                @RequestBody Map<String, Object> requestBody){
         try {
-            logger.info("INCEPE LOGGERU");
-            logger.info("Am primit id-ul:" + id + " de tip:" + id.getClass());
+            logger.info("Update course: LOGGER");
+            logger.info("Course id: " + id + "; type:" + id.getClass());
             String name = (String) requestBody.get("name");
-            logger.info("Trece de name: " + name);
+            logger.info("Received name: " + name);
             String category = (String) requestBody.get("category");
-            logger.info("Trece de category: " + category);
+            logger.info("Received category: " + category);
             Integer studyYear = (Integer) requestBody.get("studyYear");
-            logger.info("Trece de studyYear");
-            logger.info("Study Year:" + studyYear + " type: " + studyYear.getClass());
+            logger.info("Received study year: " + studyYear);
             String teacher = (String) requestBody.get("teacher");
-            logger.info("Teacher: " + teacher + " " + teacher.getClass());
+            logger.info("Received teacher: " + teacher);
             Integer maxCapacity = (Integer) requestBody.get("maxCapacity");
-            logger.info("Capacity: " + maxCapacity + " " + maxCapacity.getClass());
+            logger.info("Received capacity: " + maxCapacity);
             String facultySectionString = (String) requestBody.get("facultySection");
             FacultySection facultySection = FacultySection.valueOf(facultySectionString);
-            logger.info("Faculty Section: " + facultySection.toString() + " " + facultySection.getClass());
+            logger.info("Received facultySection: " + facultySection);
             Integer applicationsCount = (Integer) requestBody.get("applicationsCount");
-            logger.info("Count: " + applicationsCount + " " + applicationsCount.getClass());
+            logger.info("Received count: " + applicationsCount);
 
             courseService.updateCourse(id, name, category, studyYear, teacher, maxCapacity, facultySection, applicationsCount);
             return new ResponseEntity<>("Course with id: " + id + " successfully updated!", HttpStatus.OK);
 
-        } catch (NoSuchObjectExistsException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 
-        } catch (InvalidNameException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (InvalidNameException | InvalidCapacityException | InvalidStudyYearException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-    }
+	}
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable("id") Long id) {
@@ -100,8 +108,8 @@ public class CourseApi {
             courseService.deleteCourse(id);
             return new ResponseEntity<>(gson.toJson("Application with id:" + id + " successfully deleted."), HttpStatus.OK);
 
-        } catch (NoSuchObjectExistsException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>("Course id: " + id + " not found.", HttpStatus.NOT_FOUND);
         }
     }
 }
