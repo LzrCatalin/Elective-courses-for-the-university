@@ -21,7 +21,7 @@ export class MyprofileComponent implements OnInit {
 			if (this.studentId) {
 				this.getData(this.studentId);
 			} else {
-				console.log("PULA")
+				console.log("Error finding ID. ! ! !")
 			}
 		});
 	}
@@ -41,5 +41,23 @@ export class MyprofileComponent implements OnInit {
 
 	handleButtonClick(): void {
 		console.log('Button clicked!');
+	}
+
+	exportPDF(id: number) {
+		this.studentService.exportPDF(id).subscribe(
+			(res) => {
+				console.log("Successfully received PDF response.");
+				const blob = new Blob([res], { type: 'application/pdf' });
+		
+				const link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blob);
+				link.download = 'certificate.pdf';
+		
+				link.click();
+			},
+			(error) => {
+				console.error("Error exporting PDF:", error);
+			}
+		)
 	}
 }

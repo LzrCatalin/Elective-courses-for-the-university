@@ -38,7 +38,7 @@
         </div>
         <div class="button-container">
             <a routerLink="/student/1/applications" class="p-button font-bold">View Application</a>
-            <!-- <a routerLink="/student/1/myprofile" class="p-button font-bold">PDF Extractor</a> -->
+            <a (click)="exportPDF(student.id)" class="p-button font-bold">Certificate PDF</a>
         </div>
     </div>
 </div>
