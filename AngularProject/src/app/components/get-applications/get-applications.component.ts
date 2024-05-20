@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+// src/app/get-applications/get-applications.component.ts
+import { Component, OnInit } from '@angular/core';
 import { ApplicationsService } from '../../services/applications.service';
 import { ActivatedRoute } from '@angular/router';
-import { SortEvent } from 'primeng/api';
+import { ReadOnlyService } from '../../services/read-only.service';
 
 @Component({
 	selector: 'app-get-applications',
 	templateUrl: './get-applications.component.html',
-	styleUrl: './get-applications.component.css'
+	styleUrls: ['./get-applications.component.css']
 })
-export class GetApplicationsComponent {
+export class GetApplicationsComponent implements OnInit {
 	applications: any[] = [];
-	cols: any[] = []; 
+	cols: any[] = [];
 	studentId?: number;
 	showForm: boolean = false;
 	showEditForm: boolean = false;
@@ -18,14 +19,18 @@ export class GetApplicationsComponent {
 	priority: number = 0;
 	editedPriority: number = 0;
 	selectedApplication: any;
+	readOnly: boolean = false;
 
-	constructor(private route: ActivatedRoute, private applicationsService: ApplicationsService) {
-		this.applications = [];
-	}
+	constructor(
+		private route: ActivatedRoute,
+		private applicationsService: ApplicationsService,
+		private readOnlyService: ReadOnlyService
+	) {}
 
-	ngOnInit() {
+	ngOnInit(): void {
+		// Subscribe to route parameters to get the studentId
 		this.route.params.subscribe(params => {
-			this.studentId = +params['studentId']; 
+			this.studentId = +params['studentId'];
 			if (this.studentId) {
 				this.getApplicationsForStudent(this.studentId);
 			} else {
@@ -33,161 +38,120 @@ export class GetApplicationsComponent {
 			}
 		});
 
-		this.cols = [ 
-            { field: 'firstname', header: 'First Name' }, 
-            { field: 'lastname', header: 'Last Name' }, 
-            { field: 'age', header: 'Age' }, 
-        ]; 
+		// Subscribe to the read-only state
+		this.readOnlyService.readOnly$.subscribe(isReadOnly => {
+			this.readOnly = isReadOnly;
+		});
+
+		// Set the table columns
+		this.cols = [
+			{ field: 'courseName', header: 'Course Name' },
+			{ field: 'priority', header: 'Priority' },
+			{ field: 'status', header: 'Status' }
+		];
 	}
 
-	toggleFormVisibility() {
-		this.showForm = !this.showForm; 
+	toggleFormVisibility(): void {
+		this.showForm = !this.showForm;
 
 		if (!this.showForm) {
 			this.resetForm();
 		}
 	}
 
-	toggleEditFormVisibility(application: any) {
+	toggleEditFormVisibility(application: any): void {
 		this.selectedApplication = application;
-		this.editedPriority = application.priority; 
+		this.editedPriority = application.priority;
 		this.showEditForm = !this.showEditForm;
 	}
 
-	onFormSubmit() {
+	onFormSubmit(): void {
 		this.addApplication();
 		this.showForm = false;
 		this.resetForm();
 	}
-	
-	onEditFormSubmit() {
-		this.updateApplication(this.selectedApplication)
+
+	onEditFormSubmit(): void {
+		this.updateApplication(this.selectedApplication);
 		this.selectedApplication.priority = this.editedPriority;
 		this.showEditForm = false;
 	}
 
-	cancelEdit() {
+	cancelEdit(): void {
 		this.editedPriority = this.selectedApplication.priority;
 		this.showEditForm = false;
 	}
 
-	resetForm() {
+	resetForm(): void {
 		this.courseName = '';
 		this.priority = 0;
 	}
 
-	getApplicationsForStudent(studentId: number) {
+	getApplicationsForStudent(studentId: number): void {
 		this.applicationsService.getStudentApplications(studentId).subscribe(
-			(res) => {
-				console.log("Successfully displayed applications for student:" + studentId);
-				//console.log(res);
+			res => {
 				this.applications = res;
 			},
-			(error) => {
-				console.error("Error fetching applications for student:", error);
+			error => {
+				console.error('Error fetching applications for student:', error);
 			}
-		)
+		);
 	}
 
-	getApplications() {
+	getApplications(): void {
 		this.applicationsService.getApplications().subscribe(
-			(res) => {
-				console.log("Successfully displayed applications")
-				//console.log(res);
+			res => {
 				this.applications = res;
-
 			},
-			(error) => {
-				console.error("Error fetching applications", error);
+			error => {
+				console.error('Error fetching applications:', error);
 			}
-		)
+		);
 	}
 
-	addApplication() {
+	addApplication(): void {
 		if (this.studentId !== undefined) {
-			console.log("Inside first if...")
-			console.log(this.courseName)
-			console.log(this.priority)
 			this.applicationsService.addApplication(this.studentId, this.courseName, this.priority).subscribe(
-				(res) => {
-					console.log("Successfully added new application");
+				() => {
+					console.log('Successfully added new application');
 					location.reload();
 				},
-				(error) => {
-					console.error("Error adding application:", error);
+				error => {
+					console.error('Error adding application:', error);
 				}
 			);
-
 		} else {
-			console.error("Student ID is undefined.");
+			console.error('Student ID is undefined.');
 		}
-		console.log("Final state")
 	}
 
-	updateApplication(application: any) {
-		console.log("Application id: " + application.id)
-		console.log("Course name: " + application.course.name)
-		console.log("Past priority: " + application.priority)
+	updateApplication(application: any): void {
 		if (this.studentId !== undefined) {
-			console.log("Student id: " + this.studentId)
-			console.log("New priority: " + this.editedPriority)
 			this.applicationsService.updateApplication(application.id, this.editedPriority).subscribe(
-				(res) => {
-					console.log("Successfully updated application");
-					console.log("New priority: " + this.editedPriority)
-					location.reload()
+				() => {
+					console.log('Successfully updated application');
+					location.reload();
 				},
-				(error) => {
-					console.log("Error updating application:", error);
+				error => {
+					console.error('Error updating application:', error);
 				}
 			);
 		} else {
-			console.log("Student id is undefined")
+			console.error('Student ID is undefined.');
 		}
-		console.log("Final state")
 	}
 
-	deleteApplication(applicationId: number) {
-		console.log("Inside deletion function...")
-		console.log(applicationId)
-		if (confirm("Are you sure you want to delete this application?")) {
-			console.log("Inside if statement")
+	deleteApplication(applicationId: number): void {
+		if (confirm('Are you sure you want to delete this application?')) {
 			this.applicationsService.deleteApplication(applicationId).subscribe(
 				() => {
-					console.log("Application deleted successfully.");
+					console.log('Application deleted successfully.');
 					location.reload();
 				},
-				(error) => {
-					console.error("Error deleting application:", error);
-					console.log("Error deleting the application...")
-					location.reload();
+				error => {
+					console.error('Error deleting application:', error);
 				}
 			);
 		}
 	}
-
-	onSort(event: any) {
-		const field = event.field; // Field to sort by
-		const order = event.order; // Sort order: 1 for ascending, -1 for descending
-	
-		if (field && order) {
-			this.applications.sort((a: any, b: any) => {
-				const valueA = a[field];
-				const valueB = b[field];
-	
-				if (valueA === valueB) {
-					return 0;
-				}
-	
-				if (typeof valueA === 'string' && typeof valueB === 'string') {
-					// Sort string values
-					return order * valueA.localeCompare(valueB);
-				} else {
-					// Sort numeric values
-					return order * (valueA < valueB ? -1 : 1);
-				}
-			});
-		}
-	}
-	
 }
