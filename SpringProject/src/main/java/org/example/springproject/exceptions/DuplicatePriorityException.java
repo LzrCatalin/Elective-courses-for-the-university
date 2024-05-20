@@ -12,6 +12,10 @@ public class DuplicatePriorityException extends RuntimeException{
 		this.httpStatus = httpStatus;
 	}
 
+	public DuplicatePriorityException(String s) {
+		super(s);
+	}
+
 	public HttpStatus getHttpStatus() {
 		return httpStatus;
 	}

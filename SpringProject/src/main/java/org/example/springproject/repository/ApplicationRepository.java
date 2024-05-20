@@ -12,10 +12,19 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     Application findByCourseId(Long id);
 	Application findByStudentId(Long id);
+	Application findByPriorityAndStudentId(Integer priority, Long studentId);
 	List<Application> findApplicationsByStudentId(Long id);
 	Application findByStudentIdAndCourseId(Long studentId, Long courseId);
 	@Query("select a.student" +
 			" from Application a " +
 			"where a.course.id = :courseId and a.status = 'PENDING'")
 	List<Student> findStudentsIdThatAppliedCourse(@Param("courseId") Long courseId);
+
+	@Query("select a.priority" +
+			" from Application a " +
+			" where a.student.id = :studentId")
+	List<Integer> findStudentPriorities(@Param("studentId") Long studentId);
+
+	@Query("select a.course.id from Application a where a.student.id = :studentId")
+	List<Long> findStudentAppliedCoursesId(@Param("studentId") Long studentId);
 }

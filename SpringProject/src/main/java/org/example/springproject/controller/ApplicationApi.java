@@ -59,7 +59,7 @@ public class ApplicationApi {
 		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 
-		} catch (MismatchedFacultySectionException | MismatchedIdTypeException | InvalidStudyYearException e) {
+		} catch (MismatchedFacultySectionException | MismatchedIdTypeException | InvalidStudyYearException | DuplicatePriorityException | IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
