@@ -1,10 +1,12 @@
 package org.example.springproject.services.implementation;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.example.springproject.controller.CourseApi;
 import org.example.springproject.entity.Application;
 import org.example.springproject.entity.Course;
 import org.example.springproject.entity.Student;
 import org.example.springproject.enums.Status;
+import org.example.springproject.exceptions.DuplicatePriorityException;
 import org.example.springproject.exceptions.InvalidStudyYearException;
 import org.example.springproject.exceptions.MismatchedFacultySectionException;
 import org.example.springproject.exceptions.MismatchedIdTypeException;
@@ -12,6 +14,8 @@ import org.example.springproject.repository.ApplicationRepository;
 import org.example.springproject.repository.CourseRepository;
 import org.example.springproject.repository.StudentRepository;
 import org.example.springproject.services.ApplicationService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +23,9 @@ import java.util.List;
 
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
-    @Autowired
+	private static final Logger logger = LoggerFactory.getLogger(CourseApi.class);
+
+	@Autowired
     private ApplicationRepository applicationRepository;
 	@Autowired
 	private StudentRepository studentRepository;
@@ -95,20 +101,35 @@ public class ApplicationServiceImpl implements ApplicationService {
 			throw new EntityNotFoundException("Course name: " + courseName + " not found.");
 		}
 
-		// Increase counter after an application add
-		Integer count = course.getApplicationsCount();
-		course.setApplicationsCount(count + 1);
+		// Verify for duplicate course try
+		List<Long> appliedCoursesIDs = applicationRepository.findStudentAppliedCoursesId(studentId);
+		if (appliedCoursesIDs.contains(course.getId())) {
+			throw new IllegalArgumentException("Student has already applied for this course.");
+		}
 
+		// Verify facultySection
 		if (!student.getFacultySection().equals(course.getFacultySection())) {
 			throw new MismatchedFacultySectionException("Can not assign application for different faculty section.");
 		}
 
+		// Verify studyYear
 		if (!student.getStudyYear().equals(course.getStudyYear())) {
 			throw new InvalidStudyYearException("Can not assign application for different study year.");
 		}
 
+		// Verify if wanted priority is free
+		List<Integer> studentPriorities = applicationRepository.findStudentPriorities(studentId);
+		if (studentPriorities.contains(priority)) {
+			throw new DuplicatePriorityException("Wanted priority: " + priority + " is taken.");
+		}
+
 		Application addApplication = new Application(student, course, priority);
 		addApplication.setStatus(Status.PENDING);
+
+		// Increase counter after an application add
+		Integer count = course.getApplicationsCount();
+		course.setApplicationsCount(count + 1);
+
 		return applicationRepository.save(addApplication);
 	}
 
@@ -125,9 +146,27 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Override
 	public Application updateApplicationAsStudent(Long id, Integer priority) {
+		logger.info("Wanted priority: " + priority);
 		Application application = applicationRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
-		application.setPriority(priority);
+		List<Integer> studentPriorities = applicationRepository.findStudentPriorities(application.getStudent().getId());
+		logger.info("Priorities: " + studentPriorities);
+		// Verify if wanted priority is free
+		if (studentPriorities.contains(priority)) {
+			logger.info("Inside taken path: ... ");
+			// TAKEN PATH: Switch priorities between wanted application and founded one
+			Application foundApplication = applicationRepository.findByPriorityAndStudentId(priority, application.getStudent().getId());
+			logger.info("Found application: " + foundApplication);
+			foundApplication.setPriority(application.getPriority());
+			logger.info("Found application new priority: " + application.getPriority());
+			application.setPriority(priority);
+
+		} else {
+			logger.info("Inside free path: ... ");
+			// FREE PATH: Just apply the new priority to application
+			application.setPriority(priority);
+		}
+
 		return applicationRepository.save(application);
 	}
 

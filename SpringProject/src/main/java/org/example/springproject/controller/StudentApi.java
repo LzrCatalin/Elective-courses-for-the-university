@@ -6,7 +6,6 @@ import org.example.springproject.enums.FacultySection;
 import org.example.springproject.exceptions.InvalidGradeException;
 import org.example.springproject.exceptions.InvalidNameException;
 import org.example.springproject.exceptions.InvalidStudyYearException;
-import org.example.springproject.exceptions.NoSuchObjectExistsException;
 import org.example.springproject.services.StudentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/students")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class StudentApi {
 	private static final Logger logger = LoggerFactory.getLogger(CourseApi.class);
 
