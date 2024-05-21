@@ -27,14 +27,13 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
         return (List<CourseSchedule>) repository.findAll();
     }
     @Override
-    public ResponseEntity<String> addCourseSchedule(Long courseId, String startTime, String endTime, WeekDay weekDay, WeekParity weekParity){
+    public CourseSchedule addCourseSchedule(Long courseId, String startTime, String endTime, WeekDay weekDay, WeekParity weekParity){
 
         Course course = courseRepository.findById(courseId).orElseThrow(EntityNotFoundException::new);
 
         CourseSchedule newCourseSchedule = new CourseSchedule(course,startTime,endTime,weekDay,weekParity);
 
-        repository.save(newCourseSchedule);
-        return ResponseEntity.ok("Successfully added a new course schedule!");
+        return repository.save(newCourseSchedule);
 
     }
 
