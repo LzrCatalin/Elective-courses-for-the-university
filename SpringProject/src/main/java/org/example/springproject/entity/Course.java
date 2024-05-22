@@ -64,7 +64,7 @@ public class Course {
      * Getter for the id of the course
      * @return id of the course
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
