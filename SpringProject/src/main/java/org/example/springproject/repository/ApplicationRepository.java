@@ -1,6 +1,7 @@
 package org.example.springproject.repository;
 
 import org.example.springproject.entity.Application;
+import org.example.springproject.entity.Course;
 import org.example.springproject.entity.Student;
 import org.example.springproject.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,4 +28,17 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 
 	@Query("select a.course.id from Application a where a.student.id = :studentId")
 	List<Long> findStudentAppliedCoursesId(@Param("studentId") Long studentId);
+
+	@Query("SELECT s FROM Student s " +
+			"LEFT JOIN Application app ON s.id = app.student.id AND app.status = 'ACCEPTED' " +
+			"GROUP BY s.id " +
+			"HAVING (s.studyYear = 2 AND COUNT(app.id) < 2) OR (s.studyYear = 3 AND COUNT(app.id) < 3)")
+	List<Student> findStudentsWithoutNecessaryCourses();
+
+	@Query("SELECT c FROM Course c " +
+			"WHERE c.maxCapacity > " +
+			"(SELECT COUNT(a.id) FROM Application a " +
+			"WHERE a.course = c AND a.status = 'ACCEPTED') " +
+			"ORDER BY (SELECT (c.maxCapacity - COUNT(a.id)) FROM Application a WHERE a.course = c AND a.status = 'ACCEPTED') DESC")
+	List<Course> findAvailableCourses();
 }
