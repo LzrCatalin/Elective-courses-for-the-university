@@ -1,9 +1,11 @@
 package org.example.springproject.controller;
 
 import com.google.gson.Gson;
+import jakarta.persistence.EntityNotFoundException;
 import org.example.springproject.entity.CourseSchedule;
 import org.example.springproject.enums.WeekDay;
 import org.example.springproject.enums.WeekParity;
+import org.example.springproject.exceptions.InvalidTimeException;
 import org.example.springproject.services.CourseScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +35,7 @@ public class CourseScheduleApi {
 
         try{
             Integer courseIdNumber = (Integer) requestBody.get("courseId");
-            Long courseId = courseIdNumber.longValue();  // Convert to Long
+            Long courseId = courseIdNumber.longValue();
             String startTime = (String) requestBody.get("startTime");
             String endTime = (String) requestBody.get("endTime");
             String weekDayString = (String) requestBody.get("weekDay");
@@ -47,6 +49,36 @@ public class CourseScheduleApi {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
 
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateCourseSchedule(@PathVariable("id") Long id, @RequestBody Map<String, Object> requestBody){
+        try{
+
+            String startTime = (String) requestBody.get("startTime");
+            String endTime = (String) requestBody.get("endTime");
+            String weekDayString = (String) requestBody.get("weekDay");
+            WeekDay weekDay = WeekDay.valueOf(weekDayString);
+            String weekParityString = (String) requestBody.get("weekParity");
+            WeekParity weekParity = WeekParity.valueOf(weekParityString);
+
+            courseScheduleService.updateCourseSchedule(id,startTime,endTime,weekDay,weekParity);
+            return new ResponseEntity<>("Course schedule with id: " + id + " successfully updated!", HttpStatus.OK);
+
+        }catch (EntityNotFoundException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }catch (InvalidTimeException e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCourseSchedule(@PathVariable("id") Long id){
+        try {
+            courseScheduleService.deleteCourseSchedule(id);
+            return new ResponseEntity<>(gson.toJson("Course schedule with id:" + id + " successfully deleted."), HttpStatus.OK);
+
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>("Course schedule id: " + id + " not found.", HttpStatus.NOT_FOUND);
+        }
     }
 }
