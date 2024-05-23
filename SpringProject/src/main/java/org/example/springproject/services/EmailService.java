@@ -9,5 +9,6 @@ public interface EmailService {
 	void sendUpdateApplicationMail(Long id, Integer priority);
 	void sendNewCourseMail(String courseName);
 	String sendMailWithAttachment(EmailDetails details);
+	void sendAllocationProcessMail();
 
 }

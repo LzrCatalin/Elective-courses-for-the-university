@@ -3,6 +3,7 @@ package org.example.springproject.controller;
 import jakarta.persistence.EntityNotFoundException;
 import org.example.springproject.entity.Application;
 import org.example.springproject.entity.Student;
+import org.example.springproject.enums.FacultySection;
 import org.example.springproject.enums.Status;
 import org.example.springproject.exceptions.*;
 import org.example.springproject.services.ApplicationService;
@@ -36,9 +37,13 @@ public class ApplicationApi {
 		return applicationService.getAllApplications();
 	}
 
-	@GetMapping("/pendingIDs/{courseId}")
-	public List<Student> getIds(@PathVariable("courseId") Long courseId) {
-		return applicationService.getStudentsOfCourse(courseId);
+	@PostMapping("/studentsIDs/{courseId}")
+	public List<Student> getIds(@PathVariable("courseId") Long courseId, @RequestBody Map<String, Object> requestBody) {
+		logger.info("Received course id: " + courseId);
+		String applicationsStatus = (String) requestBody.get("status");
+		Status status = Status.valueOf(applicationsStatus);
+		logger.info("Received status request: " + status);
+		return applicationService.getStudentsOfCourse(courseId, status);
 	}
 
 	@GetMapping("/{id}")
