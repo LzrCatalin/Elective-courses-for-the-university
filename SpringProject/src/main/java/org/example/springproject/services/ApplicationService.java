@@ -11,7 +11,7 @@ import java.util.List;
 public interface ApplicationService {
 	List<Application> getAllApplications();
 	List<Application> getStudentApplications(Long id);
-	List<Student> getStudentsOfCourse(Long courseId);
+	List<Student> getStudentsOfCourse(Long courseId, Status status);
 	Application addApplication(Long studentId, Long courseId, Integer priority);
 	Application addApplicationAsStudent(Long studentId, String courseName, Integer priority);
 	Application updateApplication(Long id, Integer priority, Status status);

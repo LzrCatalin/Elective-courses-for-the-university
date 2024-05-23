@@ -19,9 +19,24 @@
             </div>
         </ng-template>
     </p-dropdown>
-    <button class = "btn-cancel" (click)="clearDropdown()">X</button>
+    <button class="btn-cancel" (click)="clearDropdown()">X</button>
 </div>
 
+<!-- Status Options -->
+<div *ngIf="selectedCourse" class="status-options">
+    <label>
+        <input type="radio" name="status" value="ACCEPTED" [(ngModel)]="selectedStatus" (change)="onStatusChange('ACCEPTED')" />
+        Accepted
+    </label>
+    <label>
+        <input type="radio" name="status" value="PENDING" [(ngModel)]="selectedStatus" (change)="onStatusChange('PENDING')" />
+        Pending
+    </label>
+</div>
+
+<div class = "btn-export-container" *ngIf="dropdownUsed">
+    <a (click)="exportPDF(selectedCourse.id, selectedStatus)" class="btn-export">Export</a>
+</div>
 
 <div class="table1-container" *ngIf="selectedCourse">
     <p-table class="table1 centered-table"
@@ -31,7 +46,7 @@
         [rows]="5"
         [rowsPerPageOptions]="[5, 10, 20]"
     >
-        <ng-template pTemplate="header">>
+        <ng-template pTemplate="header">
             <tr>
                 <th class="t1id" style="width:20%">ID</th>
                 <th style="width:20%">Name</th>
@@ -50,14 +65,13 @@
     </p-table>
 </div>
 
-<div class="table2-container">
+<div class="table2-container" *ngIf="!dropdownUsed">
     <p-table class="table2"
         [value]="courses" 
         styleClass="p-datatable-gridlines" 
         [tableStyle]="{ 'min-width': '50rem' }"
         [paginator]="true"
         [rows]="5"
-        [tableStyle]="{ 'min-width': '50rem' }"
         [rowsPerPageOptions]="[5, 10, 20]">
         
             <ng-template pTemplate="header">
@@ -93,20 +107,20 @@
 
 <div class="course-edit-container">
     <div class="course-edit" *ngIf="editedCourse">
-        <form class = "edit-form">
+        <form class="edit-form">
             <h3>Edit Course</h3>
             <!-- Input fields for editing course details -->
-            <input class = "input-form" type="text" [(ngModel)]="editedCourse.name" name="name" placeholder="Name"><br>
-            <input class = "input-form" type="text" [(ngModel)]="editedCourse.category" name="category" placeholder="Category"><br>
-            <input class = "input-form" type="number" [(ngModel)]="editedCourse.studyYear" name="studyYear" placeholder="Study Year"><br>
-            <input class = "input-form" type="text" [(ngModel)]="editedCourse.teacher" name="teacher" placeholder="Teacher"><br>
-            <input class = "input-form" type="number" [(ngModel)]="editedCourse.maxCapacity" name="maxCapacity" placeholder="Capacity"><br>
-            <input class = "input-form" type="text" [(ngModel)]="editedCourse.facultySection" name="facultySection" placeholder="Faculty Section"><br>
-            <input class = "input-form" type="number" [(ngModel)]="editedCourse.applicationsCount" name="applicationsCount" placeholder="Count"><br>
+            <input class="input-form" type="text" [(ngModel)]="editedCourse.name" name="name" placeholder="Name"><br>
+            <input class="input-form" type="text" [(ngModel)]="editedCourse.category" name="category" placeholder="Category"><br>
+            <input class="input-form" type="number" [(ngModel)]="editedCourse.studyYear" name="studyYear" placeholder="Study Year"><br>
+            <input class="input-form" type="text" [(ngModel)]="editedCourse.teacher" name="teacher" placeholder="Teacher"><br>
+            <input class="input-form" type="number" [(ngModel)]="editedCourse.maxCapacity" name="maxCapacity" placeholder="Capacity"><br>
+            <input class="input-form" type="text" [(ngModel)]="editedCourse.facultySection" name="facultySection" placeholder="Faculty Section"><br>
+            <input class="input-form" type="number" [(ngModel)]="editedCourse.applicationsCount" name="applicationsCount" placeholder="Count"><br>
             <!-- Button functionalities for each course -->
-            <div class = "btn-container">
-                <button class = "btn-update" type="button" (click)="updateCourse()">Update</button>
-                <button class = "btn-cancel-edit" type="button" (click)="cancelEdit()">Cancel</button>
+            <div class="btn-container">
+                <button class="btn-update" type="button" (click)="updateCourse()">Update</button>
+                <button class="btn-cancel-edit" type="button" (click)="cancelEdit()">Cancel</button>
             </div>
         </form>
     </div>

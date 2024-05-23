@@ -73,8 +73,8 @@ export class CourseService {
     );
   }
   
-  getPendingIDs(courseId: number): Observable<any> {
-    return this.http.get(BASE_URL + "/applications/pendingIDs/" + courseId)
+  getIDs(courseId: number, status: string): Observable<any> {
+    return this.http.post(BASE_URL + "/applications/studentsIDs/" + courseId, { status: status.toUpperCase() });
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -92,4 +92,11 @@ export class CourseService {
     return throwError('Something bad happened; please try again later.');
   }
 
+  exportPDF(courseId: number, status: string): Observable<any> {
+    const body = {
+      courseId: courseId,
+      status: status
+    }
+    return this.http.post(BASE_URL + "/pdf/export/courseAllocations", body, { responseType: 'blob' }) 
+  }
 }
