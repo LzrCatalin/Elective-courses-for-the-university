@@ -14,6 +14,8 @@ export class GetCoursesComponent implements OnInit {
   selectedCourse: any;
   studentIds: string[] = [];
   editedCourse: any;
+  selectedStatus: any;
+  dropdownUsed: boolean = false;
 
   constructor(private courseService: CourseService) {}
 
@@ -58,14 +60,23 @@ export class GetCoursesComponent implements OnInit {
   }
 
   onCourseSelect() {
+    this.dropdownUsed = true;
     if (this.selectedCourse) {
       const courseId = this.selectedCourse.id;
-      this.courseService.getPendingIDs(courseId).subscribe((data: string[]) => {
+      this.courseService.getIDs(courseId, this.selectedStatus).subscribe((data: string[]) => {
         this.studentIds = data;
       });
     }
   }
 
+  onStatusChange(status: string) {
+    this.selectedStatus = status;
+    // Fetch the student IDs again when status changes if needed
+    if (this.selectedCourse) {
+      this.onCourseSelect();
+    }
+  }
+  
   editCourse(course: any) {
     this.editedCourse = { ...course }
   }
@@ -105,12 +116,32 @@ export class GetCoursesComponent implements OnInit {
         console.error("Error deleting the course: ", error);
         console.log("Error deleting the course")
         location.reload()
-      });
+      }); 
     }
   }
 
   clearDropdown() {
-    this.selectedCourse = null; 
-}
+    this.selectedCourse = null;
+    this.dropdownUsed = false; 
+  }
 
+  exportPDF(courseId: number, status: string) {
+    console.log("Selected course id: " + courseId)
+    console.log("Selected status: " + status)
+    this.courseService.exportPDF(courseId, status).subscribe(
+      (res) => {
+        console.log("Successfully received PDF response.");
+				const blob = new Blob([res], { type: 'application/pdf' });
+		
+				const link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blob);
+				link.download = 'allocation.pdf';
+		
+				link.click();
+      },
+      (error) => {
+				console.error("Error exporting PDF:", error);
+			}
+		)
+  }
 }

@@ -141,34 +141,59 @@ public class EmailServiceImpl implements EmailService {
 		logger.info("Inside course mail sender...");
 		Course course = courseRepository.findByName(courseName);
 		// Get all students within course study year and faculty section
-		List<Student> recipientStudents = studentRepository.findByStudyYearAndFacultySection(course.getStudyYear(), course.getFacultySection());
+//		List<Student> recipientStudents = studentRepository.findByStudyYearAndFacultySection(course.getStudyYear(), course.getFacultySection());
 
 		// Creating a simple mail message
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 
 		// Take each student
-		for (Student student : recipientStudents) {
-			logger.info("Student: " + student.getName() + ", Email: " + student.getEmail());
-			mailMessage.setFrom(sender);
-			mailMessage.setTo(student.getEmail());
+//		for (Student student : recipientStudents) {
+//			logger.info("Student: " + student.getName() + ", Email: " + student.getEmail());
+		mailMessage.setFrom(sender);
+		mailMessage.setTo("florin.lazar02@e-uvt.ro");
 
-			String emailText = "Hi, " + student.getName() + " !\n\n";
-			emailText += "We added new course that could interests you.\n\n";
-			emailText += "Name: " + course.getName();
-			emailText += "\nCategory: " + course.getCategory();
-			emailText += "\nTeacher: " + course.getTeacher();
-			emailText += "\nCapacity: " + course.getMaxCapacity();
-			emailText += "\nHave a good day!\n\nBest regards,\nYour University";
-			mailMessage.setText(emailText);
+		String emailText = "Hi, Florin!\n\n";
+		emailText += "We added new course that could interests you.\n\n";
+		emailText += "Name: " + course.getName();
+		emailText += "\nCategory: " + course.getCategory();
+		emailText += "\nTeacher: " + course.getTeacher();
+		emailText += "\nCapacity: " + course.getMaxCapacity();
+		emailText += "\nHave a good day!\n\nBest regards,\nYour University";
+		mailMessage.setText(emailText);
 
-			String emailSubject = "New Course Alert: " + courseName;
-			mailMessage.setSubject(emailSubject);
-			javaMailSender.send(mailMessage);
-		}
+		String emailSubject = "New Course Alert: " + courseName;
+		mailMessage.setSubject(emailSubject);
+		javaMailSender.send(mailMessage);
+//		}
 	}
 
 	@Override
 	public String sendMailWithAttachment(EmailDetails details) {
 		return null;
+	}
+
+	@Override
+	public void sendAllocationProcessMail() {
+		logger.info("Inside allocation process mail ...");
+//		List<Student> students = studentRepository.findAll();
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+
+//		for (Student student : students) {
+//		logger.info("Student: " + student.getName() + ", Email: " + student.getEmail());
+		mailMessage.setFrom(sender);
+		mailMessage.setTo("florin.lazar02@e-uvt.ro");
+
+		String emailText = "Hi, Florin!\n\n";
+		emailText += "We are pleased to inform you that the allocation process has been completed.";
+		emailText += "You can now view your allocated courses on our website.\n\n";
+		emailText += "Wishing you a successful academic term ahead!\n\nBest regards,\nYour University";
+
+		mailMessage.setText(emailText);
+
+		String emailSubject = "Allocations Result";
+		mailMessage.setSubject(emailSubject);
+		javaMailSender.send(mailMessage);
+//		}
 	}
 }

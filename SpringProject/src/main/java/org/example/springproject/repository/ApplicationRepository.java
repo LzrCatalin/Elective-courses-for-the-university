@@ -18,8 +18,8 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 	Application findByStudentIdAndCourseId(Long studentId, Long courseId);
 	@Query("select a.student" +
 			" from Application a " +
-			"where a.course.id = :courseId and a.status = 'PENDING'")
-	List<Student> findStudentsIdThatAppliedCourse(@Param("courseId") Long courseId);
+			"where a.course.id = :courseId and a.status = :status")
+	List<Student> findStudentsThatAppliedCourse(@Param("courseId") Long courseId, Status status);
 
 	@Query("select a.priority" +
 			" from Application a " +
