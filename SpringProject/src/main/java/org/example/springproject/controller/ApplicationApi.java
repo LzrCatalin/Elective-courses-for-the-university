@@ -69,14 +69,46 @@ public class ApplicationApi {
 		}
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<String> updateApplication(@PathVariable("id") Long id, Integer priority, Status status) {
+	@PutMapping("/")
+	public ResponseEntity<String> updateApplication(@RequestBody Map<String, Object> requestBody) {
 		try {
-			applicationService.updateApplication(id, priority, status);
+			Integer id = (Integer) requestBody.get("applicationId");
+			Long applicationId = Long.valueOf(id);
+			logger.info("Received application id: " + applicationId);
+			Integer sID = (Integer) requestBody.get("studentId");
+			Long studentId = Long.valueOf(sID);
+			logger.info("Received student id: " + studentId);
+			Integer cID = (Integer) requestBody.get("courseId");
+			Long courseId = Long.valueOf(cID);
+			logger.info("Received course id: " + courseId);
+			Integer priority = (Integer) requestBody.get("priority");
+			logger.info("Received priority: " + priority);
+			String receivedStatus = (String) requestBody.get("status");
+			Status status = Status.valueOf(receivedStatus);
+			logger.info("Received status: " + status);
+			applicationService.updateApplication(applicationId, studentId, courseId, priority, status);
 			return new ResponseEntity<>("Application with id:" + id + " successfully updated.", HttpStatus.OK);
 
 		} catch (EntityNotFoundException e) {
-			return new ResponseEntity<>("Application id: " + id + " not found.", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("Application not found.", HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@PutMapping("/admin")
+	public ResponseEntity<String> updateApplicationAsAdmin(@RequestBody Map<String, Object> requestBody) {
+		try {
+			Long studentId = Long.valueOf((Integer) requestBody.get("studentId"));
+			logger.info("Received student id: " + studentId);
+			String courseName = (String) requestBody.get("courseName");
+			logger.info("Received course name: " + courseName);
+			String newCourseName = (String) requestBody.get("newCourseName");
+			logger.info("Received new course name: " + newCourseName);
+
+			applicationService.updateApplicationAsAdmin(studentId, courseName, newCourseName);
+			return new ResponseEntity<>("Application successfully updated.", HttpStatus.OK);
+
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<>("Application not found.", HttpStatus.NOT_FOUND);
 		}
 	}
 

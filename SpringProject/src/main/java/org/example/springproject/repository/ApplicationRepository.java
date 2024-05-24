@@ -41,4 +41,10 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 			"WHERE a.course = c AND a.status = 'ACCEPTED') " +
 			"ORDER BY (SELECT (c.maxCapacity - COUNT(a.id)) FROM Application a WHERE a.course = c AND a.status = 'ACCEPTED') DESC")
 	List<Course> findAvailableCourses();
+
+	@Query("SELECT a.course FROM Application a WHERE a.student.id = :studentId AND a.status = 'ACCEPTED'")
+	List<Course> findAcceptedCourseIdsByStudentId(@Param("studentId") Long studentId);
+
+	@Query("SELECT COUNT(DISTINCT a.student.id) FROM Application a WHERE a.course.id = :courseId AND a.status = 'ACCEPTED'")
+	int countCourseAcceptedStudents(@Param("courseId") Long courseId);
 }

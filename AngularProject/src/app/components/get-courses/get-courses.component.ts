@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../../services/course.service';
+import { ReadOnlyService } from '../../services/read-only.service';
+import { ApplicationsService } from '../../services/applications.service';
 import { max } from 'rxjs';
 
 @Component({
@@ -14,13 +16,23 @@ export class GetCoursesComponent implements OnInit {
   selectedCourse: any;
   studentIds: string[] = [];
   editedCourse: any;
-  selectedStatus: any;
+  selectedStatus: string = "";
   dropdownUsed: boolean = false;
+  showReassignForm: boolean = false;
+  selectedStudent: any;
+  newCourse: string = '';
 
-  constructor(private courseService: CourseService) {}
+  constructor(private courseService: CourseService, 
+    private readonlyService: ReadOnlyService,
+    private applicationService: ApplicationsService) {}
 
   ngOnInit() {
     this.getAllCourses();
+    this.readonlyService.readOnly$.subscribe(
+      (res) => {
+        this.selectedStatus = res ? 'ACCEPTED' : 'PENDING';
+      }
+    )
   }
 
   // Fetch all courses
@@ -119,6 +131,21 @@ export class GetCoursesComponent implements OnInit {
       }); 
     }
   }
+
+  reassignStudent(studentId: number, currentCourse: string, newCourseName: string): void {
+    // Assuming 'this.selectedCourse' holds the current course name
+    this.applicationService.updateApplicationAsAdmin(studentId, currentCourse, newCourseName)
+        .subscribe(
+            () => {
+                // Handle success
+                console.log('Course updated successfully.');
+            },
+            (error) => {
+                // Handle error
+                console.error('Error updating course:', error);
+            }
+        );
+}
 
   clearDropdown() {
     this.selectedCourse = null;

@@ -134,13 +134,77 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public Application updateApplication(Long id, Integer newPriority, Status newStatus) {
+	public Application updateApplication(Long id, Long studentId, Long courseId, Integer newPriority, Status newStatus) {
 
 		// Check if application exists by id
 		Application application = applicationRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		Student student = studentRepository.findById(studentId).orElseThrow(EntityNotFoundException::new);
+		Course course = courseRepository.findById(courseId).orElseThrow(EntityNotFoundException::new);
 
+		application.setStudent(student);
+		application.setCourse(course);
 		application.setPriority(newPriority);
 		application.setStatus(newStatus);
+		return applicationRepository.save(application);
+	}
+
+	@Override
+	public Application updateApplicationAsAdmin(Long studentId, String courseName, String newCourseName) {
+		logger.info("AM INTRAT IN FUNCTIA DIN SERVICE ... FII ATENT PROSTULE");
+		// Validate student id
+		Student student = studentRepository.findById(studentId).orElseThrow(EntityNotFoundException::new);
+
+		logger.info("Received course in function: " + courseName);
+		// Validate course id
+		Course course = courseRepository.findByName(courseName);
+		logger.info("Course found with id {}", course.getId());
+
+		logger.info("Received new course in function: " + newCourseName);
+		// Validate course id
+		Course newCourse = courseRepository.findByName(newCourseName);
+		logger.info("New course found with id {}", newCourse.getId());
+
+		// Validate application by student and course ids
+		Application application = applicationRepository.findByStudentIdAndCourseId(studentId, course.getId());
+		logger.info("Found application: " + application.getId());
+
+		// Get course capacity info
+		int newCourseEnrolls = applicationRepository.countCourseAcceptedStudents(newCourse.getId());
+		logger.info("New course enrolls number: " + newCourseEnrolls);
+		logger.info("New course capacity: " + newCourse.getMaxCapacity());
+
+		// Get a list of student enrolls
+		List<Course> studentEnrolledCourses = applicationRepository.findAcceptedCourseIdsByStudentId(studentId);
+		studentEnrolledCourses.remove(course);
+
+		for (Course oldCourse: studentEnrolledCourses) {
+			logger.info("New course name: " + newCourseName);
+			logger.info("New course category: " + newCourse.getCategory());
+			logger.info("================================================");
+			logger.info("Old course name: " + oldCourse.getName());
+			logger.info("Old course category: " + oldCourse.getCategory());
+
+			// Check duplicate category
+			if (!newCourse.getCategory().equals(oldCourse.getCategory()) &&
+					// Validate study year
+			student.getStudyYear().equals(newCourse.getStudyYear()) &&
+					// Validate capacity number of wanted course
+					newCourseEnrolls < newCourse.getMaxCapacity()) {
+
+				application.setStudent(student);
+				application.setCourse(newCourse);
+				application.setPriority(0);
+				application.setStatus(Status.REASSIGNED);
+
+				logger.info("Successfully assigned student to a new course");
+				return applicationRepository.save(application);
+
+			} else {
+				logger.info("SECOND IF STATEMENT ... ");
+			}
+		}
+
+		logger.info("Assigned fail");
 		return applicationRepository.save(application);
 	}
 

@@ -127,7 +127,7 @@ export class GetApplicationsComponent implements OnInit {
 
 	updateApplication(application: any): void {
 		if (this.studentId !== undefined) {
-			this.applicationsService.updateApplication(application.id, this.editedPriority).subscribe(
+			this.applicationsService.updateApplicationAsStudent(application.id, this.editedPriority).subscribe(
 				() => {
 					console.log('Successfully updated application');
 					location.reload();
