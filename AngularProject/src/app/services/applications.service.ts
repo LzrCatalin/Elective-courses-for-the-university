@@ -32,7 +32,16 @@ export class ApplicationsService {
 		return this.http.post(`${BASIC_URL}/applications/stud`, body, { responseType: 'text' });
 	}
 	
-	updateApplication(id: number, priority: number): Observable<any> {
+	updateApplicationAsAdmin(studentId: number, courseName: string, newCourseName: string): Observable<any> {
+		const body = {
+			studentId: studentId,
+			courseName: courseName,
+			newCourseName: newCourseName
+		}
+		return this.http.put(`${BASIC_URL}/applications/admin`, body, { responseType: 'text' })
+	}
+
+	updateApplicationAsStudent(id: number, priority: number): Observable<any> {
 		const body = {
 			priority: priority,
 		};

@@ -116,3 +116,12 @@
   border-radius: 2rem;
   color: black;
 }
+
+.btn-reassign {
+  background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGjIB-4VitrDgJQW1hhiiOUT_54EsAkEydEtzVOGPhLA&s') no-repeat center center;
+    width: 24px; /* Adjust width as needed */
+    height: 24px; /* Adjust height as needed */
+    border: none;
+    cursor: pointer;
+    background-size: cover;
+}

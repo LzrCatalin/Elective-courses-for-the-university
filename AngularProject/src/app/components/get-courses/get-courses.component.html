@@ -22,8 +22,7 @@
     <button class="btn-cancel" (click)="clearDropdown()">X</button>
 </div>
 
-<!-- Status Options -->
-<div *ngIf="selectedCourse" class="status-options">
+<!-- <div *ngIf="selectedCourse" class="status-options">
     <label>
         <input type="radio" name="status" value="ACCEPTED" [(ngModel)]="selectedStatus" (change)="onStatusChange('ACCEPTED')" />
         Accepted
@@ -32,7 +31,7 @@
         <input type="radio" name="status" value="PENDING" [(ngModel)]="selectedStatus" (change)="onStatusChange('PENDING')" />
         Pending
     </label>
-</div>
+</div> -->
 
 <div class = "btn-export-container" *ngIf="dropdownUsed">
     <a (click)="exportPDF(selectedCourse.id, selectedStatus)" class="btn-export">Export</a>
@@ -60,10 +59,18 @@
                 <td>{{ studentId.name }}</td>   
                 <td>{{ studentId.email }}</td>
                 <td>{{ studentId.grade }}</td>
+                <td>
+                    <form (ngSubmit)="reassignStudent(studentId.id, selectedCourse.name, newCourseName.value)">
+                        <input type="text" placeholder="Enter new course name" #newCourseName required>
+                        <button type="submit">Assign New Course</button>
+                    </form>
+                </td>
             </tr>
         </ng-template>
     </p-table>
 </div>
+
+
 
 <div class="table2-container" *ngIf="!dropdownUsed">
     <p-table class="table2"
