@@ -8,8 +8,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 public interface StudentService {
 	List<Student> getAllStudents();
+
+	int getSecondyearStudents();
+
+	int getThirdYearStudents();
+
 	Student getData(Long id);
 	Student addStudent(String name, Integer studyYear, Float grade, FacultySection facultySection);
 	Student updateStudent(Long id, String name, Integer studyYear, Float grade, FacultySection facultySection);
 	void deleteStudent(Long id);
+	int getFirstYearStudents();
 }
