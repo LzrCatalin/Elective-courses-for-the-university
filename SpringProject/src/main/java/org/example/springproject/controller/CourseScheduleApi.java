@@ -34,8 +34,7 @@ public class CourseScheduleApi {
     public ResponseEntity<String> addCourseSchedule(@RequestBody Map<String,Object> requestBody){
 
         try{
-            Integer courseIdNumber = (Integer) requestBody.get("courseId");
-            Long courseId = courseIdNumber.longValue();
+            String courseName = (String) requestBody.get("courseName");
             String startTime = (String) requestBody.get("startTime");
             String endTime = (String) requestBody.get("endTime");
             String weekDayString = (String) requestBody.get("weekDay");
@@ -43,7 +42,7 @@ public class CourseScheduleApi {
             String weekParityString = (String) requestBody.get("weekParity");
             WeekParity weekParity = WeekParity.valueOf(weekParityString);
 
-            courseScheduleService.addCourseSchedule(courseId,startTime,endTime,weekDay,weekParity);
+            courseScheduleService.addCourseSchedule(courseName,startTime,endTime,weekDay,weekParity);
             return new ResponseEntity<>(gson.toJson("Schedule added successfully!"), HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
