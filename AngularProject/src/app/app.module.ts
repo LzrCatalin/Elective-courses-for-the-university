@@ -28,7 +28,13 @@ import { TagModule} from 'primeng/tag';
 import { MyprofileComponent } from './components/myprofile/myprofile.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-
+import { PostScheduleComponent } from './components/post-schedule/post-schedule.component';
+import { GetSchedulesComponent } from './components/get-schedules/get-schedules.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ChartModule } from 'primeng/chart';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { BadgeModule } from 'primeng/badge';
 
 @NgModule({
   declarations: [
@@ -44,6 +50,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     MyprofileComponent,
     ToolbarComponent,
     SidebarComponent,
+    PostScheduleComponent,
+    GetSchedulesComponent,
 
   ],
   imports: [
@@ -66,7 +74,11 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     IconFieldModule,
     InputTextModule,
     TagModule,
-    
+    ConfirmDialogModule,
+    ConfirmPopupModule,
+    ChartModule,
+    PanelMenuModule,
+    BadgeModule,
   ],
   providers: [
     provideClientHydration(),
