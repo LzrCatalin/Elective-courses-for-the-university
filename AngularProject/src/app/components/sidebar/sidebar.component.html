@@ -1,75 +1,23 @@
 <div class="sidebar-container">
-    <p-sidebar #sidebarRef [(visible)]="sidebarVisible">
-        <ng-template pTemplate="headless">
-            <div class="flex flex-column h-full">
-                <div class="button-home-container">
-                    <span class="inline-flex align-items-center gap-2">
-                        <svg width="33" height="35" viewBox="0 0 33 35" fill="none" xmlns="http://www.w3.org/2000/svg" class="block mx-auto">
-                            <!-- Your logo SVG -->
-                        </svg>
-                        <a routerLink="/admin" class="button-home" onclick="home()">
-                            <img class="avatar" src="https://i.pinimg.com/564x/cb/e7/02/cbe7022aefd9b4825077d9aa99d4808d.jpg" alt="Avatar">
-                            <span class="">PawPatrol</span>
-                        </a>                    
+    <p-sidebar [(visible)]="sidebarVisible" class="sidebar">
+        <h3 class="title">PawPatrol</h3>
+        
+        <p-panelMenu [model]="items" styleClass="w-full md:w-20rem">
+            <ng-template pTemplate="item" let-item>
+                <a [routerLink]="item.routerLink" pRipple class="flex align-items-center px-3 py-2 cursor-pointer menu-item-link">
+                    <i [class]="item.icon + ' text-primary menu-item-icon'"></i>
+                    <span class="ml-2 menu-item-label">
+                        {{ item.label }}
                     </span>
-                </div>
-                <div class="overflow-y-auto">
-                    <ul class="list-none p-3 m-0">
-                        <li>
-                            <div
-                                pRipple
-                                pStyleClass="@next"
-                                enterClass="hidden"
-                                enterActiveClass="slidedown"
-                                leaveToClass="hidden"
-                                leaveActiveClass="slideup"
-                                class="p-3 flex align-items-center justify-content-between text-600 cursor-pointer p-ripple"
-                            >
-                                <span class="coursestab">Courses</span>
-                            </div>
-                            <ul class="list-none p-0 m-0 overflow-hidden">
-                                <li>
-                                    <a routerLink="/admin/courses/post" class="addcourse">
-                                        <i class="pi pi-plus-circle mr-2"></i>
-                                        <span class="font-medium">Add Course</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a routerLink="/admin/courses" class="viewcourses">
-                                        <i class="pi pi-list mr-2"></i>
-                                        <span class="font-medium">View Courses</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <div
-                                pRipple
-                                pStyleClass="@next"
-                                enterClass="hidden"
-                                enterActiveClass="slidedown"
-                                leaveToClass="hidden"
-                                leaveActiveClass="slideup"
-                                class="p-3 flex align-items-center justify-content-between text-600 cursor-pointer p-ripple"
-                            >
-                                <span class="studentstab">Students</span>
-                            </div>
-                            <ul class="list-none p-0 m-0 overflow-hidden">
-                                <li>
-                                    <a routerLink="/admin/students" class="viewstudents">
-                                        <i class="pi pi-list mr-2"></i>
-                                        <span class="font-medium">View Students</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </ng-template>
+                    <p-badge *ngIf="item.badge" class="ml-auto menu-item-badge" [value]="item.badge"></p-badge>
+                    <span *ngIf="item.shortcut" class="ml-auto border-1 surface-border border-round surface-100 text-xs p-1 shortcut">
+                        {{ item.shortcut }}
+                    </span>
+                </a>
+            </ng-template>
+        </p-panelMenu>
     </p-sidebar>
 </div>
 <button (click)="sidebarVisible = true" class="custom-button">
     <i class="pi pi-arrow-right"></i>
 </button>
-
