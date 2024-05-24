@@ -1,0 +1,118 @@
+/* Resetting default browser styles */
+
+.title{
+    font-size: 50px;
+    font-family: Montserrat;
+    margin-left: 20px;
+  }
+  
+  .dropdown-container{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 40px;
+  }
+  
+  .dropdown{
+    color: white;
+  }
+  
+  .table1-container{
+    margin-left: 20px;
+    margin-right: 20px;
+    overflow: hidden;
+    border-radius: 3rem;
+    background-color: white;
+    text-align: center;
+  }
+  
+  .table2-container{
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    padding: 20px;
+    overflow: hidden;
+    border-radius: 3rem;
+    background-color: white;
+  }
+  
+  .course-edit-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+  }
+  
+  .course-edit{
+    border: 2px solid grey;
+    background: linear-gradient(to right, #fefefe, #2d2c2cc3);
+    margin-left: 60px;
+    margin-right: 20px;
+    overflow: hidden;
+    margin-top: 10px;
+    padding: 20px;
+    border-radius: 3rem;
+    background-color: white;
+    color: black;
+    width: 400px;
+  }
+  
+  .edit-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .input-form {
+    padding: 8px;
+    margin: 2px;
+    border-radius: 1rem;
+  }
+  
+  .btn-cancel {
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 1rem;
+  }
+  
+  .btn-edit {
+    background: url('https://static.vecteezy.com/system/resources/thumbnails/001/500/458/small/edit-icon-free-vector.jpg') no-repeat center center;
+    width: 24px; /* Adjust width as needed */
+    height: 24px; /* Adjust height as needed */
+    border: none;
+    cursor: pointer;
+    background-size: cover;
+  }
+  
+  /* Style for delete button */
+  .btn-delete {
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkEqb7yH6GMN43ZOyS5_LiZvWutK3h5ihP1Q93v7T6qA&s') no-repeat center center;
+    width: 24px; /* Adjust width as needed */
+    height: 24px; /* Adjust height as needed */
+    border: none;
+    cursor: pointer;
+    background-size: cover;
+  }
+  
+  .btn-container {
+    margin-top: 5px;
+  }
+  
+  .btn-update {
+    margin-right: 5px;
+    padding: 5px;
+    background-color: green;
+    border: 2px solid black;
+    border-radius: 2rem;
+    color: black;
+  }
+  
+  .btn-cancel-edit {
+    margin-left: 5px;
+    padding: 5px;
+    background-color: rgb(223, 82, 82);
+    border: 2px solid black;
+    border-radius: 2rem;
+    color: black;
+  }
