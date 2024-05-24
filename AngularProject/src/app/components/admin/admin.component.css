@@ -1,7 +1,8 @@
 .title{
-    font-size: 85px;
+    font-size: 50px;
     font-family: Montserrat;
     margin-top: 0px;
+    text-align: center;
 }
 
 .counter-container{
@@ -32,20 +33,17 @@
     padding: 30px;
 }
 
-.first-container{
-    width: 500px;
-    height: 500px;
-    justify-content: center;
+.first-container {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
     border: 1px solid white;
     border-radius: 3rem;
-    display: flex;
-    background: linear-gradient(to right, #808080, #000000);
-    color: white;
-    margin-left: -65px;
-    margin-right: 150px;
+    background: #a2b9bc;
 }
-
 .second-container{
     width: 500px;
     height: 500px;
@@ -56,6 +54,21 @@
     display: flex;
     background: linear-gradient(to right, #808080, #000000);
     color: white;
-    
-    
+       
+}
+
+/* Style for the title */
+.secondtitle {
+    margin-bottom:25px;
+    font-size: 30px;
+    font-family: Montserrat;
+    text-align: start;
+    text-decoration: solid;
+    color: black;
+
+}
+
+/* Style for the button */
+.first-container p-button {
+    margin-top: 30px; 
 }
