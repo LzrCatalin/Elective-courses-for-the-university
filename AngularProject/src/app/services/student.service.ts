@@ -22,4 +22,14 @@ export class StudentService {
 	exportPDF(id: number): Observable<any> {
 		return this.http.get(`${BASIC_URL}/pdf/export/${id}`, { responseType: 'blob' })
 	}
+
+	getFirstYearStudents() {
+		return this.http.get(`${BASIC_URL}/students/firstyear`);
+	}
+	getSecondYearStudents() {
+		return this.http.get(`${BASIC_URL}/students/secondyear`);
+	}
+	getThirdYearStudents() {
+		return this.http.get(`${BASIC_URL}/students/thirdyear`);
+	}
 }

@@ -35,6 +35,18 @@ public class StudentApi {
 	public ResponseEntity<Student> getStudentData(@PathVariable("id") Long id) {
 		return new ResponseEntity<>(studentService.getData(id), HttpStatus.OK);
 	}
+	@GetMapping("/firstyear")
+	public int getFirstYearStudents(){
+		return studentService.getFirstYearStudents();
+	}
+	@GetMapping("/secondyear")
+	public int getSecondYearStudents(){
+		return studentService.getSecondyearStudents();
+	}
+	@GetMapping("/thirdyear")
+	public int getThirdYearStudents(){
+		return studentService.getThirdYearStudents();
+	}
 
 	@PostMapping("/")
 	public ResponseEntity<String> addStudent(@RequestBody Map<String, Object> requestBody) {

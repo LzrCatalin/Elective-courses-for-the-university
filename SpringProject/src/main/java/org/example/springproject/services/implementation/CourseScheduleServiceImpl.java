@@ -28,15 +28,12 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
     public List<CourseSchedule> getAllCourseSchedule(){
         return (List<CourseSchedule>) repository.findAll();
     }
+
+
     @Override
-    public CourseSchedule addCourseSchedule(Long courseId, String startTime, String endTime, WeekDay weekDay, WeekParity weekParity){
+    public CourseSchedule addCourseSchedule(String courseName, String startTime, String endTime, WeekDay weekDay, WeekParity weekParity){
 
-        Course course = courseRepository.findById(courseId).orElseThrow(EntityNotFoundException::new);
-
-        // Verify if the startTime and endTime are not empty
-        if(startTime.isEmpty() || endTime.isEmpty()){
-            throw new InvalidTimeException("The start time or end time is empty.");
-        }
+        Course course = courseRepository.findByName(courseName);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime parsedStartTime = LocalTime.parse(startTime,formatter);
@@ -73,13 +70,8 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
     }
 
     @Override
-    public CourseSchedule updateCourseSchedule(Long id, String startTime, String endTime, WeekDay weekDay, WeekParity weekParity){
-        CourseSchedule courseScheduleToBeUpdated = repository.findById(id).orElseThrow(EntityNotFoundException::new);
-
-        // Verify if the startTime and endTime are not empty
-        if(startTime.isEmpty() || endTime.isEmpty()){
-            throw new InvalidTimeException("The start time or end time is empty.");
-        }
+    public CourseSchedule updateCourseSchedule(Long courseScheduleId, String startTime, String endTime, WeekDay weekDay, WeekParity weekParity){
+        CourseSchedule courseScheduleToBeUpdated = repository.findById(courseScheduleId).orElseThrow(EntityNotFoundException::new);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime parsedStartTime = LocalTime.parse(startTime,formatter);

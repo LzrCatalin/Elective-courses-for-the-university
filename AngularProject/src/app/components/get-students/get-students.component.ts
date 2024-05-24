@@ -30,4 +30,5 @@ export class GetStudentsComponent {
       console.log(res);
     })
   }
+
 }

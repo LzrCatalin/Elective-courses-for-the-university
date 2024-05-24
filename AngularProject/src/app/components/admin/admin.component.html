@@ -1,23 +1,19 @@
 <app-sidebar></app-sidebar>
 
-<h2 class="title">Dashboard</h2>
+<h1 class="title">Dashboard</h1>
 
 <div class="counter-container">
-    <div class="small-container">Container 1</div>
+
+    <p-chart class = "chart" type="pie" [data]="data" [options]="options" />
+
     <div class="small-container">Container 2</div>
     <div class="small-container">Container 3</div>
     <div class="small-container">Container 4</div>
 </div>
 
-<h2 class="subtitle">Changes</h2>
 
-<button (click)="toggleReadOnly()">Toggle Read-Only</button>
+
 
 <div class="main-container">
-    <div class="first-container">
-        Container 1
-    </div>
-    <div class="second-container">
-        Container 2
-    </div>
+    
 </div>
