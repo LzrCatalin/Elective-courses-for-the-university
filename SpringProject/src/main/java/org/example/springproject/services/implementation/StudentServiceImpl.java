@@ -25,6 +25,18 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	public int getFirstYearStudents() {
+		return repository.countFirstYearStudents();
+	}
+	@Override
+	public int getSecondyearStudents(){
+		return repository.countSecondYearStudents();
+	}
+	@Override
+	public int getThirdYearStudents(){
+		return repository.countThirdYearStudents();
+	}
+	@Override
 	public Student getData(Long id) {
 		return repository.findById(id).orElse(null);
 	}
