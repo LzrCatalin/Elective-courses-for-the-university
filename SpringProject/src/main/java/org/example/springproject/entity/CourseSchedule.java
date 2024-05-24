@@ -17,10 +17,16 @@ public class CourseSchedule {
     @OneToOne
     @JoinColumn (name = "courseId")
     private Course course;
-    private String startTime;
 
+    @Column(name = "startTime")
+    private String startTime;
+    @Column(name = "endTime")
     private String endTime;
+    @Column(name = "weekDay")
+    @Enumerated(EnumType.STRING)
     private WeekDay weekDay;
+    @Column(name = "weekParity")
+    @Enumerated(EnumType.STRING)
     private WeekParity weekParity;
 
     public CourseSchedule() {}
