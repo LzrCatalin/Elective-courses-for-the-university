@@ -1,6 +1,7 @@
 package org.example.springproject.services;
 
 
+import org.example.springproject.entity.Course;
 import org.example.springproject.entity.CourseSchedule;
 import org.example.springproject.enums.WeekDay;
 import org.example.springproject.enums.WeekParity;
