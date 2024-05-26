@@ -1,7 +1,9 @@
 package org.example.springproject.controller;
 
 import com.google.gson.Gson;
+import com.sun.jdi.request.DuplicateRequestException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.NonUniqueResultException;
 import org.example.springproject.entity.CourseSchedule;
 import org.example.springproject.enums.WeekDay;
 import org.example.springproject.enums.WeekParity;
@@ -44,10 +46,13 @@ public class CourseScheduleApi {
 
             courseScheduleService.addCourseSchedule(courseName,startTime,endTime,weekDay,weekParity);
             return new ResponseEntity<>(gson.toJson("Schedule added successfully!"), HttpStatus.CREATED);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-        }
 
+        }catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+
+        } catch (DuplicateRequestException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{id}")

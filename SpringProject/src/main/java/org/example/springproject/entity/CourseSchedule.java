@@ -1,11 +1,9 @@
 package org.example.springproject.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.example.springproject.enums.WeekDay;
 import org.example.springproject.enums.WeekParity;
 
-import java.util.Date;
 
 @Entity
 @Table(name = "courseSchedule")
@@ -54,12 +52,12 @@ public class CourseSchedule {
         this.id = id;
     }
 
-    public org.example.springproject.entity.Course getCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public void setCourse(org.example.springproject.entity.Course course) {
-        course = course;
+    public void setCourse(Course newCourse) {
+        this.course = newCourse;
     }
 
     public WeekDay getWeekDay() {
