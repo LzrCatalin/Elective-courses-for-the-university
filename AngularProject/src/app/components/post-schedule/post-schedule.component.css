@@ -1,3 +1,14 @@
+.pscheduleBackground{
+  background: linear-gradient(101deg, 
+        #4C3D40,
+        #C8B4D0, 
+        #F6EEF0, 
+        #BDB5C0
+        );
+    margin: -8px;
+    height: 100vh;
+}
+
 .container {
     max-width: 500px;
     margin: 0 auto;

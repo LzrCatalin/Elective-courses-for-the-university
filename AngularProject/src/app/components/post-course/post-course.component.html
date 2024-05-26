@@ -1,54 +1,56 @@
-<app-sidebar></app-sidebar>
+<div class="pcourseBackground">
+  <app-sidebar></app-sidebar>
 
-<div class="container">
-  <div class="form-container">
-    <h2 class="form-title">Create course</h2>
-    <form [formGroup]="postCourseForm" (ngSubmit)="postCourse()">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" class="form-control" placeholder="Enter name" formControlName="name">
-        <div *ngIf="postCourseForm.get('name')?.invalid && postCourseForm.get('name')?.touched" class="text-danger">
-          Name is required
+  <div class="container">
+    <div class="form-container">
+      <h2 class="form-title">Create course</h2>
+      <form [formGroup]="postCourseForm" (ngSubmit)="postCourse()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" class="form-control" placeholder="Enter name" formControlName="name">
+          <div *ngIf="postCourseForm.get('name')?.invalid && postCourseForm.get('name')?.touched" class="text-danger">
+            Name is required
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="category">Category</label>
-        <input type="text" id="category" class="form-control" placeholder="Enter category" formControlName="category">
-        <div *ngIf="postCourseForm.get('category')?.invalid && postCourseForm.get('category')?.touched" class="text-danger">
-          Category is required
+        <div class="form-group">
+          <label for="category">Category</label>
+          <input type="text" id="category" class="form-control" placeholder="Enter category" formControlName="category">
+          <div *ngIf="postCourseForm.get('category')?.invalid && postCourseForm.get('category')?.touched" class="text-danger">
+            Category is required
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="studyYear">Study Year</label>
-        <input type="number" id="studyYear" class="form-control" placeholder="Enter study year" formControlName="studyYear">
-        <div *ngIf="postCourseForm.get('studyYear')?.invalid && postCourseForm.get('studyYear')?.touched" class="text-danger">
-          Study Year is required
+        <div class="form-group">
+          <label for="studyYear">Study Year</label>
+          <input type="number" id="studyYear" class="form-control" placeholder="Enter study year" formControlName="studyYear">
+          <div *ngIf="postCourseForm.get('studyYear')?.invalid && postCourseForm.get('studyYear')?.touched" class="text-danger">
+            Study Year is required
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="facultySection">Faculty Section</label>
-        <select id="facultySection" class="form-control" formControlName="facultySection">
-          <option *ngFor="let section of facultysections" [value]="section">{{ section }}</option>
-        </select>
-        <div *ngIf="postCourseForm.get('facultySection')?.invalid && postCourseForm.get('facultySection')?.touched" class="text-danger">
-          Faculty Section is required
+        <div class="form-group">
+          <label for="facultySection">Faculty Section</label>
+          <select id="facultySection" class="form-control" formControlName="facultySection">
+            <option *ngFor="let section of facultysections" [value]="section">{{ section }}</option>
+          </select>
+          <div *ngIf="postCourseForm.get('facultySection')?.invalid && postCourseForm.get('facultySection')?.touched" class="text-danger">
+            Faculty Section is required
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="teacher">Teacher</label>
-        <input type="text" id="teacher" class="form-control" placeholder="Enter teacher" formControlName="teacher">
-        <div *ngIf="postCourseForm.get('teacher')?.invalid && postCourseForm.get('teacher')?.touched" class="text-danger">
-          Teacher is required
+        <div class="form-group">
+          <label for="teacher">Teacher</label>
+          <input type="text" id="teacher" class="form-control" placeholder="Enter teacher" formControlName="teacher">
+          <div *ngIf="postCourseForm.get('teacher')?.invalid && postCourseForm.get('teacher')?.touched" class="text-danger">
+            Teacher is required
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="maxCapacity">Max Capacity</label>
-        <input type="number" id="maxCapacity" class="form-control" placeholder="Enter max capacity" formControlName="maxCapacity">
-        <div *ngIf="postCourseForm.get('maxCapacity')?.invalid && postCourseForm.get('maxCapacity')?.touched" class="text-danger">
-          Max Capacity is required
+        <div class="form-group">
+          <label for="maxCapacity">Max Capacity</label>
+          <input type="number" id="maxCapacity" class="form-control" placeholder="Enter max capacity" formControlName="maxCapacity">
+          <div *ngIf="postCourseForm.get('maxCapacity')?.invalid && postCourseForm.get('maxCapacity')?.touched" class="text-danger">
+            Max Capacity is required
+          </div>
         </div>
-      </div>
-      <button type="submit" [disabled]="postCourseForm.invalid">Submit</button>
-    </form>
+        <button type="submit" [disabled]="postCourseForm.invalid">Submit</button>
+      </form>
+    </div>
   </div>
 </div>

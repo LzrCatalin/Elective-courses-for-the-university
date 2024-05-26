@@ -1,50 +1,52 @@
-<app-sidebar></app-sidebar>
+<div class="pscheduleBackground">
+  <app-sidebar></app-sidebar>
 
-<div class="container">
-  <div class="form-container">
-    <h2 class="form-title">Add schedule</h2>
-    <form [formGroup]="postScheduleForm" (ngSubmit)="postSchedule()">
-      <div class="form-group">
-        <label for="courseName">Course name</label>
-        <input type="text" id="id" class="form-control" placeholder="Enter course name" formControlName="courseName">
-        <div *ngIf="postScheduleForm.get('courseName')?.invalid && postScheduleForm.get('courseName')?.touched" class="text-danger">
-          Course name is required
+  <div class="container">
+    <div class="form-container">
+      <h2 class="form-title">Add schedule</h2>
+      <form [formGroup]="postScheduleForm" (ngSubmit)="postSchedule()">
+        <div class="form-group">
+          <label for="courseName">Course name</label>
+          <input type="text" id="id" class="form-control" placeholder="Enter course name" formControlName="courseName">
+          <div *ngIf="postScheduleForm.get('courseName')?.invalid && postScheduleForm.get('courseName')?.touched" class="text-danger">
+            Course name is required
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="startTime">Start time</label>
-        <input type="text" id="startTime" class="form-control" placeholder="Enter start time" formControlName="startTime">
-        <div *ngIf="postScheduleForm.get('startTime')?.invalid && postScheduleForm.get('startTime')?.touched" class="text-danger">
-          Start time is required
+        <div class="form-group">
+          <label for="startTime">Start time</label>
+          <input type="text" id="startTime" class="form-control" placeholder="Enter start time" formControlName="startTime">
+          <div *ngIf="postScheduleForm.get('startTime')?.invalid && postScheduleForm.get('startTime')?.touched" class="text-danger">
+            Start time is required
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="End time">End time</label>
-        <input type="text" id="End time" class="form-control" placeholder="Enter end time" formControlName="endTime">
-        <div *ngIf="postScheduleForm.get('End time')?.invalid && postScheduleForm.get('End time')?.touched" class="text-danger">
-          End time is required
+        <div class="form-group">
+          <label for="End time">End time</label>
+          <input type="text" id="End time" class="form-control" placeholder="Enter end time" formControlName="endTime">
+          <div *ngIf="postScheduleForm.get('End time')?.invalid && postScheduleForm.get('End time')?.touched" class="text-danger">
+            End time is required
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="weekDays">Week day</label>
-        <select id="weekDays" class="form-control" formControlName="weekDay">
-          <option *ngFor="let section of weekDays" [value]="section">{{ section }}</option>
-        </select>
-        <div *ngIf="postScheduleForm.get('weekDays')?.invalid && postScheduleForm.get('weekDays')?.touched" class="text-danger">
-          Week day is required
+        <div class="form-group">
+          <label for="weekDays">Week day</label>
+          <select id="weekDays" class="form-control" formControlName="weekDay">
+            <option *ngFor="let section of weekDays" [value]="section">{{ section }}</option>
+          </select>
+          <div *ngIf="postScheduleForm.get('weekDays')?.invalid && postScheduleForm.get('weekDays')?.touched" class="text-danger">
+            Week day is required
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="weekParity">Week day</label>
-        <select id="weekParity" class="form-control" formControlName="weekParity">
-          <option *ngFor="let section of weekParity" [value]="section">{{ section }}</option>
-        </select>
-        <div *ngIf="postScheduleForm.get('weekParity')?.invalid && postScheduleForm.get('weekParity')?.touched" class="text-danger">
-          Week parity is required
+        <div class="form-group">
+          <label for="weekParity">Week day</label>
+          <select id="weekParity" class="form-control" formControlName="weekParity">
+            <option *ngFor="let section of weekParity" [value]="section">{{ section }}</option>
+          </select>
+          <div *ngIf="postScheduleForm.get('weekParity')?.invalid && postScheduleForm.get('weekParity')?.touched" class="text-danger">
+            Week parity is required
+          </div>
         </div>
-      </div>
-      
-      <button type="submit" [disabled]="postScheduleForm.invalid">Submit</button>
-    </form>
+        
+        <button type="submit" [disabled]="postScheduleForm.invalid">Submit</button>
+      </form>
+    </div>
   </div>
 </div>
