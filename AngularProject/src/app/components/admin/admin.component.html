@@ -1,19 +1,44 @@
-<app-sidebar></app-sidebar>
+<div class="adminBackground">
+    <app-sidebar></app-sidebar>
 
-<h1 class="title">Dashboard</h1>
+    <h1 class="title">Dashboard</h1>
 
-<div class="counter-container">
+    <div class="counter-container">
+        <p-meterGroup [value]="value" labelPosition="start" class="p-meterGroup">
+            <ng-template pTemplate="label">
+                <div class="flex flex-wrap gap-3" style="justify-content: center;">
+                    <ng-container *ngFor="let meterItem of value; let index = index">
+                        <p-card class="card1">
+                            <div class="content-box" style="width: 150px; ">
+                                <span class="icons">
+                                    <i [class]="meterItem.icon"></i>
+                                </span>
+                                <div class="flex flex-column gap-1">
+                                    <span class="text-secondary text-sm">{{ meterItem.label }}</span>
+                                    <span class="font-bold text-lg">{{ meterItem.value }}</span>
+                                </div>
+                                
+                            </div>
+                        </p-card>
+                    </ng-container>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="meter" let-value let-class="class" let-width="size">
+                <span [class]="class" [style]="{ background: 'linear-gradient(to right, ' + value.color + ', ' + value.color + ')', width: size }"></span>
+            </ng-template>
+            
+        </p-meterGroup>
+    </div>
 
-    <p-chart class = "chart" type="pie" [data]="data" [options]="options" />
 
-    <div class="small-container">Container 2</div>
-    <div class="small-container">Container 3</div>
-    <div class="small-container">Container 4</div>
+
+
+
+    <div class="main-container">
+        <div class="chart">
+            <p-chart type="bar" [data]="data" [options]="options" />
+        </div>
+    </div>
+        
 </div>
 
-
-
-
-<div class="main-container">
-    
-</div>

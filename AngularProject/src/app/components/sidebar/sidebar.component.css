@@ -7,13 +7,15 @@
 .custom-button {
     background: linear-gradient(to right, #fefefe, #2d2c2cc3);
     color: black;
-    border: 2px solid white;
+    border: 2px solid black;
     padding: 10px 20px;
     cursor: pointer;
     font-size: 16px;
     border-radius: 2rem;
     display: inline-flex;
     align-items: center;
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
 .custom-button i {
