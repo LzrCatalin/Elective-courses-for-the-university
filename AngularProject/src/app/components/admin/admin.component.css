@@ -1,29 +1,30 @@
+.adminBackground {
+    background: linear-gradient(101deg, 
+        #4C3D40,
+        #C8B4D0, 
+        #F6EEF0, 
+        #BDB5C0
+        );
+    margin: -8px;
+}
+
+ 
 .title{
     font-size: 50px;
     font-family: Montserrat;
     margin-top: 0px;
     text-align: center;
+    color: black;
 }
 
 .counter-container{
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
+    width: 100%;
 }
 
-.small-container {
-    width: 250px;
-    height: 125px;
-    border: 1px solid white;
-    border-radius: 3rem;
-    margin-right: 70px;
-    margin-top: -50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(to right, #808080, #000000);
-    color: white;
-}
 
 .main-container{
     display: flex;
@@ -67,8 +68,111 @@
     color: black;
 
 }
-
+.card1{
+    margin-right: 20px;
+    margin-left: 20px;
+}
 /* Style for the button */
 .first-container p-button {
     margin-top: 30px; 
+}
+
+.chart {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 530px; 
+    margin: 0 auto; 
+    background: linear-gradient(to right, #4C3D40, #C8B4D0);
+    border-radius: 30px;
+  }
+  
+/* Add the gradient background using the :before pseudo-element */
+.chart:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, #eceaeb, #e4e5e8); 
+    z-index: -1; 
+    border-radius: 30px; 
+}
+
+
+/* Ensure the chart itself has a higher z-index */
+.chart canvas {
+    position: relative;
+    z-index: 1;
+}
+
+.p-meterGroup {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 30px;
+    background: linear-gradient(to right, #4C3D40, #C8B4D0); /* Gradient background */
+    width: 100%;
+    max-width: 800px; /* Ensure it doesn't get too wide */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add some shadow for depth */
+}
+
+
+.p-meterGroup .p-card .p-card-body {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    width: 200px;
+}
+
+
+
+.p-meterGroup .flex.flex-wrap {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto; 
+    width: 100%;
+}
+.p-meterGroup .p-card {
+    flex: 0 0 200px;
+    margin-right: 10px; 
+    ;
+}
+
+.p-meterGroup .p-card .flex {
+    align-items: center;
+}
+
+.p-meterGroup .p-card .border-circle {
+    background: linear-gradient(to right, #42A5F5, #66BB6A); /* Gradient for the icons */
+    width: 2rem;
+    height: 2rem;
+}
+
+.p-meterGroup .p-card .text-sm {
+    font-size: 14px;
+}
+
+.p-meterGroup .p-card .text-lg {
+    font-size: 18px;
+}
+
+.p-meterGroup .flex {
+    width: 100%;
+}
+
+.p-meterGroup .flex.justify-content-between {
+    justify-content: space-between;
+}
+
+.p-meterGroup .relative {
+    position: relative;
+    width: 100%;
+}
+
+.p-meterGroup .relative .absolute {
+    position: absolute;
+    right: 0;
 }

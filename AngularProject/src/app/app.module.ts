@@ -35,6 +35,8 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ChartModule } from 'primeng/chart';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { BadgeModule } from 'primeng/badge';
+import { MeterGroupModule } from 'primeng/metergroup';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -79,6 +81,8 @@ import { BadgeModule } from 'primeng/badge';
     ChartModule,
     PanelMenuModule,
     BadgeModule,
+    MeterGroupModule,
+    CardModule,
   ],
   providers: [
     provideClientHydration(),
