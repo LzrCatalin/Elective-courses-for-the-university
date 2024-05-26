@@ -1,60 +1,64 @@
-<app-sidebar></app-sidebar>
+<div class="schedulesBackground">
+    <app-sidebar></app-sidebar>
 
-
-<div class="table2-container">
-    <p-table class="table2"
-        [value]="schedules" 
-        styleClass="p-datatable-gridlines" 
-        [tableStyle]="{ 'min-width': '50rem' }"
-        [paginator]="true"
-        [rows]="5"
-        [tableStyle]="{ 'min-width': '50rem' }"
-        [rowsPerPageOptions]="[5, 10, 20]">
-        
-            <ng-template pTemplate="header">
-            <tr>
-                <th>id</th>
-                <th>courseName</th>
-                <th>startTime</th>
-                <th>endTime</th>
-                <th>weekDay</th>
-                <th>weekParity</th>
-            </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-schedule>
-            <tr>
-                <td>{{schedule.id}}</td>
-                <td>{{schedule.course.name}}</td>
-                <td>{{schedule.startTime}}</td>
-                <td>{{schedule.endTime}}</td>
-                <td>{{schedule.weekDay}}</td>
-                <td>{{schedule.weekParity}}</td>
-                <td>
-                    <button class="btn-edit" label="Edit" (click)="editSchedule(schedule)"></button>
-                    <button class="btn-delete" severity="danger" (click)="deleteSchedule(schedule.id)"></button>
-                </td>
-            </tr>
-            </ng-template>
-    </p-table>
-</div>
-
-<!-- Edit schedule -->
-
-<div class="course-edit-container">
-    <div class="course-edit" *ngIf="editedSchedule">
-        <form class = "edit-form">
-            <h3>Edit course schedule</h3>
-            <!-- Input fields for editing course schedule details -->
-            <input class = "input-form" type="text" [(ngModel)]="editedSchedule.startTime" name="startTime" placeholder="Start time"><br>
-            <input class = "input-form" type="text" [(ngModel)]="editedSchedule.endTime" name="endTime" placeholder="End time"><br>
-            <input class = "input-form" type="text" [(ngModel)]="editedSchedule.weekDay" name="weekDay" placeholder="Week day"><br>
-            <input class = "input-form" type="text" [(ngModel)]="editedSchedule.weekParity" name="weekParity" placeholder="Week parity"><br>
+    <div class="title">
+        <h1>Available schedules:</h1>
+    </div>
+    <div class="table2-container">
+        <p-table class="table2"
+            [value]="schedules" 
+            styleClass="p-datatable-gridlines" 
+            [tableStyle]="{ 'min-width': '50rem' }"
+            [paginator]="true"
+            [rows]="5"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            [rowsPerPageOptions]="[5, 10, 20]">
             
-            <!-- Button functionalities for each course schedule -->
-            <div class = "btn-container">
-                <button class = "btn-update" type="button" (click)="updateSchedule()">Update</button>
-                <button class = "btn-cancel-edit" type="button" (click)="cancelEdit()">Cancel</button>
-            </div>
-        </form>
+                <ng-template pTemplate="header">
+                <tr>
+                    <th>id</th>
+                    <th>courseName</th>
+                    <th>startTime</th>
+                    <th>endTime</th>
+                    <th>weekDay</th>
+                    <th>weekParity</th>
+                </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-schedule>
+                <tr>
+                    <td>{{schedule.id}}</td>
+                    <td>{{schedule.course.name}}</td>
+                    <td>{{schedule.startTime}}</td>
+                    <td>{{schedule.endTime}}</td>
+                    <td>{{schedule.weekDay}}</td>
+                    <td>{{schedule.weekParity}}</td>
+                    <td>
+                        <button class="btn-edit" label="Edit" (click)="editSchedule(schedule)"></button>
+                        <button class="btn-delete" severity="danger" (click)="deleteSchedule(schedule.id)"></button>
+                    </td>
+                </tr>
+                </ng-template>
+        </p-table>
+    </div>
+
+    <!-- Edit schedule -->
+
+    <div class="course-edit-container">
+        <div class="course-edit" *ngIf="editedSchedule">
+            <form class = "edit-form">
+                <h3>Edit course schedule</h3>
+                <!-- Input fields for editing course schedule details -->
+                <input class = "input-form" type="text" [(ngModel)]="editedSchedule.startTime" name="startTime" placeholder="Start time"><br>
+                <input class = "input-form" type="text" [(ngModel)]="editedSchedule.endTime" name="endTime" placeholder="End time"><br>
+                <input class = "input-form" type="text" [(ngModel)]="editedSchedule.weekDay" name="weekDay" placeholder="Week day"><br>
+                <input class = "input-form" type="text" [(ngModel)]="editedSchedule.weekParity" name="weekParity" placeholder="Week parity"><br>
+                
+                <!-- Button functionalities for each course schedule -->
+                <div class = "btn-container">
+                    <button class = "btn-update" type="button" (click)="updateSchedule()">Update</button>
+                    <button class = "btn-cancel-edit" type="button" (click)="cancelEdit()">Cancel</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

@@ -1,9 +1,19 @@
-/* Resetting default browser styles */
+.schedulesBackground{
+  background: linear-gradient(101deg, 
+        #4C3D40,
+        #C8B4D0, 
+        #F6EEF0, 
+        #BDB5C0
+        );
+    margin: -8px;
+    height: 100vh;
+}
 
 .title{
     font-size: 50px;
     font-family: Montserrat;
     margin-left: 20px;
+    margin-bottom: -60px;
   }
   
   .dropdown-container{

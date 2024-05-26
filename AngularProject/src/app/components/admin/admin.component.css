@@ -8,7 +8,6 @@
     margin: -8px;
 }
 
- 
 .title{
     font-size: 50px;
     font-family: Montserrat;
@@ -24,7 +23,6 @@
     padding: 20px;
     width: 100%;
 }
-
 
 .main-container{
     display: flex;
@@ -45,6 +43,7 @@
     border-radius: 3rem;
     background: #a2b9bc;
 }
+
 .second-container{
     width: 500px;
     height: 500px;
@@ -58,7 +57,6 @@
        
 }
 
-/* Style for the title */
 .secondtitle {
     margin-bottom:25px;
     font-size: 30px;
@@ -68,11 +66,12 @@
     color: black;
 
 }
+
 .card1{
     margin-right: 20px;
     margin-left: 20px;
 }
-/* Style for the button */
+
 .first-container p-button {
     margin-top: 30px; 
 }
@@ -86,8 +85,7 @@
     background: linear-gradient(to right, #4C3D40, #C8B4D0);
     border-radius: 30px;
   }
-  
-/* Add the gradient background using the :before pseudo-element */
+
 .chart:before {
     content: '';
     position: absolute;
@@ -100,8 +98,6 @@
     border-radius: 30px; 
 }
 
-
-/* Ensure the chart itself has a higher z-index */
 .chart canvas {
     position: relative;
     z-index: 1;
@@ -119,15 +115,14 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add some shadow for depth */
 }
 
-
 .p-meterGroup .p-card .p-card-body {
     font-size: 16px;
     font-weight: 600;
     margin: 0;
     width: 200px;
+    text-align: center;
+    align-items: center;
 }
-
-
 
 .p-meterGroup .flex.flex-wrap {
     display: flex;
@@ -135,10 +130,10 @@
     overflow-x: auto; 
     width: 100%;
 }
+
 .p-meterGroup .p-card {
     flex: 0 0 200px;
     margin-right: 10px; 
-    ;
 }
 
 .p-meterGroup .p-card .flex {
@@ -176,3 +171,22 @@
     position: absolute;
     right: 0;
 }
+
+.icons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}   
+
+.icons i {
+    font-size: 24px;
+    color: #333;
+}
+

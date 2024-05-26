@@ -96,7 +96,7 @@ export class AdminComponent{
 
 			this.value = [
 				{ label: 'Students', value: 40, color: '#42A5F5', icon: 'pi pi-user',},
-				{ label: 'Courses', value: 30, color: '#FFA726', icon: 'pi pi-box' },
+				{ label: 'Courses', value: 30, color: '#FFA726', icon: 'pi pi-book' },
 				{ label: 'Read-Only', color: '#AB47BC', icon: 'pi pi-exclamation-triangle' },
 			];
 		  }

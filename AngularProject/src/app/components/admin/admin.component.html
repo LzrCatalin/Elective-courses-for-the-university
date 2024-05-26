@@ -6,7 +6,7 @@
     <div class="counter-container">
         <p-meterGroup [value]="value" labelPosition="start" class="p-meterGroup">
             <ng-template pTemplate="label">
-                <div class="flex flex-wrap gap-3" style="justify-content: center;">
+                <div class="flex flex-wrap gap-3" style="justify-content: center; text-align: center;">
                     <ng-container *ngFor="let meterItem of value; let index = index">
                         <p-card class="card1">
                             <div class="content-box" style="width: 150px; ">
@@ -17,7 +17,6 @@
                                     <span class="text-secondary text-sm">{{ meterItem.label }}</span>
                                     <span class="font-bold text-lg">{{ meterItem.value }}</span>
                                 </div>
-                                
                             </div>
                         </p-card>
                     </ng-container>
