@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -48,7 +49,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Override
 	public List<Student> getStudentsOfCourse(Long courseId, Status status) {
-		return applicationRepository.findStudentsThatAppliedCourse(courseId, status);
+		return applicationRepository.findStudentsThatAppliedCourse(courseId, Arrays.asList(status, Status.REASSIGNED));
 	}
 
 	@Override
@@ -154,53 +155,60 @@ public class ApplicationServiceImpl implements ApplicationService {
 		// Validate student id
 		Student student = studentRepository.findById(studentId).orElseThrow(EntityNotFoundException::new);
 
-		logger.info("Received course in function: " + courseName);
+//		logger.info("Received course in function: " + courseName);
 		// Validate course id
 		Course course = courseRepository.findByName(courseName);
-		logger.info("Course found with id {}", course.getId());
+//		logger.info("Course found with id {}", course.getId());
 
-		logger.info("Received new course in function: " + newCourseName);
+//		logger.info("Received new course in function: " + newCourseName);
 		// Validate course id
 		Course newCourse = courseRepository.findByName(newCourseName);
-		logger.info("New course found with id {}", newCourse.getId());
+//		logger.info("New course found with id {}", newCourse.getId());
 
 		// Validate application by student and course ids
 		Application application = applicationRepository.findByStudentIdAndCourseId(studentId, course.getId());
-		logger.info("Found application: " + application.getId());
+//		logger.info("Found application: " + application.getId());
+		Application wantedApplication = applicationRepository.findByStudentIdAndCourseId(studentId, newCourse.getId());
 
+		logger.info("AJUNGE ...");
 		// Get course capacity info
-		int newCourseEnrolls = applicationRepository.countCourseAcceptedStudents(newCourse.getId());
-		logger.info("New course enrolls number: " + newCourseEnrolls);
-		logger.info("New course capacity: " + newCourse.getMaxCapacity());
+		int newCourseEnrolls = applicationRepository.getCourseAcceptedStudents(newCourse.getId()).size();
 
-		// Get a list of student enrolls
-		List<Course> studentEnrolledCourses = applicationRepository.findAcceptedCourseIdsByStudentId(studentId);
-		studentEnrolledCourses.remove(course);
+		logger.info("TRECE ...");
+//		logger.info("New course enrolls number: " + newCourseEnrolls);
+//		logger.info("New course capacity: " + newCourse.getMaxCapacity());
 
-		for (Course oldCourse: studentEnrolledCourses) {
-			logger.info("New course name: " + newCourseName);
-			logger.info("New course category: " + newCourse.getCategory());
-			logger.info("================================================");
-			logger.info("Old course name: " + oldCourse.getName());
-			logger.info("Old course category: " + oldCourse.getCategory());
+		List<String> studentEnrolledCategories = applicationRepository.findAcceptedCourseCategoriesByStudentId(studentId);
+		studentEnrolledCategories.remove(course.getCategory());
 
-			// Check duplicate category
-			if (!newCourse.getCategory().equals(oldCourse.getCategory()) &&
-					// Validate study year
-			student.getStudyYear().equals(newCourse.getStudyYear()) &&
-					// Validate capacity number of wanted course
-					newCourseEnrolls < newCourse.getMaxCapacity()) {
+		if (application == wantedApplication) {
+			logger.info("Can not reassign at the same course ... :P ");
+			return applicationRepository.save(application);
+		}
 
+		if (student.getStudyYear().equals(newCourse.getStudyYear()) &&
+				!studentEnrolledCategories.contains(newCourse.getCategory()) &&
+				newCourseEnrolls < newCourse.getMaxCapacity()) {
+
+			if (wantedApplication == null) {
+
+				logger.info("Can not find any application for the new course assign.");
 				application.setStudent(student);
 				application.setCourse(newCourse);
 				application.setPriority(0);
 				application.setStatus(Status.REASSIGNED);
 
-				logger.info("Successfully assigned student to a new course");
 				return applicationRepository.save(application);
 
 			} else {
-				logger.info("SECOND IF STATEMENT ... ");
+				logger.info("Found application for the new course assign.");
+				wantedApplication.setStatus(Status.REASSIGNED);
+				wantedApplication.setPriority(0);
+
+				application.setStatus(Status.REJECTED);
+				application.setPriority(-1);
+
+				return applicationRepository.save(wantedApplication);
 			}
 		}
 

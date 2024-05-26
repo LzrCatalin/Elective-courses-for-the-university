@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -107,7 +108,7 @@ public class PDFServiceImpl {
 		Course course = courseRepository.findById(courseId).orElseThrow(EntityNotFoundException::new);
 		logger.info("Course name: " + course.getName());
 
-		List<Student> students = applicationRepository.findStudentsThatAppliedCourse(courseId, status);
+		List<Student> students = applicationRepository.findStudentsThatAppliedCourse(courseId, Arrays.asList(status, Status.REASSIGNED));
 		logger.info("Get accepted students: ");
 		for (Student student : students) {
 			logger.info("Student name: " + student.getName());

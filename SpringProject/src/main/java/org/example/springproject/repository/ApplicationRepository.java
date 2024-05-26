@@ -16,10 +16,10 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 	Application findByPriorityAndStudentId(Integer priority, Long studentId);
 	List<Application> findApplicationsByStudentId(Long id);
 	Application findByStudentIdAndCourseId(Long studentId, Long courseId);
-	@Query("select a.student" +
-			" from Application a " +
-			"where a.course.id = :courseId and a.status = :status")
-	List<Student> findStudentsThatAppliedCourse(@Param("courseId") Long courseId, Status status);
+	@Query("SELECT a.student " +
+			"FROM Application a " +
+			"WHERE a.course.id = :courseId AND a.status IN :statuses")
+	List<Student> findStudentsThatAppliedCourse(@Param("courseId") Long courseId, @Param("statuses") List<Status> statuses);
 
 	@Query("select a.priority" +
 			" from Application a " +
@@ -38,13 +38,24 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 	@Query("SELECT c FROM Course c " +
 			"WHERE c.maxCapacity > " +
 			"(SELECT COUNT(a.id) FROM Application a " +
-			"WHERE a.course = c AND a.status = 'ACCEPTED') " +
-			"ORDER BY (SELECT (c.maxCapacity - COUNT(a.id)) FROM Application a WHERE a.course = c AND a.status = 'ACCEPTED') DESC")
+			"WHERE a.course = c AND a.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)) " +
+			"ORDER BY (SELECT (c.maxCapacity - COUNT(a.id)) FROM Application a " +
+			"WHERE a.course = c AND a.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)) DESC")
+
 	List<Course> findAvailableCourses();
 
-	@Query("SELECT a.course FROM Application a WHERE a.student.id = :studentId AND a.status = 'ACCEPTED'")
-	List<Course> findAcceptedCourseIdsByStudentId(@Param("studentId") Long studentId);
+	@Query("SELECT a.course FROM Application a WHERE a.student.id = :studentId")
+	List<Course> findCourseIdsByStudentId(@Param("studentId") Long studentId);
 
-	@Query("SELECT COUNT(DISTINCT a.student.id) FROM Application a WHERE a.course.id = :courseId AND a.status = 'ACCEPTED'")
-	int countCourseAcceptedStudents(@Param("courseId") Long courseId);
+	@Query("SELECT DISTINCT a.student FROM Application a " +
+			"WHERE a.course.id = :courseId AND a.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)")
+	List<Student> getCourseAcceptedStudents(@Param("courseId") Long courseId);
+
+	@Query("SELECT DISTINCT a.course.teacher FROM Application a " +
+			"WHERE a.course.id = :courseId AND a.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)")
+	String getCourseTeachers(@Param("courseId") Long courseId);
+	@Query("SELECT DISTINCT c.category FROM Course c " +
+			"JOIN Application a ON c = a.course " +
+			"WHERE a.student.id = :studentId AND a.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)")
+	List<String> findAcceptedCourseCategoriesByStudentId(@Param("studentId") Long studentId);
 }
