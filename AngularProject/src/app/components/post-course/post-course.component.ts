@@ -2,19 +2,25 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CourseService } from '../../services/course.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
 
 @Component({
 selector: 'app-post-course',
 templateUrl: './post-course.component.html',
-styleUrl: './post-course.component.css'
+styleUrl: './post-course.component.css',
+providers: [MessageService]
 })
 export class PostCourseComponent {
 postCourseForm: FormGroup = new FormGroup({});
 facultysections: string[] = [];
+errorMessage: string = '';
+
 
 constructor(private courseService:CourseService,
 	private fb:FormBuilder,
-	private router: Router) { }
+	private router: Router,
+	private messageService: MessageService) { }
 
 ngOnInit() {
 	this.postCourseForm = this.fb.group({
@@ -26,6 +32,10 @@ ngOnInit() {
 	maxCapacity: [null, Validators.required],
 	});
 	this.loadFacultySections();
+}
+
+showMessage(severity: string, summary: string, detail: string): void {
+	this.messageService.add({ severity: severity, summary: summary, detail: detail });
 }
 
 loadFacultySections() {
@@ -53,6 +63,8 @@ postCourse() {
 			},
 			(error) => {
 				console.log("Error ! ! !")
+				this.errorMessage = error.error;
+				this.showMessage('error', 'Add Course Error', this.errorMessage);
 			}
 		);
 	}
