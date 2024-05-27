@@ -33,21 +33,21 @@ public class CourseServiceImpl implements CourseService {
     public Course addCourse(String name, String category, Integer studyYear, String teacher, Integer maxCapacity, FacultySection facultySection){
         // Verify name
         if(!NameValidator.validateString(name)) {
-            throw new InvalidNameException("Error: Name string contains only digits.");
+            throw new InvalidNameException("Name string contains only digits.");
         }
 
         // Verify category
         if(!NameValidator.validateString(category)) {
-            throw new InvalidNameException("Error: Category string contains only digits.");
+            throw new InvalidNameException("Category string contains only digits.");
         }
 
         // Verify teacher
         if(!NameValidator.validateString(teacher)) {
-            throw new InvalidNameException("Error: Teacher string contains only digits.");
+            throw new InvalidNameException("Teacher string contains only digits.");
         }
 
         // Verify course's capacity info
-        if (maxCapacity <= 0 || maxCapacity > 50) {
+        if (maxCapacity <= 0 || maxCapacity > 100) {
             throw new InvalidCapacityException("The provided capacity value is unrealistic. Capacity must be a realistic number, typically not greater than 50.");
         }
 
@@ -67,17 +67,17 @@ public class CourseServiceImpl implements CourseService {
 
         // verify course name
         if(!NameValidator.validateString(name)) {
-            throw new InvalidNameException("Error: Name string contains only digits.");
+            throw new InvalidNameException("Name string contains only digits.");
         }
 
         // Verify category
         if(!NameValidator.validateString(category)) {
-            throw new InvalidNameException("Error: Category string contains only digits.");
+            throw new InvalidNameException("Category string contains only digits.");
         }
 
         // Verify teacher name
         if(!NameValidator.validateString(teacher)) {
-            throw new InvalidNameException("Error: Teacher string contains only digits.");
+            throw new InvalidNameException("Teacher string contains only digits.");
         }
 
         // Verify study year

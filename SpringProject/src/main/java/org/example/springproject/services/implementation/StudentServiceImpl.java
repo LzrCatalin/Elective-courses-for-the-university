@@ -45,7 +45,7 @@ public class StudentServiceImpl implements StudentService {
 	public Student addStudent(String name, Integer studyYear, Float grade, FacultySection facultySection) {
 		// Verify inserted name
 		if (!NameValidator.validateString(name)) {
-			throw new InvalidNameException("Error: The string contains only digits.");
+			throw new InvalidNameException("The name contains only digits.");
 		}
 
 		// Verify inserted grade
@@ -76,7 +76,7 @@ public class StudentServiceImpl implements StudentService {
 
 		// Verify inserted name
 		if (!NameValidator.validateString(name)) {
-			throw new InvalidNameException("Error: The string contains only digits.");
+			throw new InvalidNameException("The string contains only digits.");
 		}
 
 		// Verify inserted grade
