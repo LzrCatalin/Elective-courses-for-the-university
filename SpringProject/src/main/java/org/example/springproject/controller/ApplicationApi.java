@@ -64,7 +64,8 @@ public class ApplicationApi {
 		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 
-		} catch (MismatchedFacultySectionException | MismatchedIdTypeException | InvalidStudyYearException | DuplicatePriorityException | IllegalArgumentException e) {
+		} catch (MismatchedFacultySectionException | MismatchedIdTypeException | InvalidStudyYearException | DuplicatePriorityException | IllegalArgumentException
+		| InvalidPriorityException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -139,6 +140,9 @@ public class ApplicationApi {
 
 		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>("Application id: " + id + " not found.", HttpStatus.NOT_FOUND);
+
+		} catch (InvalidPriorityException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 }

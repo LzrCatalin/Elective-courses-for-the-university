@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.management.InvalidAttributeValueException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -103,6 +104,11 @@ public class ApplicationServiceImpl implements ApplicationService {
 		List<Long> appliedCoursesIDs = applicationRepository.findStudentAppliedCoursesId(studentId);
 		if (appliedCoursesIDs.contains(course.getId())) {
 			throw new IllegalArgumentException("Student has already applied for this course.");
+		}
+
+		// Verify priority input
+		if (priority <= 0 || priority > 100) {
+			throw new InvalidPriorityException("Priority needs to be greater than 0.");
 		}
 
 		// Verify facultySection
@@ -231,6 +237,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 	public Application updateApplicationAsStudent(Long id, Integer priority) {
 		logger.info("Wanted priority: " + priority);
 		Application application = applicationRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+		if (priority <= 0 || priority > 100) {
+			throw new InvalidPriorityException("Priority needs to be greater than 0.");
+		}
 
 		List<Integer> studentPriorities = applicationRepository.findStudentPriorities(application.getStudent().getId());
 		logger.info("Priorities: " + studentPriorities);

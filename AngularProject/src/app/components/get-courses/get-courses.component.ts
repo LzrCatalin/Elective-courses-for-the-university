@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../../services/course.service';
 import { ReadOnlyService } from '../../services/read-only.service';
 import { ApplicationsService } from '../../services/applications.service';
-import { max } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-get-courses',
   templateUrl: './get-courses.component.html',
-  styleUrls: ['./get-courses.component.css']
+  styleUrls: ['./get-courses.component.css'],
+  providers: [MessageService]
 })
 export class GetCoursesComponent implements OnInit {
 
@@ -22,11 +23,14 @@ export class GetCoursesComponent implements OnInit {
   selectedStudent: any;
   newCourse: string = '';
   readOnly: boolean = false;
+  errorMessage: string = '';
 
 
   constructor(private courseService: CourseService, 
     private readonlyService: ReadOnlyService,
-    private applicationService: ApplicationsService) {}
+    private applicationService: ApplicationsService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {
     this.getAllCourses();
@@ -36,6 +40,10 @@ export class GetCoursesComponent implements OnInit {
         this.readOnly = res;
       }
     )
+  }
+
+  showMessage(severity: string, summary: string, detail: string): void {
+    this.messageService.add({ severity: severity, summary: summary, detail: detail });
   }
 
   // Fetch all courses
@@ -114,6 +122,8 @@ export class GetCoursesComponent implements OnInit {
         },
         (error) => {
           console.log("Error ! ! !")
+          this.errorMessage = error.error;
+					this.showMessage('error', 'Update Course Error', this.errorMessage);
         }
       )
     }
@@ -128,8 +138,9 @@ export class GetCoursesComponent implements OnInit {
         console.log("Course deleted successfully")
         location.reload()
       }, (error) => {
-        console.error("Error deleting the course: ", error);
         console.log("Error deleting the course")
+        this.errorMessage = error.error;
+				this.showMessage('error', 'Delete Course Error', this.errorMessage);
         location.reload()
       }); 
     }
@@ -147,9 +158,11 @@ export class GetCoursesComponent implements OnInit {
             (error) => {
                 // Handle error
                 console.error('Error updating course:', error);
+                this.errorMessage = error.error;
+					    this.showMessage('error', 'Assign Student Error', this.errorMessage);
             }
         );
-}
+  }
 
   clearDropdown() {
     this.selectedCourse = null;

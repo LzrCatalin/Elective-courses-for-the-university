@@ -4,11 +4,13 @@ import { ApplicationsService } from '../../services/applications.service';
 import { ActivatedRoute } from '@angular/router';
 import { ReadOnlyService } from '../../services/read-only.service';
 import { ScheduleService } from '../../services/schedule.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
 	selector: 'app-get-applications',
 	templateUrl: './get-applications.component.html',
-	styleUrls: ['./get-applications.component.css']
+	styleUrls: ['./get-applications.component.css'],
+	providers: [MessageService]
 })
 export class GetApplicationsComponent implements OnInit {
 	applications: any[] = [];
@@ -23,12 +25,14 @@ export class GetApplicationsComponent implements OnInit {
 	readOnly: boolean = false;
 	schedules: any[] = [];
 	showSchedules: boolean = false;
+	errorMessage: string = '';
 
 	constructor(
 		private route: ActivatedRoute,
 		private applicationsService: ApplicationsService,
 		private readOnlyService: ReadOnlyService,
 		private scheduleService: ScheduleService,
+		private messageService: MessageService
 	) {}
 
 	ngOnInit(): void {
@@ -54,6 +58,10 @@ export class GetApplicationsComponent implements OnInit {
 			{ field: 'status', header: 'Status' }
 		];
 	}
+
+	showMessage(severity: string, summary: string, detail: string): void {
+        this.messageService.add({ severity: severity, summary: summary, detail: detail });
+    }
 
 	toggleFormVisibility(): void {
 		this.showForm = !this.showForm;
@@ -122,6 +130,8 @@ export class GetApplicationsComponent implements OnInit {
 				},
 				error => {
 					console.error('Error adding application:', error);
+					this.errorMessage = error.error;
+					this.showMessage('error', 'Add Application Error', this.errorMessage);
 				}
 			);
 		} else {
@@ -138,6 +148,8 @@ export class GetApplicationsComponent implements OnInit {
 				},
 				error => {
 					console.error('Error updating application:', error);
+					this.errorMessage = error.error;
+					this.showMessage('error', 'Update Application Error', this.errorMessage);
 				}
 			);
 		} else {
@@ -154,6 +166,8 @@ export class GetApplicationsComponent implements OnInit {
 				},
 				error => {
 					console.error('Error deleting application:', error);
+					this.errorMessage = error.error;
+					this.showMessage('error', 'Delete Application Error', this.errorMessage);
 				}
 			);
 		}
@@ -173,8 +187,10 @@ export class GetApplicationsComponent implements OnInit {
                     this.schedules = res; 
                     this.showSchedules = true;
                 },
-                (err) => {
-                    console.log("Error", err);
+                (error) => {
+                    console.log("Error", error);
+					this.errorMessage = error.error;
+					this.showMessage('error', 'Failed to fetch schedules', this.errorMessage);
                 }
             );
         }

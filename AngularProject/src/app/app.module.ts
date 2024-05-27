@@ -37,6 +37,8 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { BadgeModule } from 'primeng/badge';
 import { MeterGroupModule } from 'primeng/metergroup';
 import { CardModule } from 'primeng/card';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 
 @NgModule({
   declarations: [
@@ -83,6 +85,9 @@ import { CardModule } from 'primeng/card';
     BadgeModule,
     MeterGroupModule,
     CardModule,
+    MessagesModule,
+    MessageModule,
+    
   ],
   providers: [
     provideClientHydration(),

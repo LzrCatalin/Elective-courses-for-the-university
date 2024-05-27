@@ -31,7 +31,7 @@ public class AdminServiceImpl implements AdminService {
 	public Admin addAdmin(String name) {
 		// Verify inserted name
 		if(!NameValidator.validateString(name)) {
-			throw new InvalidNameException("Error: The string contains only digits.");
+			throw new InvalidNameException("The string contains only digits.");
 		}
 
 		// Create admin object
@@ -54,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
 
 		// Verify inserted name
 		if(!NameValidator.validateString(name)) {
-			throw new InvalidNameException("Error: The string contains only digits.");
+			throw new InvalidNameException("The string contains only digits.");
 		}
 
 		// Set the new values of attributes
