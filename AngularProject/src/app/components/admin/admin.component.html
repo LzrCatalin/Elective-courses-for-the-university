@@ -8,8 +8,8 @@
             <ng-template pTemplate="label">
                 <div class="flex flex-wrap gap-3" style="justify-content: center; text-align: center;">
                     <ng-container *ngFor="let meterItem of value; let index = index">
-                        <p-card class="card1">
-                            <div class="content-box" style="width: 150px; ">
+                        <p-card class="card1" [style.backgroundColor]="meterItem.label === 'Read-Only' ? meterItem.color : 'inherit'">
+                            <div class="content-box" style="width: 100px; height:100px">
                                 <span class="icons">
                                     <i [class]="meterItem.icon"></i>
                                 </span>
@@ -23,21 +23,14 @@
                 </div>
             </ng-template>
             <ng-template pTemplate="meter" let-value let-class="class" let-width="size">
-                <span [class]="class" [style]="{ background: 'linear-gradient(to right, ' + value.color + ', ' + value.color + ')', width: size }"></span>
+                <span [class]="class" [style]="{ background: 'linear-gradient(to right, ' + value.color + ', ' + value.color + ')'}"></span>
             </ng-template>
-            
         </p-meterGroup>
     </div>
 
-
-
-
-
     <div class="main-container">
         <div class="chart">
-            <p-chart type="bar" [data]="data" [options]="options" />
+            <p-chart type="bar" [data]="data" [options]="options"></p-chart>
         </div>
     </div>
-        
 </div>
-
