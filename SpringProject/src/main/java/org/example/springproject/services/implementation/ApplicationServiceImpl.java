@@ -6,10 +6,7 @@ import org.example.springproject.entity.Application;
 import org.example.springproject.entity.Course;
 import org.example.springproject.entity.Student;
 import org.example.springproject.enums.Status;
-import org.example.springproject.exceptions.DuplicatePriorityException;
-import org.example.springproject.exceptions.InvalidStudyYearException;
-import org.example.springproject.exceptions.MismatchedFacultySectionException;
-import org.example.springproject.exceptions.MismatchedIdTypeException;
+import org.example.springproject.exceptions.*;
 import org.example.springproject.repository.ApplicationRepository;
 import org.example.springproject.repository.CourseRepository;
 import org.example.springproject.repository.StudentRepository;
@@ -151,7 +148,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Override
 	public Application updateApplicationAsAdmin(Long studentId, String courseName, String newCourseName) {
-		logger.info("AM INTRAT IN FUNCTIA DIN SERVICE ... FII ATENT PROSTULE");
+//		logger.info("AM INTRAT IN FUNCTIA DIN SERVICE ... ");
 		// Validate student id
 		Student student = studentRepository.findById(studentId).orElseThrow(EntityNotFoundException::new);
 
@@ -163,6 +160,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 //		logger.info("Received new course in function: " + newCourseName);
 		// Validate course id
 		Course newCourse = courseRepository.findByName(newCourseName);
+		if (newCourse == null) {
+			throw new EntityNotFoundException("Course: " + newCourseName + " not found.");
+		}
+
 //		logger.info("New course found with id {}", newCourse.getId());
 
 		// Validate application by student and course ids
@@ -170,11 +171,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 //		logger.info("Found application: " + application.getId());
 		Application wantedApplication = applicationRepository.findByStudentIdAndCourseId(studentId, newCourse.getId());
 
-		logger.info("AJUNGE ...");
 		// Get course capacity info
 		int newCourseEnrolls = applicationRepository.getCourseAcceptedStudents(newCourse.getId()).size();
 
-		logger.info("TRECE ...");
 //		logger.info("New course enrolls number: " + newCourseEnrolls);
 //		logger.info("New course capacity: " + newCourse.getMaxCapacity());
 
@@ -182,8 +181,20 @@ public class ApplicationServiceImpl implements ApplicationService {
 		studentEnrolledCategories.remove(course.getCategory());
 
 		if (application == wantedApplication) {
-			logger.info("Can not reassign at the same course ... :P ");
-			return applicationRepository.save(application);
+			throw new DuplicateCourseAssignmentException("Can not assign student at the same course.");
+		}
+
+		if (!student.getStudyYear().equals(newCourse.getStudyYear())) {
+			throw new InvalidStudyYearException("Can not assign student to a different study year course. Student year: " + student.getStudyYear());
+		}
+
+		if (studentEnrolledCategories.contains(newCourse.getCategory())) {
+			throw new DuplicateCategoryAssignmentException("The student is already assigned to the category: " + course.getCategory());
+		}
+
+		if (newCourseEnrolls == newCourse.getMaxCapacity()) {
+			logger.info("New Course enrolls: " + newCourseEnrolls);
+			throw new CourseCapacityExceededException("The course " + newCourseName + " has no more available seats.");
 		}
 
 		if (student.getStudyYear().equals(newCourse.getStudyYear()) &&

@@ -18,4 +18,5 @@ public interface CourseScheduleService {
     void deleteCourseSchedule(Long id);
 
     CourseSchedule updateCourseSchedule(Long id, String startTime, String endTime, WeekDay weekDay, WeekParity weekParity);
+    List<CourseSchedule> displayStudentSchedules(Long studentId);
 }

@@ -51,9 +51,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 			"WHERE a.course.id = :courseId AND a.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)")
 	List<Student> getCourseAcceptedStudents(@Param("courseId") Long courseId);
 
-	@Query("SELECT DISTINCT a.course.teacher FROM Application a " +
-			"WHERE a.course.id = :courseId AND a.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)")
-	String getCourseTeachers(@Param("courseId") Long courseId);
 	@Query("SELECT DISTINCT c.category FROM Course c " +
 			"JOIN Application a ON c = a.course " +
 			"WHERE a.student.id = :studentId AND a.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)")

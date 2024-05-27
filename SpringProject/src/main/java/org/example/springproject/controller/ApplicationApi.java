@@ -108,7 +108,10 @@ public class ApplicationApi {
 			return new ResponseEntity<>("Application successfully updated.", HttpStatus.OK);
 
 		} catch (EntityNotFoundException e) {
-			return new ResponseEntity<>("Application not found.", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+
+		} catch (DuplicateCourseAssignmentException | CourseCapacityExceededException | DuplicateCategoryAssignmentException | InvalidStudyYearException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 
