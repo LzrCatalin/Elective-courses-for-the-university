@@ -32,6 +32,12 @@ public class CourseScheduleApi {
     public List<CourseSchedule> getAllCourseSchedule(){
         return courseScheduleService.getAllCourseSchedule();
     }
+
+    @GetMapping("/student-{studentId}")
+    public List<CourseSchedule> getStudentSchedules(@PathVariable("studentId") Long studentId) {
+        return courseScheduleService.displayStudentSchedules(studentId);
+    }
+
     @PostMapping("/")
     public ResponseEntity<String> addCourseSchedule(@RequestBody Map<String,Object> requestBody){
 

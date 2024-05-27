@@ -47,4 +47,8 @@ export class ApplicationsService {
 		};
 		return this.http.put(`${BASIC_URL}/applications/stud/${id}`, body);
 	}
+
+	allocationProcess() {
+		return this.http.get(`${BASIC_URL}/allocation`)
+	}
 }

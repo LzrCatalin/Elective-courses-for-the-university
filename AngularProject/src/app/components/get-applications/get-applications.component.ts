@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApplicationsService } from '../../services/applications.service';
 import { ActivatedRoute } from '@angular/router';
 import { ReadOnlyService } from '../../services/read-only.service';
+import { ScheduleService } from '../../services/schedule.service';
 
 @Component({
 	selector: 'app-get-applications',
@@ -20,11 +21,14 @@ export class GetApplicationsComponent implements OnInit {
 	editedPriority: number = 0;
 	selectedApplication: any;
 	readOnly: boolean = false;
+	schedules: any[] = [];
+	showSchedules: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
 		private applicationsService: ApplicationsService,
-		private readOnlyService: ReadOnlyService
+		private readOnlyService: ReadOnlyService,
+		private scheduleService: ScheduleService,
 	) {}
 
 	ngOnInit(): void {
@@ -154,4 +158,25 @@ export class GetApplicationsComponent implements OnInit {
 			);
 		}
 	}
+
+	getStudentSchedules(studentId: number): void {
+        console.log("Inside schedule display ... ");
+        console.log("Student id: " + studentId);
+
+        if (this.showSchedules) {
+            this.showSchedules = false;
+        } else {
+            this.scheduleService.displayStudentSchedules(studentId).subscribe(
+                (res) => {
+                    console.log("Successfully displayed ... ");
+                    console.log(res);
+                    this.schedules = res; 
+                    this.showSchedules = true;
+                },
+                (err) => {
+                    console.log("Error", err);
+                }
+            );
+        }
+    }
 }

@@ -96,11 +96,6 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
             existingCourses = repository.findCoursesAtSelectedTimeSlot(weekDay, Arrays.asList(weekParity, WeekParity.WEEKLY), startTime, endTime);
         }
 
-//        logger.info("Found course in the same timeslot : ");
-//        for(Course c : existingCourses) {
-//            logger.info(c.getName());
-//        }
-
         // Be sure not adding more schedules for a course
         int courseSchedules = repository.courseAppearances(course.getId());
         if (courseSchedules == 1) {
@@ -109,19 +104,26 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
 
         // Get a list of students and teachers for found course
         List<Student> courseStudents = applicationRepository.getCourseAcceptedStudents(course.getId());
-        String courseTeacher = applicationRepository.getCourseTeachers(course.getId());
+        // Get course teacher
+        String courseTeacher = course.getTeacher();
 
-        // For each found course , get list of students
+        // Check if there are no schedules at wanted timeslot
+        if (existingCourses.isEmpty()) {
+            CourseSchedule newCourseSchedule = new CourseSchedule(course,startTime,endTime,weekDay,weekParity);
+            return repository.save(newCourseSchedule);
+        }
+
+        // Iterate existing courses
         for (Course existingCourse : existingCourses) {
             /*
-            From list to arraylist, helps us to verify if students and teachers dont need to split
+            From list to arraylist, helps us to verify if students and teachers don't need to split
             for course attendance
              */
             List<Student> existingCourseStudents = applicationRepository.getCourseAcceptedStudents(existingCourse.getId());
             ArrayList<Student> checkStudentsList = new ArrayList<>(existingCourseStudents);
 
             // Get existing course teacher
-            String existingCourseTeacher = applicationRepository.getCourseTeachers(existingCourse.getId());
+            String existingCourseTeacher = existingCourse.getTeacher();
 
             // Remove all obj that exists in other list
             checkStudentsList.removeAll(courseStudents);
@@ -181,5 +183,10 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
 
         return repository.save(courseScheduleToBeUpdated);
 
+    }
+
+    @Override
+    public List<CourseSchedule> displayStudentSchedules(Long studentId) {
+        return repository.findCourseSchedulesForStudent(studentId);
     }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { ReadOnlyService } from '../../services/read-only.service';
+import { ApplicationsService } from '../../services/applications.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,8 +11,9 @@ import { ReadOnlyService } from '../../services/read-only.service';
 export class SidebarComponent implements OnInit {
   sidebarVisible: boolean = false;
   items: MenuItem[] = [];
+  allocationProcessActive: boolean = false;
 
-  constructor(public readOnlyService: ReadOnlyService) {}
+  constructor(public readOnlyService: ReadOnlyService, public applicationsService: ApplicationsService) {}
 
   ngOnInit() {
     this.items = [
@@ -48,10 +50,15 @@ export class SidebarComponent implements OnInit {
         icon: 'pi pi-fw pi-pencil',
         // Press yes to confirm
 
-        command: () => this.confirmToggleReadOnly()
+        command: () => this.confirmToggleReadOnly() 
 
 
       },
+      {
+        label: 'Allocation Process', 
+        icon: 'pi pi-fw pi-cog', 
+        command: () => this.allocationProcess()
+      }
     ];
   }
   toggleReadOnly() {
@@ -64,5 +71,16 @@ export class SidebarComponent implements OnInit {
     if (confirm("Are you sure you want to toggle read-only mode?")) {
       this.toggleReadOnly();
     }
+  }
+
+  allocationProcess() {
+    this.applicationsService.allocationProcess().subscribe(
+      () => {
+        console.log("Successfully")
+      },
+      (err) => {
+        console.log("Error")
+      }
+    )
   }
 }
