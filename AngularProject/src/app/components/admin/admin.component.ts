@@ -3,7 +3,7 @@ import { ReadOnlyService } from '../../services/read-only.service';
 import { StudentService } from '../../services/student.service';
 import { CourseService } from '../../services/course.service';
 import { MeterItem } from 'primeng/metergroup';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -13,10 +13,7 @@ import { Subscription } from 'rxjs';
 export class AdminComponent implements OnInit, OnDestroy {
   data: any;
   options: any;
-  chartData: any;
-  chartOptions: any;
-  value: MeterItem[] | undefined;
-  size: any;
+  value: MeterItem[] = [];
   readOnlySubscription: Subscription | undefined;
 
   constructor(
@@ -26,6 +23,18 @@ export class AdminComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.initializeChartData();
+    this.initializeMeterItems();
+  }
+
+  ngOnDestroy() {
+    // Clean up the subscription when the component is destroyed
+    if (this.readOnlySubscription) {
+      this.readOnlySubscription.unsubscribe();
+    }
+  }
+
+  private initializeChartData(): void {
     this.studentService.getFirstYearStudents().subscribe(
       (firstYearRes: any) => {
         this.studentService.getSecondYearStudents().subscribe(
@@ -94,33 +103,38 @@ export class AdminComponent implements OnInit, OnDestroy {
         ]
       }
     };
+  }
 
-    this.value = [
-      { label: 'Students', value: 40, color: '#42A5F5', icon: 'pi pi-user' },
-      { label: 'Courses', value: 30, color: '#FFA726', icon: 'pi pi-book' },
-      { label: 'Read-Only', color: '#AB47BC', icon: 'pi pi-exclamation-triangle' },
-    ];
+  private initializeMeterItems(): void {
+    forkJoin([
+      this.studentService.getAllStudents(),
+      this.courseService.getAllCourses()
+    ]).subscribe(
+      ([studentsRes, coursesRes]: [any, any]) => {
+        this.value = [
+          { label: 'Students', value: studentsRes.length, color: '#42A5F5', icon: 'pi pi-user' },
+          { label: 'Courses', value: coursesRes.length, color: '#FFA726', icon: 'pi pi-book' },
+          { label: 'Read-Only', value: null, color: '#AB47BC', icon: 'pi pi-exclamation-triangle' }
+        ];
+        this.subscribeToReadOnlyChanges();
+      },
+      err => {
+        console.log('Error fetching data:', err);
+      }
+    );
+  }
 
-    // Subscribe to read-only state changes to update the label color
+  private subscribeToReadOnlyChanges(): void {
     this.readOnlySubscription = this.readOnlyService.readOnly$.subscribe(currentState => {
       this.updateReadOnlyLabelColor(currentState);
     });
   }
 
-  ngOnDestroy() {
-    // Clean up the subscription when the component is destroyed
-    if (this.readOnlySubscription) {
-      this.readOnlySubscription.unsubscribe();
-    }
-  }
-
   private updateReadOnlyLabelColor(isReadOnly: boolean): void {
     const newColor = isReadOnly ? 'red' : '#e4e5e8';
-    if (this.value) {
-      const readOnlyItem = this.value.find(item => item.label === 'Read-Only');
-      if (readOnlyItem) {
-        readOnlyItem.color = newColor;
-      }
+    const readOnlyItem = this.value.find(item => item.label === 'Read-Only');
+    if (readOnlyItem) {
+      readOnlyItem.color = newColor;
     }
   }
 }

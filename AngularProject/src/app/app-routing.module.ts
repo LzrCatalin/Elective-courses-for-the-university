@@ -21,7 +21,7 @@ const routes: Routes = [
   {path : 'admin/schedule', component: GetSchedulesComponent},
   {path : 'admin/schedule/post', component : PostScheduleComponent},
   {path : 'admin/students', component: GetStudentsComponent},
-  {path : 'student', component : StudentComponent},
+  // {path : 'student', component : StudentComponent},
   {path : 'student/applications', component : GetApplicationsComponent},
   {path : 'student/:studentId/applications', component : GetApplicationsComponent}, 
   {path : 'student/:studentId/myprofile', component : MyprofileComponent},
