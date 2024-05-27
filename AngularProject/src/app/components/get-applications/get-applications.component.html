@@ -43,6 +43,49 @@
 	<button class="btn-add" (click)="toggleFormVisibility()">Add Application</button>
 </div>
 
+<div *ngIf="studentId && readOnly" class="btn-schedule-container">
+	<button class="btn-schedule" (click)="getStudentSchedules(studentId)">View Schedules</button>
+</div>
+
+<div *ngIf="showSchedules">
+    <div class="schedule-container">
+        <p-table [value]="schedules" [tableStyle]="{'min-width': '60rem'}" class="schedule-table">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="course.name" style="width:20%">
+                        Name <p-sortIcon field="course.name" />
+                    </th>
+                    <th pSortableColumn="weekDay" style="width:20%">
+                        Week Day <p-sortIcon field="weekDay" />
+                    </th>
+                    <th pSortableColumn="weekParity" style="width:20%">
+                        Week Parity <p-sortIcon field="weekParity" />
+                    </th>
+                    <th pSortableColumn="startTime" style="width:20%">
+                        Start Time <p-sortIcon field="startTime" />
+                    </th>
+                    <th pSortableColumn="endTime" style="width:20%">
+                        End Time <p-sortIcon field="endTime" />
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-schedule>
+                <tr>
+                    <td>{{ schedule.course.name }}</td>
+                    <td>{{ schedule.weekDay }}</td>
+                    <td>{{ schedule.weekParity }}</td>
+                    <td>{{ schedule.startTime }}</td>
+                    <td>{{ schedule.endTime }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+	<div *ngIf="!schedules || schedules.length === 0" class="empty-message">
+		No schedules available.
+	</div>
+</div>
+
+
 <div *ngIf="showForm && !readOnly" class="add-form-container">
 	<form (submit)="onFormSubmit()" class="add-form">
 		<label for="courseName">Course Name: </label>

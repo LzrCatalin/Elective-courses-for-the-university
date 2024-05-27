@@ -10,9 +10,30 @@
     border: none;
 }
 
+.schedule-container {
+    display: flex;
+    padding-top: 30px;
+    margin-top: -20px;
+    justify-content: center;
+    height: auto; /* Adjust as needed */
+    align-items: center;
+    padding: 50px;
+    border-radius: 2rem;
+    border: none;
+}
+
 .main-table {
     font-family: Arial, sans-serif;
     width: 650px;
+    background: white;
+    padding: 20px;
+    border: gray;
+    border-radius: 2rem;
+}
+
+.schedule-table {
+    font-family: Arial, sans-serif;
+    width: 1050px;
     background: white;
     padding: 20px;
     border: gray;
@@ -45,6 +66,27 @@
 }
 
 .btn-add {
+    background-color: rgba(54, 52, 52, 0.85);
+    color: #fff;
+    border: none;
+    border-radius: 1rem;
+    padding: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    text-decoration: none;
+    margin-left: 15px;
+    min-width: 100px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.btn-schedule-container {
+    padding: 10px;
+    margin-left: 600px;
+    margin-top: -50px
+}
+
+.btn-schedule {
     background-color: rgba(54, 52, 52, 0.85);
     color: #fff;
     border: none;
@@ -139,4 +181,11 @@
     border-radius: 1rem;
     margin-top: 12px;
     min-width: 75px;
+}
+
+.empty-message {
+    display: flex;
+    margin-left: 800px;
+    font-size: 25px;
+    font-family: MONTSERRAT;
 }
