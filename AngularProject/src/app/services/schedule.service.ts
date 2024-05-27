@@ -83,5 +83,7 @@ export class ScheduleService {
     );
   }
 
-
+  displayStudentSchedules(studentId: number): Observable<any> {
+    return this.http.get(`${BASE_URL}/courses/schedule/student-${studentId}`)
+  }
 }

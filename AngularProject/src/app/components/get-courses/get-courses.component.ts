@@ -21,6 +21,8 @@ export class GetCoursesComponent implements OnInit {
   showReassignForm: boolean = false;
   selectedStudent: any;
   newCourse: string = '';
+  readOnly: boolean = false;
+
 
   constructor(private courseService: CourseService, 
     private readonlyService: ReadOnlyService,
@@ -31,6 +33,7 @@ export class GetCoursesComponent implements OnInit {
     this.readonlyService.readOnly$.subscribe(
       (res) => {
         this.selectedStatus = res ? 'ACCEPTED' : 'PENDING';
+        this.readOnly = res;
       }
     )
   }
