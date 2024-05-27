@@ -57,7 +57,7 @@ export class SidebarComponent implements OnInit {
       {
         label: 'Allocation Process', 
         icon: 'pi pi-fw pi-cog', 
-        command: () => this.allocationProcess()
+        command: () => this.confirmAllocationProcess()
       }
     ];
   }
@@ -70,6 +70,14 @@ export class SidebarComponent implements OnInit {
   confirmToggleReadOnly() {
     if (confirm("Are you sure you want to toggle read-only mode?")) {
       this.toggleReadOnly();
+      location.reload();
+    }
+  }
+
+  confirmAllocationProcess() {
+    if (confirm("Are you sure you want to toggle Allocation Process?")) {
+      this.allocationProcess();
+      location.reload();
     }
   }
 
@@ -82,5 +90,6 @@ export class SidebarComponent implements OnInit {
         console.log("Error")
       }
     )
+    location.reload();
   }
 }

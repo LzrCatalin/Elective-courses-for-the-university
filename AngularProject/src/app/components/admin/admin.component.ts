@@ -99,7 +99,6 @@ export class AdminComponent implements OnInit, OnDestroy {
       { label: 'Students', value: 40, color: '#42A5F5', icon: 'pi pi-user' },
       { label: 'Courses', value: 30, color: '#FFA726', icon: 'pi pi-book' },
       { label: 'Read-Only', color: '#AB47BC', icon: 'pi pi-exclamation-triangle' },
-      { label: 'Allocation Process', color: '#AB47BC', icon: 'pi pi-exclamation-triangle' },
     ];
 
     // Subscribe to read-only state changes to update the label color
@@ -116,7 +115,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   private updateReadOnlyLabelColor(isReadOnly: boolean): void {
-    const newColor = isReadOnly ? 'red' : 'black';
+    const newColor = isReadOnly ? 'red' : '#e4e5e8';
     if (this.value) {
       const readOnlyItem = this.value.find(item => item.label === 'Read-Only');
       if (readOnlyItem) {

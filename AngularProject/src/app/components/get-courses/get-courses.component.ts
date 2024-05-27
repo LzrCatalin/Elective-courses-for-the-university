@@ -142,6 +142,7 @@ export class GetCoursesComponent implements OnInit {
             () => {
                 // Handle success
                 console.log('Course updated successfully.');
+                location.reload();
             },
             (error) => {
                 // Handle error
