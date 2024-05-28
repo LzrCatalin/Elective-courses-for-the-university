@@ -135,7 +135,7 @@ public class ApplicationApi {
 		try {
 			Integer priority = (Integer) requestBody.get("priority");
 			applicationService.updateApplicationAsStudent(id, priority);
-			emailService.sendUpdateApplicationMail(id, priority);
+//			emailService.sendUpdateApplicationMail(id, priority);
 			return new ResponseEntity<>(gson.toJson("Application updated successfully."), HttpStatus.OK);
 
 		} catch (EntityNotFoundException e) {

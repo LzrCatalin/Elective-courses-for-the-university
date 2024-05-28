@@ -8,6 +8,7 @@ import org.example.springproject.entity.CourseSchedule;
 import org.example.springproject.enums.WeekDay;
 import org.example.springproject.enums.WeekParity;
 import org.example.springproject.exceptions.InvalidTimeException;
+import org.example.springproject.exceptions.ScheduleConflictException;
 import org.example.springproject.services.CourseScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,8 +57,9 @@ public class CourseScheduleApi {
         }catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 
-        } catch (DuplicateRequestException e) {
+        } catch (DuplicateRequestException | ScheduleConflictException | InvalidTimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
         }
     }
 
