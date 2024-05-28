@@ -8,6 +8,7 @@ import org.example.springproject.enums.Status;
 import org.example.springproject.exceptions.*;
 import org.example.springproject.services.ApplicationService;
 import org.example.springproject.services.EmailService;
+import org.example.springproject.utilities.DBState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,10 @@ public class ApplicationApi {
 	@PostMapping("/stud")
 	public ResponseEntity<String> addApplication(@RequestBody Map<String, Object> requestBody){
 		try {
+			if (DBState.getInstance().isReadOnly()) {
+				return new ResponseEntity<>("Read-Only is ON. Can not modify anything.", HttpStatus.BAD_REQUEST);
+			}
+
 			Long studentId = Long.valueOf((Integer) requestBody.get("studentId"));
 			String courseName = (String) requestBody.get("courseName");
 			Integer priority = (Integer) requestBody.get("priority");
@@ -119,6 +124,10 @@ public class ApplicationApi {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteApplication(@PathVariable("id") Long id) {
 		try {
+			if (DBState.getInstance().isReadOnly()) {
+				return new ResponseEntity<>("Read-Only is ON. Can not modify anything.", HttpStatus.BAD_REQUEST);
+			}
+
 			emailService.sendDeleteApplicationMail(id);
 			applicationService.deleteApplication(id);
 			return new ResponseEntity<>(gson.toJson("Application with id:" + id + " successfully deleted."), HttpStatus.OK);
@@ -133,9 +142,13 @@ public class ApplicationApi {
 	public ResponseEntity<String> updateApplicationAsStudent(@PathVariable("id") Long id,
 															 @RequestBody Map<String, Object> requestBody) {
 		try {
+			if (DBState.getInstance().isReadOnly()) {
+				return new ResponseEntity<>("Read-Only is ON. Can not modify anything.", HttpStatus.BAD_REQUEST);
+			}
+
 			Integer priority = (Integer) requestBody.get("priority");
 			applicationService.updateApplicationAsStudent(id, priority);
-//			emailService.sendUpdateApplicationMail(id, priority);
+			emailService.sendUpdateApplicationMail(id, priority);
 			return new ResponseEntity<>(gson.toJson("Application updated successfully."), HttpStatus.OK);
 
 		} catch (EntityNotFoundException e) {

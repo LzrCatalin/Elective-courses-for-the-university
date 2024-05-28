@@ -1,6 +1,7 @@
 package org.example.springproject.controller;
 
 import com.google.gson.Gson;
+import com.sun.jdi.request.InvalidRequestStateException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.Email;
 import org.example.springproject.entity.Course;
@@ -97,7 +98,7 @@ public class CourseApi {
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 
-        } catch (InvalidNameException | InvalidCapacityException | InvalidStudyYearException e) {
+        } catch (InvalidNameException | InvalidCapacityException | InvalidStudyYearException | InvalidRequestStateException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 	}

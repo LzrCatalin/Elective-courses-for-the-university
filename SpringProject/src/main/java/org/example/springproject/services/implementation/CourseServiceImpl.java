@@ -1,5 +1,6 @@
 package org.example.springproject.services.implementation;
 
+import com.sun.jdi.request.InvalidRequestStateException;
 import jakarta.persistence.EntityNotFoundException;
 import org.example.springproject.entity.Course;
 import org.example.springproject.enums.FacultySection;
@@ -80,14 +81,27 @@ public class CourseServiceImpl implements CourseService {
             throw new InvalidNameException("Teacher string contains only digits.");
         }
 
+        // Verify to not update faculty, category or study year during applications stage
+        if (!facultySection.equals(courseToBeUpdated.getFacultySection())) {
+            throw new InvalidRequestStateException("Can not modify faculty section during applications stage");
+        }
+
+        if (!category.equals(courseToBeUpdated.getCategory())) {
+            throw new InvalidRequestStateException("Can not modify category during applications stage");
+        }
+
+        if (!studyYear.equals(courseToBeUpdated.getStudyYear())) {
+            throw new InvalidRequestStateException("Can not modify study year during applications stage");
+        }
+
         // Verify study year
         if (studyYear <= 0 || studyYear > 4) {
             throw new InvalidStudyYearException("The provided study year is invalid. Study year must be a positive integer between 1 and 4 (inclusive).");
         }
 
         // Verify course's capacity info
-        if (maxCapacity <= 0 || maxCapacity > 50) {
-            throw new InvalidCapacityException("The provided capacity value is unrealistic. Capacity must be a realistic number, typically not greater than 50.");
+        if (maxCapacity <= 0 || maxCapacity > 100) {
+            throw new InvalidCapacityException("The provided capacity value is unrealistic. Capacity must be a realistic number, typically not greater than 100.");
         }
 
         courseToBeUpdated.setName(name);
