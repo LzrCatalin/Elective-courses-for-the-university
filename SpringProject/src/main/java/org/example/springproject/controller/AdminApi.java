@@ -5,6 +5,7 @@ import org.example.springproject.entity.Admin;
 import org.example.springproject.exceptions.InvalidNameException;
 import org.example.springproject.exceptions.NoSuchObjectExistsException;
 import org.example.springproject.services.AdminService;
+import org.example.springproject.utilities.DBState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,9 @@ import java.util.Map;
 @ResponseBody
 @RestController
 @RequestMapping("/admins")
+@CrossOrigin
 public class AdminApi {
-	private static final Logger logger = LoggerFactory.getLogger(CourseApi.class);
+	private static final Logger logger = LoggerFactory.getLogger(AdminApi.class);
 
 	@Autowired
 	public AdminService adminService;
@@ -68,5 +70,14 @@ public class AdminApi {
 		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>("Not found id: " + id + " for admin.", HttpStatus.NOT_FOUND);
 		}
+	}
+
+	@PostMapping("/readOnly")
+	public ResponseEntity<String> receivedStatus(@RequestBody Map<String, Object> requestBody) {
+		logger.info("Read-Only");
+		Boolean state = (Boolean) requestBody.get("readOnly");
+		DBState.getInstance().setReadOnly(state);
+
+		return new ResponseEntity<>("Received state", HttpStatus.OK);
 	}
 }

@@ -12,10 +12,17 @@ export class SidebarComponent implements OnInit {
   sidebarVisible: boolean = false;
   items: MenuItem[] = [];
   allocationProcessActive: boolean = false;
+  readOnly: boolean = false;
 
   constructor(public readOnlyService: ReadOnlyService, public applicationsService: ApplicationsService) {}
 
   ngOnInit() {
+
+    // Subscribe to the read-only state
+		this.readOnlyService.readOnly$.subscribe(isReadOnly => {
+      this.readOnly = isReadOnly;
+    });
+
     this.items = [
       {
         label: 'Home',
@@ -61,12 +68,12 @@ export class SidebarComponent implements OnInit {
       }
     ];
   }
+
   toggleReadOnly() {
-		console.log("Toggle Read-Only...")
-		this.readOnlyService.readOnly$.subscribe(currentState => {
-		  this.readOnlyService.setReadOnly(!currentState);
-		});
-	}
+    const currentState = this.readOnlyService.readOnlySubject.getValue();
+    this.readOnlyService.setReadOnly(!currentState);
+  }
+  
   confirmToggleReadOnly() {
     if (confirm("Are you sure you want to toggle read-only mode?")) {
       this.toggleReadOnly();
