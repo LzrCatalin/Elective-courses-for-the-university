@@ -48,7 +48,7 @@ public class CourseServiceImpl implements CourseService {
 
         // Verify course's capacity info
         if (maxCapacity <= 0 || maxCapacity > 100) {
-            throw new InvalidCapacityException("The provided capacity value is unrealistic. Capacity must be a realistic number, typically not greater than 50.");
+            throw new InvalidCapacityException("The provided capacity value is unrealistic. Capacity must be a realistic number, typically not greater than 100.");
         }
 
         // Verify study year

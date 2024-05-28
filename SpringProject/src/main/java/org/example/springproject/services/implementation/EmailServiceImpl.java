@@ -116,7 +116,6 @@ public class EmailServiceImpl implements EmailService {
 
 		// Setting up necessary details
 		mailMessage.setFrom(sender);
-		assert application != null;
 		mailMessage.setTo(application.getStudent().getEmail());
 
 		// Customizing email text

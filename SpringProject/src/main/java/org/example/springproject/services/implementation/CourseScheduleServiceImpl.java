@@ -2,7 +2,6 @@ package org.example.springproject.services.implementation;
 
 import com.sun.jdi.request.DuplicateRequestException;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.NonUniqueResultException;
 import org.example.springproject.controller.CourseApi;
 import org.example.springproject.entity.Course;
 import org.example.springproject.entity.CourseSchedule;
@@ -15,11 +14,13 @@ import org.example.springproject.repository.ApplicationRepository;
 import org.example.springproject.repository.CourseRepository;
 import org.example.springproject.repository.CourseScheduleRepository;
 import org.example.springproject.services.CourseScheduleService;
+import org.example.springproject.utilities.TimeValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -52,6 +53,10 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
             throw new EntityNotFoundException("Course with name: " + courseName + " not found");
         }
 
+        // Verify string as HH:mm before parsing to LocalTime
+        TimeValidator.validateTimeFormat(startTime);
+        TimeValidator.validateTimeFormat(endTime);
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime parsedStartTime = LocalTime.parse(startTime,formatter);
         LocalTime parsedEndTime = LocalTime.parse(endTime,formatter);
@@ -67,7 +72,10 @@ public class CourseScheduleServiceImpl implements CourseScheduleService {
         }
 
         // Verify if the startTime is greater than 08:00 and the endTime is less than 21:00
-        if(parsedStartTime.isBefore(LocalTime.parse("08:00",formatter)) || parsedEndTime.isAfter(LocalTime.parse("21:00",formatter))){
+        if(parsedStartTime.isBefore(LocalTime.parse("08:00",formatter)) ||
+                parsedEndTime.isAfter(LocalTime.parse("21:00",formatter)) ||
+                parsedStartTime.isAfter(LocalTime.parse("21:00",formatter)))
+        {
             throw new InvalidTimeException("The course schedule must be between 08:00 - 21:00");
         }
 
