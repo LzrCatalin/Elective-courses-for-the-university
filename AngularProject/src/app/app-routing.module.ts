@@ -14,7 +14,6 @@ import { GetSchedulesComponent } from './components/get-schedules/get-schedules.
 
 const routes: Routes = [
   {path : '', component : HomeComponent},
-  {path : 'course', component : CourseComponent},
   {path : 'admin', component: AdminComponent},
   {path : 'admin/courses', component: GetCoursesComponent},
   {path : 'admin/courses/post', component: PostCourseComponent},
@@ -25,6 +24,7 @@ const routes: Routes = [
   {path : 'student/applications', component : GetApplicationsComponent},
   {path : 'student/:studentId/applications', component : GetApplicationsComponent}, 
   {path : 'student/:studentId/myprofile', component : MyprofileComponent},
+  {path : 'student/:studentId/courses', component : CourseComponent},
   
 ];
 

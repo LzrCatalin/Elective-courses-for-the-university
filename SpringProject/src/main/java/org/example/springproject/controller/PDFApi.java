@@ -69,4 +69,25 @@ public class PDFApi {
 			return new ResponseEntity<>("Course not found.", HttpStatus.NOT_FOUND);
 		}
 	}
+
+	@GetMapping("/export/studentSchedule/{studentId}")
+	public ResponseEntity<String> exportStudentSchedule(@PathVariable("studentId") Long studentId, HttpServletResponse response) {
+		try {
+			logger.info("Inside schedule extractor API ...");
+			logger.info("Student id: " + studentId);
+			response.setContentType("application/pdf");
+			response.setHeader("Content-Disposition", "attachment; filename=exportedData.pdf");
+
+			OutputStream outputStream = response.getOutputStream();
+			pdfService.generateSchedulePDF(studentId, outputStream);
+			outputStream.flush();
+			return new ResponseEntity<>("Successfully generated pdf of student schedule: " + studentId, HttpStatus.CREATED);
+
+		} catch (DocumentException | IOException e) {
+			return new ResponseEntity<>("Error !!!", HttpStatus.BAD_REQUEST);
+
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<>("Student ID: " + studentId + " not found.", HttpStatus.NOT_FOUND);
+		}
+	}
 }

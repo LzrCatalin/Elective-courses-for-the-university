@@ -91,12 +91,4 @@ export class CourseService {
     // Return an observable with a user-facing error message
     return throwError('Something bad happened; please try again later.');
   }
-
-  exportPDF(courseId: number, status: string): Observable<any> {
-    const body = {
-      courseId: courseId,
-      status: status
-    }
-    return this.http.post(BASE_URL + "/pdf/export/courseAllocations", body, { responseType: 'blob' }) 
-  }
 }

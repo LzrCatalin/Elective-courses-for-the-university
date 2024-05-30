@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { ReadOnlyService } from '../../services/read-only.service';
 import { ApplicationsService } from '../../services/applications.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,14 +15,22 @@ export class SidebarComponent implements OnInit {
   allocationProcessActive: boolean = false;
   readOnly: boolean = false;
 
-  constructor(public readOnlyService: ReadOnlyService, public applicationsService: ApplicationsService) {}
+  constructor(public readOnlyService: ReadOnlyService, 
+    public applicationsService: ApplicationsService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
 
     // Subscribe to the read-only state
-		this.readOnlyService.readOnly$.subscribe(isReadOnly => {
-      this.readOnly = isReadOnly;
-    });
+		this.readOnlyService.readOnly$.subscribe(
+      (isReadOnly) => {
+        this.readOnly = isReadOnly;
+      },
+      (error) => {
+        console.log("Error toggling read-only.", error)
+      }
+  );
 
     this.items = [
       {
@@ -72,31 +81,30 @@ export class SidebarComponent implements OnInit {
   toggleReadOnly() {
     const currentState = this.readOnlyService.readOnlySubject.getValue();
     this.readOnlyService.setReadOnly(!currentState);
+    this.router.navigate(["/admin"])
   }
   
   confirmToggleReadOnly() {
     if (confirm("Are you sure you want to toggle read-only mode?")) {
       this.toggleReadOnly();
-      location.reload();
     }
   }
 
   confirmAllocationProcess() {
     if (confirm("Are you sure you want to toggle Allocation Process?")) {
       this.allocationProcess();
-      location.reload();
     }
   }
 
   allocationProcess() {
     this.applicationsService.allocationProcess().subscribe(
-      () => {
-        console.log("Successfully")
+      (res) => {
+        console.log("Successfully. Status: " + res)
+        this.router.navigate(["/admin"])
       },
       (err) => {
         console.log("Error")
       }
     )
-    location.reload();
   }
 }

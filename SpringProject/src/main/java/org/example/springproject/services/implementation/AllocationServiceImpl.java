@@ -71,7 +71,7 @@ public class AllocationServiceImpl implements AllocationService {
 			int necessaryCoursesPerStudent = (student.getStudyYear() <= 2) ? 2 : 3;
 
 			// Start allocation condition
-			if (allocatedCountPerStudent <= necessaryCoursesPerStudent &&
+			if (allocatedCountPerStudent < necessaryCoursesPerStudent &&
 					courseRegistrations.getOrDefault(course.getId(), 0) < course.getMaxCapacity())
 			{
 				courseRegistrations.put(course.getId(), courseRegistrations.getOrDefault(course.getId(), 0) + 1);
