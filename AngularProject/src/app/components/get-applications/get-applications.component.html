@@ -82,6 +82,10 @@
 	</div>
 </div>
 
+<div *ngIf="studentId && readOnly && schedules.length != 0" class="button-extract-container">
+	<button class="btn-extract" (click)="exportPDF(studentId)">Export Schedule</button>
+</div>
+
 <div *ngIf="showEditForm && !readOnly" class="edit-form-container">
 	<form (submit)="onEditFormSubmit()" class="edit-form">
 		<label for="editPriority">Edit Priority: </label>

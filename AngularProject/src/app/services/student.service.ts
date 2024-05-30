@@ -19,10 +19,6 @@ export class StudentService {
 		return this.http.get(`${BASIC_URL}/students/${id}`)
 	}
 
-	exportPDF(id: number): Observable<any> {
-		return this.http.get(`${BASIC_URL}/pdf/export/${id}`, { responseType: 'blob' })
-	}
-
 	getFirstYearStudents() {
 		return this.http.get(`${BASIC_URL}/students/firstyear`);
 	}
