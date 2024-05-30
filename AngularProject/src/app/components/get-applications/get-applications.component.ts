@@ -77,12 +77,6 @@ export class GetApplicationsComponent implements OnInit {
 		this.showEditForm = !this.showEditForm;
 	}
 
-	onFormSubmit(): void {
-		this.addApplication();
-		this.showForm = false;
-		this.resetForm();
-	}
-
 	onEditFormSubmit(): void {
 		this.updateApplication(this.selectedApplication);
 		this.selectedApplication.priority = this.editedPriority;
@@ -121,30 +115,12 @@ export class GetApplicationsComponent implements OnInit {
 		);
 	}
 
-	addApplication(): void {
-		if (this.studentId !== undefined) {
-			this.applicationsService.addApplication(this.studentId, this.courseName, this.priority).subscribe(
-				() => {
-					console.log('Successfully added new application');
-					location.reload();
-				},
-				error => {
-					console.error('Error adding application:', error);
-					this.errorMessage = error.error;
-					this.showMessage('error', 'Add Application Error', this.errorMessage);
-				}
-			);
-		} else {
-			console.error('Student ID is undefined.');
-		}
-	}
-
 	updateApplication(application: any): void {
 		if (this.studentId !== undefined) {
 			this.applicationsService.updateApplicationAsStudent(application.id, this.editedPriority).subscribe(
 				() => {
 					console.log('Successfully updated application');
-					location.reload();
+					
 				},
 				error => {
 					console.error('Error updating application:', error);

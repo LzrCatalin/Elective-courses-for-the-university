@@ -127,12 +127,18 @@ public class ApplicationServiceImpl implements ApplicationService {
 			throw new DuplicatePriorityException("Wanted priority: " + priority + " is taken.");
 		}
 
+		int studentApplicationsCount = applicationRepository.getStudentApplicationsCount(studentId);
+		logger.info("Student applications until now: " + studentApplicationsCount);
+		if (studentApplicationsCount + 1 < priority) {
+			throw new InvalidPriorityException("Last priority: " + studentApplicationsCount + ". Can not add priority: " + priority);
+		}
+
 		Application addApplication = new Application(student, course, priority);
 		addApplication.setStatus(Status.PENDING);
 
 		// Increase counter after an application add
-		Integer count = course.getApplicationsCount();
-		course.setApplicationsCount(count + 1);
+		int courseCount = applicationRepository.getCourseApplicationsCount(course.getId());
+		course.setApplicationsCount(courseCount + 1);
 
 		return applicationRepository.save(addApplication);
 	}
@@ -270,8 +276,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 		// Decrease counter after an application deletion
 		Course course = application.getCourse();
-		Integer counter = course.getApplicationsCount();
-		course.setApplicationsCount(counter - 1);
+		int courseCount = applicationRepository.getCourseApplicationsCount(course.getId());
+		course.setApplicationsCount(courseCount - 1);
+
 		applicationRepository.delete(application);
 	}
 }

@@ -40,10 +40,6 @@
 	</div>
 </div>
 
-<div *ngIf="studentId && !readOnly" class="btn-add-container">
-	<button class="btn-add" (click)="toggleFormVisibility()">Add Application</button>
-</div>
-
 <div *ngIf="studentId && readOnly" class="btn-schedule-container">
 	<button class="btn-schedule" (click)="getStudentSchedules(studentId)">View Schedules</button>
 </div>
@@ -84,19 +80,6 @@
 	<div *ngIf="!schedules || schedules.length === 0" class="empty-message">
 		No schedules available.
 	</div>
-</div>
-
-
-<div *ngIf="showForm && !readOnly" class="add-form-container">
-	<form (submit)="onFormSubmit()" class="add-form">
-		<label for="courseName">Course Name: </label>
-		<input type="text" id="courseName" name="courseName" [(ngModel)]="courseName" required><br>
-
-		<label for="priority">Priority: </label>
-		<input class="input-priority" type="number" id="priority" name="priority" [(ngModel)]="priority" required><br>
-
-		<button class="btn-submit" type="submit">Submit</button>
-	</form>
 </div>
 
 <div *ngIf="showEditForm && !readOnly" class="edit-form-container">
