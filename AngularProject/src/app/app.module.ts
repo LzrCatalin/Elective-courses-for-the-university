@@ -39,6 +39,8 @@ import { MeterGroupModule } from 'primeng/metergroup';
 import { CardModule } from 'primeng/card';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { LoginComponent } from './components/login/login.component';
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,7 @@ import { MessageModule } from 'primeng/message';
     SidebarComponent,
     PostScheduleComponent,
     GetSchedulesComponent,
+    LoginComponent,
 
   ],
   imports: [
@@ -87,7 +90,7 @@ import { MessageModule } from 'primeng/message';
     CardModule,
     MessagesModule,
     MessageModule,
-    
+    FloatLabelModule,
   ],
   providers: [
     provideClientHydration(),
