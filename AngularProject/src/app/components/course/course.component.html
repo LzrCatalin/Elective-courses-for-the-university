@@ -1,5 +1,6 @@
 <app-toolbar></app-toolbar>
-<h2 class ="title">Let's have a look at the available courses</h2>
+<p-messages></p-messages>
+<h2 class="title">Let's have a look at the available courses</h2>
 <div class="container">
     <p-table 
         #dt [columns]="cols" [value]="courses" responsiveLayout="scroll"
@@ -9,7 +10,7 @@
         [rowsPerPageOptions]="[5, 10, 20]"> 
         <ng-template pTemplate="header" let-columns> 
             <tr> 
-                <th *ngFor="let col of columns"> 
+                <th *ngFor="let col of columns" class="container-columns"> 
                     {{ col.header }} 
                 </th> 
             </tr> 
@@ -22,8 +23,8 @@
                         [matchModeOptions]="matchModeOptions" 
                     ></p-columnFilter> 
                 </th> 
-                <!-- Add header for the extra column -->
                 <th>Applications Count</th>
+                <th></th>
             </tr> 
         </ng-template> 
         <ng-template pTemplate="body" let-rowData let-columns="columns"> 
@@ -31,8 +32,12 @@
                 <td *ngFor="let col of columns"> 
                     {{ rowData[col.field] }} 
                 </td> 
-                <!-- Add extra column for displaying additional details -->
                 <td>{{ rowData.applicationsCount }}</td> 
+                <td>
+                    <div *ngIf="studentId && !readOnly" class="btn-add-container">
+                        <button class="btn-add" (click)="toggleFormVisibility(rowData)">Add</button>
+                    </div>
+                </td>
             </tr> 
         </ng-template> 
     </p-table>
@@ -41,3 +46,14 @@
     <button class="btn-display-app" routerLink="/student/1/applications" (click)="handleButtonClick()">View Applications</button>
 </div>
 
+<div *ngIf="showForm && !readOnly" class="add-form-container">
+    <form (submit)="onFormSubmit()" class="add-form">
+        <label for="courseName">Course Name: </label>
+        <input type="text" id="courseName" name="courseName" [(ngModel)]="selectedCourse.name" required readonly><br>
+
+        <label for="priority">Priority: </label>
+        <input class="input-priority" type="number" id="priority" name="priority" [(ngModel)]="priority" required><br>
+
+        <button class="btn-submit" type="submit">Submit</button>
+    </form>
+</div>

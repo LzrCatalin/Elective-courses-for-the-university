@@ -60,8 +60,11 @@ public class ApplicationApi {
 			}
 
 			Long studentId = Long.valueOf((Integer) requestBody.get("studentId"));
+			logger.debug("Received student id: " + studentId);
 			String courseName = (String) requestBody.get("courseName");
+			logger.debug("Received course name: " + courseName);
 			Integer priority = (Integer) requestBody.get("priority");
+			logger.debug("Received priority: " + priority);
 			applicationService.addApplicationAsStudent(studentId, courseName, priority);
 			emailService.sendNewApplicationMail(studentId, courseName, priority);
 			return new ResponseEntity<>("Application added successfully.", HttpStatus.CREATED);
