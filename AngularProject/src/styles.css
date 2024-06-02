@@ -5,7 +5,24 @@
 .btn-margins{
     margin-right: 10px;
 }
+
+html, body {
+    height: 98%;
+    margin-top: 10;
+}
+
 body{
-    background-color: black;
+    background-image: url('https://images3.alphacoders.com/919/919075.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 100%;
     color:white;
+}
+
+.blur {
+    padding: 20px;
+    border-radius: 2rem;
+    background-color: rgba(128, 128, 128, 0.5);
+    backdrop-filter: brightness(120%) saturate(20%) blur(2px);
 }
