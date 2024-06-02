@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
-import { Router } from 'express';
-import { error } from 'console';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +13,9 @@ export class LoginComponent {
 
   constructor(private loginService: LoginService,
     private fb:FormBuilder,
+    private router: Router
     ) { }
+    
   ngOnInit(){
     this.loginForm = this.fb.group({
       email: [null, Validators.required],
@@ -28,6 +29,24 @@ export class LoginComponent {
     console.log(this.loginForm.value.email);
     console.log("\nParola: ")
     console.log(this.loginForm.value.password);
+
+    this.loginService.loginRequest(this.loginForm.value.email).subscribe(
+      (res) => {
+        console.log("Successfully made request")
+        console.log(res)
+
+        if (res == "student") {
+          this.router.navigate(["/home"])
+        } else {
+          this.router.navigate(["/admin"])
+        }
+
+      },
+      (err) => {
+        console.log("Error", err);
+      }
+    )
   }
+
 
 }
