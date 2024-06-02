@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 public interface StudentService {
-	List<Student> getAllStudents();
+    Student getStudent(String email);
+
+    List<Student> getAllStudents();
 
 	int getSecondyearStudents();
 

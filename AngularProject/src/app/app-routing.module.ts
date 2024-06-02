@@ -11,9 +11,13 @@ import { GetStudentsComponent } from './components/get-students/get-students.com
 import { MyprofileComponent } from './components/myprofile/myprofile.component';
 import { PostScheduleComponent } from './components/post-schedule/post-schedule.component';
 import { GetSchedulesComponent } from './components/get-schedules/get-schedules.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  {path : '', component : HomeComponent},
+
+  {path: '', component : LoginComponent},
+  {path : 'home', component : HomeComponent},
+  {path : 'course', component : CourseComponent},
   {path : 'admin', component: AdminComponent},
   {path : 'admin/courses', component: GetCoursesComponent},
   {path : 'admin/courses/post', component: PostCourseComponent},
