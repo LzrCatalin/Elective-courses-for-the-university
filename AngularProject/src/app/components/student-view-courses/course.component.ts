@@ -4,6 +4,8 @@ import { SelectItem, FilterService, FilterMatchMode } from "primeng/api";
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationsService } from '../../services/applications.service';
 import { MessageService } from 'primeng/api';
+import { ReadOnlyService } from '../../services/read-only.service';
+
 
 @Component({
     selector: 'app-course',
@@ -31,7 +33,8 @@ export class CourseComponent implements OnInit {
         private activateRouter: ActivatedRoute,
         private router: Router,
         private applicationsService: ApplicationsService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private readOnlyService: ReadOnlyService,
 
     ) {}
 
@@ -54,6 +57,12 @@ export class CourseComponent implements OnInit {
             { label: "Starts With", value: FilterMatchMode.STARTS_WITH }, 
             { label: "Contains", value: FilterMatchMode.CONTAINS } 
         ]; 
+
+        // Subscribe to the read-only state
+		this.readOnlyService.readOnly$.subscribe(isReadOnly => {
+			this.readOnly = isReadOnly;
+		});
+
     }
     
     getAllCourses() {
@@ -98,7 +107,7 @@ export class CourseComponent implements OnInit {
                     console.error('Error adding application:', error);
                     // Display the error message
                     this.errorMessage = error.error;
-					this.showMessage('error', 'Delete Application Error', this.errorMessage);
+					this.showMessage('error', 'Add Application Error', this.errorMessage);
                 }
             );
         } else {

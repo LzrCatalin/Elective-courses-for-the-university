@@ -86,15 +86,15 @@ public class AllocationServiceImpl implements AllocationService {
 		// Save changes after allocation round
 		applicationRepository.saveAll(allocationsResult);
 
-		logger.info("Students info after first allocation: ");
-		for (Map.Entry<Long, List<Long>> entry : studentAllocations.entrySet()) {
-			logger.info("Student id: " + entry.getKey() + ": " + entry.getValue());
-		}
-
-		logger.info("Courses info after first allocation: ");
-		for (Map.Entry<Long, Integer> entry : courseRegistrations.entrySet()) {
-			logger.info("Course id: " + entry.getKey() + ": " + entry.getValue());
-		}
+//		logger.info("Students info after first allocation: ");
+//		for (Map.Entry<Long, List<Long>> entry : studentAllocations.entrySet()) {
+//			logger.info("Student id: " + entry.getKey() + ": " + entry.getValue());
+//		}
+//
+//		logger.info("Courses info after first allocation: ");
+//		for (Map.Entry<Long, Integer> entry : courseRegistrations.entrySet()) {
+//			logger.info("Course id: " + entry.getKey() + ": " + entry.getValue());
+//		}
 
 		///////////////////////////////////////////////////////////////
 		/*
@@ -105,32 +105,32 @@ public class AllocationServiceImpl implements AllocationService {
 		// Get all students without necessary number of courses
 		List<Student> uncompletedStudents = applicationRepository.findStudentsWithoutNecessaryCourses();
 		uncompletedStudents.sort(Comparator.comparing(Student::getGrade).reversed().thenComparing(Student::getId));
-		logger.info("Display uncompleted students: ");
-		for (Student st : uncompletedStudents) {
-			logger.info(st.getId().toString());
-		}
+////		logger.info("Display uncompleted students: ");
+//		for (Student st : uncompletedStudents) {
+//			logger.info(st.getId().toString());
+//		}
 
 		// Get all courses with available slots
 		List<Course> availableCourses = applicationRepository.findAvailableCourses();
-		logger.info("Display available courses: ");
-		for (Course c : availableCourses) {
-			logger.info(c.getId().toString());
-		}
+//		logger.info("Display available courses: ");
+//		for (Course c : availableCourses) {
+//			logger.info(c.getId().toString());
+//		}
 
 		// Allocation process : YEY N X M TIME
 		for (Student student : uncompletedStudents) {
 
 			// Get the number of allocated courses for standing student
 			int allocatedCountPerStudent = studentAllocations.getOrDefault(student.getId(), new ArrayList<>()).size();
-			logger.info("Student id: " + student.getId() + " with: " + allocatedCountPerStudent + " until now");
+//			logger.info("Student id: " + student.getId() + " with: " + allocatedCountPerStudent + " until now");
 
 			// Check necessary number of courses of each study year
 			int necessaryCoursesPerStudent = (student.getStudyYear() <= 2) ? 2 : 3;
-			logger.info("Student id: " + student.getId() + " with: " + necessaryCoursesPerStudent + " necessary");
+//			logger.info("Student id: " + student.getId() + " with: " + necessaryCoursesPerStudent + " necessary");
 
 			// Keep track of how many courses the student still needs
 			int remainingCoursesNeeded = necessaryCoursesPerStudent - allocatedCountPerStudent;
-			logger.info("Remaining necessary courses:" + remainingCoursesNeeded);
+//			logger.info("Remaining necessary courses:" + remainingCoursesNeeded);
 
 			for (Course course : availableCourses) {
 
@@ -152,15 +152,15 @@ public class AllocationServiceImpl implements AllocationService {
 			}
 		}
 
-		logger.info("Students info after second allocation: ");
-		for (Map.Entry<Long, List<Long>> entry : studentAllocations.entrySet()) {
-			logger.info("Student id: " + entry.getKey() + ": " + entry.getValue());
-		}
-
-		logger.info("Courses info after second allocation: ");
-		for (Map.Entry<Long, Integer> entry : courseRegistrations.entrySet()) {
-			logger.info("Course id: " + entry.getKey() + ": " + entry.getValue());
-		}
+//		logger.info("Students info after second allocation: ");
+//		for (Map.Entry<Long, List<Long>> entry : studentAllocations.entrySet()) {
+//			logger.info("Student id: " + entry.getKey() + ": " + entry.getValue());
+//		}
+//
+//		logger.info("Courses info after second allocation: ");
+//		for (Map.Entry<Long, Integer> entry : courseRegistrations.entrySet()) {
+//			logger.info("Course id: " + entry.getKey() + ": " + entry.getValue());
+//		}
 
 		return allocationsResult;
 	}

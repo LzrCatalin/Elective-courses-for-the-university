@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { ReadOnlyService } from '../../services/read-only.service';
 import { ApplicationsService } from '../../services/applications.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-sidebar',
@@ -15,9 +16,11 @@ export class SidebarComponent implements OnInit {
   allocationProcessActive: boolean = false;
   readOnly: boolean = false;
 
-  constructor(public readOnlyService: ReadOnlyService, 
+  constructor(
+    public readOnlyService: ReadOnlyService, 
     public applicationsService: ApplicationsService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit() {
@@ -74,6 +77,11 @@ export class SidebarComponent implements OnInit {
         label: 'Allocation Process', 
         icon: 'pi pi-fw pi-cog', 
         command: () => this.confirmAllocationProcess()
+      },
+      {
+        label: 'Logout', 
+        icon: 'pi pi-fw pi-power-off', 
+        command: () => this.router.navigate(["/"])
       }
     ];
   }
@@ -97,9 +105,18 @@ export class SidebarComponent implements OnInit {
   }
 
   allocationProcess() {
+    this.spinner.show(undefined, {
+      type: 'ball-spin-clockwise-fade-rotating',
+      size: 'medium',
+      bdColor: 'rgba(51, 51, 51, 0.8)',
+      color: '#fff',
+      fullScreen: true
+    });
+    
     this.applicationsService.allocationProcess().subscribe(
       (res) => {
         console.log("Successfully. Status: " + res)
+        this.spinner.hide();
         this.router.navigate(["/admin"])
       },
       (err) => {
