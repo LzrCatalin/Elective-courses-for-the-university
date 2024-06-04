@@ -40,6 +40,9 @@
 	</div>
 </div>
 
+<button *ngIf="studentId" (click)="getStudentClassmates(studentId, 6)">Get Classmates</button>"
+
+
 <div *ngIf="studentId && readOnly" class="btn-schedule-container">
 	<button class="btn-schedule" (click)="getStudentSchedules(studentId)">View Schedules</button>
 </div>

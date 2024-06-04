@@ -1,6 +1,7 @@
 package org.example.springproject.controller;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.example.springproject.dto.StudentDTO;
 import org.example.springproject.entity.Application;
 import org.example.springproject.entity.Student;
 import org.example.springproject.enums.FacultySection;
@@ -50,6 +51,19 @@ public class ApplicationApi {
 	@GetMapping("/{id}")
 	public List<Application> getStudentApplications(@PathVariable("id") Long id) {
 		return applicationService.getStudentApplications(id);
+	}
+
+	@GetMapping("/{studentId}/classmates")
+	public ResponseEntity<List<StudentDTO>> getStudentClassmatesOnCourse(@PathVariable("studentId") Long studentId, @RequestParam Long courseId) {
+//		Long courseId = Long.valueOf((Integer) requestBody.get("courseId"));
+		List<Student> classmates = applicationService.getStudentClassmatesOnCourse(courseId, studentId);
+
+		if (classmates.isEmpty()) {
+			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		}
+
+		List<StudentDTO> classmatesDTO = StudentDTO.convertToDTO(classmates);
+		return new ResponseEntity<>(classmatesDTO, HttpStatus.OK);
 	}
 
 	@PostMapping("/stud")
