@@ -54,8 +54,8 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 
 	List<Course> findAvailableCourses();
 
-	@Query("SELECT a.course FROM Application a WHERE a.student.id = :studentId")
-	List<Course> findCourseIdsByStudentId(@Param("studentId") Long studentId);
+	@Query("SELECT a.course.name FROM Application a WHERE a.student.id = :studentId AND a.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)")
+	List<String> findStudentAcceptedCourses(@Param("studentId") Long studentId);
 
 	@Query("SELECT DISTINCT a.student FROM Application a " +
 			"WHERE a.course.id = :courseId AND a.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)")

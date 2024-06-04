@@ -34,7 +34,7 @@
                 </td> 
                 <td>{{ rowData.applicationsCount }}</td> 
                 <td>
-                    <div *ngIf="studentId && !readOnly" class="btn-add-container">
+                    <div *ngIf="studentId && !readOnly">
                         <button class="btn-add" (click)="toggleFormVisibility(rowData)">Add</button>
                     </div>
                 </td>
