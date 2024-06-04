@@ -31,7 +31,17 @@
     width: 100%;
     height: auto;
 }
-
+.logoutbtn{
+    text-decoration: none;
+    max-width: 70px;
+    padding: 10px;
+    border-radius: 1rem;
+    text-align: center;
+    display: inline-block;
+    background-color: rgba(54, 52, 52, 0.85);
+    border: none;
+    color: white;
+}
 .btn-container {
     align-items: center;
     margin-left: 135px;
