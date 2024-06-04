@@ -5,7 +5,10 @@
         #F6EEF0, 
         #BDB5C0
         );
-    height: 100%;
+    height: 204.5%;
+    margin-left: -7px;
+    margin-right: -7px;
+    margin-top: -10px;
 }
 
 .title{
