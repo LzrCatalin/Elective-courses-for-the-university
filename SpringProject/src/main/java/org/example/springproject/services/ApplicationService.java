@@ -12,6 +12,7 @@ public interface ApplicationService {
 	List<Application> getAllApplications();
 	List<Application> getStudentApplications(Long id);
 	List<Student> getStudentsOfCourse(Long courseId, Status status);
+	List<Student> getStudentClassmatesOnCourse(Long courseId, Long studentId);
 	Application addApplication(Long studentId, Long courseId, Integer priority);
 	Application addApplicationAsStudent(Long studentId, String courseName, Integer priority);
 	Application updateApplication(Long id, Long studentId, Long courseId, Integer priority, Status status);

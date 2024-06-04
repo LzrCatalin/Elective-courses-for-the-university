@@ -6,8 +6,8 @@ import { ReadOnlyService } from '../../services/read-only.service';
 import { ScheduleService } from '../../services/schedule.service';
 import { ApplicationsService } from '../../services/applications.service';
 import { ExtractorPdfService } from '../../services/extractor-pdf.service';
-
-
+import { StudentService } from '../../services/student.service';
+import { Student } from '../../model/student.model';
 @Component({
 	selector: 'app-get-applications',
 	templateUrl: './get-applications.component.html',
@@ -28,6 +28,7 @@ export class GetApplicationsComponent implements OnInit {
 	schedules: any[] = [];
 	showSchedules: boolean = false;
 	errorMessage: string = '';
+	classmates: Student[] = [];
 
 	constructor(
 		private route: ActivatedRoute,
@@ -35,7 +36,8 @@ export class GetApplicationsComponent implements OnInit {
 		private readOnlyService: ReadOnlyService,
 		private scheduleService: ScheduleService,
 		private messageService: MessageService,
-		private extractPDF: ExtractorPdfService
+		private extractPDF: ExtractorPdfService,
+		private studentService:  StudentService,
 	) {}
 
 	ngOnInit(): void {
@@ -197,6 +199,19 @@ export class GetApplicationsComponent implements OnInit {
 				console.error("Error exporting PDF:", error);
 				this.errorMessage = error.error;
 				this.showMessage('error', 'Failed to fetch schedules', this.errorMessage);
+			}
+		)
+	}
+
+	getStudentClassmates(studentId: number, courseId: number) {
+		this.studentService.getStudentClassmates(studentId, courseId).subscribe(
+			(res: Student[]) => {
+				console.log(typeof(res))
+				this.classmates = res
+				console.log(this.classmates)
+			},
+			(err) => {
+				console.log(err)
 			}
 		)
 	}
