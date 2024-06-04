@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../../services/course.service';
+import { MessageService } from 'primeng/api';
 import { ReadOnlyService } from '../../services/read-only.service';
 import { ApplicationsService } from '../../services/applications.service';
-import { MessageService } from 'primeng/api';
+import { ExtractorPdfService } from '../../services/extractor-pdf.service';
 
 @Component({
   selector: 'app-get-courses',
@@ -29,7 +30,8 @@ export class GetCoursesComponent implements OnInit {
   constructor(private courseService: CourseService, 
     private readonlyService: ReadOnlyService,
     private applicationService: ApplicationsService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private extractPDF: ExtractorPdfService
   ) {}
 
   ngOnInit() {
@@ -169,10 +171,9 @@ export class GetCoursesComponent implements OnInit {
     this.dropdownUsed = false; 
   }
 
+  // Export student that are enrolled into a course
   exportPDF(courseId: number, status: string) {
-    console.log("Selected course id: " + courseId)
-    console.log("Selected status: " + status)
-    this.courseService.exportPDF(courseId, status).subscribe(
+    this.extractPDF.exportCourseData(courseId, status).subscribe(
       (res) => {
         console.log("Successfully received PDF response.");
 				const blob = new Blob([res], { type: 'application/pdf' });

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentService } from '../../services/student.service';
 import { ActivatedRoute } from '@angular/router';
+import { ExtractorPdfService } from '../../services/extractor-pdf.service';
 
 @Component({
   selector: 'app-myprofile',
@@ -11,7 +12,10 @@ export class MyprofileComponent implements OnInit {
 	student: any;
 	studentId?: number;
 
-	constructor(private studentService: StudentService, private route: ActivatedRoute) {
+	constructor(private studentService: StudentService, 
+		private route: ActivatedRoute,
+		private extractorPDF: ExtractorPdfService
+	) {
 		this.student;
 	}
 
@@ -43,8 +47,9 @@ export class MyprofileComponent implements OnInit {
 		console.log('Button clicked!');
 	}
 
+	// Export certificate
 	exportPDF(id: number) {
-		this.studentService.exportPDF(id).subscribe(
+		this.extractorPDF.exportStudentCertificate(id).subscribe(
 			(res) => {
 				console.log("Successfully received PDF response.");
 				const blob = new Blob([res], { type: 'application/pdf' });

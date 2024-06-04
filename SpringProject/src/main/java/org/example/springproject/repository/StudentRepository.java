@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 	Student findStudentByGrade(Float grade);
+	Student findByEmail(String email);
 	Student findStudentByName(String name);
 	@Query("SELECT s FROM Student s WHERE s.studyYear = :studyYear AND s.facultySection = :facultySection")
 	List<Student> findByStudyYearAndFacultySection(@Param("studyYear") int studyYear, @Param("facultySection") FacultySection facultySection);

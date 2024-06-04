@@ -18,7 +18,10 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	public StudentRepository repository;
-
+	@Override
+	public Student getStudent(String email){
+		return repository.findByEmail(email);
+	}
 	@Override
 	public List<Student> getAllStudents() {
 		return repository.findAll();

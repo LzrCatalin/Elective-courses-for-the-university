@@ -21,6 +21,16 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 			"WHERE a.course.id = :courseId AND a.status IN :statuses")
 	List<Student> findStudentsThatAppliedCourse(@Param("courseId") Long courseId, @Param("statuses") List<Status> statuses);
 
+	@Query("SELECT COUNT( DISTINCT a.student)" +
+			"FROM Application a " +
+			"WHERE a.course.id = :courseId")
+	int getCourseApplicationsCount(@Param("courseId") Long courseId);
+
+	@Query("SELECT COUNT(DISTINCT a.course)" +
+			"FROM Application a " +
+			"WHERE a.student.id = :studentId")
+	int getStudentApplicationsCount(@Param("studentId") Long studentId);
+
 	@Query("select a.priority" +
 			" from Application a " +
 			" where a.student.id = :studentId")
