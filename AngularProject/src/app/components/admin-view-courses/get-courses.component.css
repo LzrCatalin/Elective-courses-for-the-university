@@ -6,7 +6,7 @@
       #BDB5C0
       );
       margin: -8px;
-      height: 100vh;
+      height: 300%;
 }
 
 .title{
@@ -104,6 +104,14 @@
   background-size: cover;
 }
 
+.btn-schedule {
+  background: url('https://cdn4.iconfinder.com/data/icons/ui-essential-10/24/event_add-512.png') no-repeat center center;
+  width: 30px; /* Adjust width as needed */
+  height: 30px; /* Adjust height as needed */
+  border: none;
+  cursor: pointer;
+  background-size: cover;
+}
 .btn-container {
   margin-top: 5px;
 }

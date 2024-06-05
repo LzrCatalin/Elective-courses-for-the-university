@@ -31,16 +31,13 @@
     width: 100%;
     height: auto;
 }
-.logoutbtn{
-    text-decoration: none;
-    max-width: 70px;
-    padding: 10px;
-    border-radius: 1rem;
-    text-align: center;
-    display: inline-block;
-    background-color: rgba(54, 52, 52, 0.85);
+.btn-logout{
+    background: url('https://cdn.iconscout.com/icon/premium/png-256-thumb/logout-2030711-1713351.png?f=webp') no-repeat center center;
+    width: 24px; /* Adjust width as needed */
+    height: 24px; /* Adjust height as needed */
     border: none;
-    color: white;
+    cursor: pointer;
+    background-size: cover;
 }
 .btn-container {
     align-items: center;

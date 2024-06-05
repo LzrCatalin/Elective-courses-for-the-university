@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ScheduleService } from '../../services/schedule.service';
 import { MessageService } from 'primeng/api';
 
@@ -19,6 +19,7 @@ export class PostScheduleComponent implements OnInit{
   constructor(private scheduleService: ScheduleService,
     private fb: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private messageService: MessageService){}
 
   ngOnInit(){
@@ -29,8 +30,20 @@ export class PostScheduleComponent implements OnInit{
       weekDay:[null,Validators.required],
       weekParity:[null,Validators.required],
     });
+
     this.loadWeekDays();
     this.loadWeekParity();
+
+    // Get course name received from the router
+    this.route.queryParams.subscribe(
+      params => {
+        const courseName = params['courseName'];
+        if (courseName) {
+          this.postScheduleForm.patchValue({ courseName: courseName });
+        }
+      }
+    );
+
   }
 
   showMessage(severity: string, summary: string, detail: string): void {
