@@ -1,7 +1,7 @@
 <app-toolbar></app-toolbar>
 <div [ngClass]="{ 'read-only': readOnly }">
 	<p-messages></p-messages>
-	<div class="main-container">
+	<div class="main-container" *ngIf="!showClassmates && !showSchedules">
 		<p-table
 			class="main-table"
 			[value]="applications"
@@ -22,7 +22,9 @@
 			<ng-template pTemplate="body" let-application>
 				<tr>
 					<td>
-						{{ application.course.name }}
+						<a *ngIf="studentId" (click)="getStudentClassmates(studentId, application.course.id)">
+							{{ application.course.name }}
+						</a>
 					</td>
 					<td>
 						{{ application.priority }}
@@ -38,63 +40,83 @@
 			</ng-template>
 		</p-table>
 	</div>
-</div>
 
-<button *ngIf="studentId" (click)="getStudentClassmates(studentId, 6)">Get Classmates</button>"
+	<div class="classmates-container" *ngIf="showClassmates">
+		<button (click)="toggleClassmatesTable()">X</button>
+		<p-table 
+		[value]="classmates" 
+		[scrollable]="true" 
+		scrollHeight="400px"
+		[paginator]="true"
+		[rows]="5"
+		[rowsPerPageOptions]="[5, 10, 20]">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-classmate>
+				<tr>
+					<td>{{ classmate.name }}</td>
+					<td>{{ classmate.email }}</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
 
+	<div class="schedule-container" *ngIf="showSchedules">
+		<button (click)="toggleSchedulesTable()">X</button>
+		<p-table [value]="schedules" [tableStyle]="{'min-width': '60rem'}" class="schedule-table">
+			<ng-template pTemplate="header">
+				<tr>
+					<th pSortableColumn="course.name" style="width:20%">
+						Name <p-sortIcon field="course.name" />
+					</th>
+					<th pSortableColumn="weekDay" style="width:20%">
+						Week Day <p-sortIcon field="weekDay" />
+					</th>
+					<th pSortableColumn="weekParity" style="width:20%">
+						Week Parity <p-sortIcon field="weekParity" />
+					</th>
+					<th pSortableColumn="startTime" style="width:20%">
+						Start Time <p-sortIcon field="startTime" />
+					</th>
+					<th pSortableColumn="endTime" style="width:20%">
+						End Time <p-sortIcon field="endTime" />
+					</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-schedule>
+				<tr>
+					<td>{{ schedule.course.name }}</td>
+					<td>{{ schedule.weekDay }}</td>
+					<td>{{ schedule.weekParity }}</td>
+					<td>{{ schedule.startTime }}</td>
+					<td>{{ schedule.endTime }}</td>
+				</tr>
+			</ng-template>
+		</p-table>
+		<div *ngIf="!schedules || schedules.length === 0" class="empty-message">
+			No schedules available.
+		</div>
+	</div>
 
-<div *ngIf="studentId && readOnly" class="btn-schedule-container">
-	<button class="btn-schedule" (click)="getStudentSchedules(studentId)">View Schedules</button>
-</div>
+	<div *ngIf="studentId && readOnly && schedules.length != 0" class="button-extract-container">
+		<button class="btn-extract" (click)="exportPDF(studentId)">Export Schedule</button>
+	</div>
 
-<div *ngIf="showSchedules">
-    <div class="schedule-container">
-        <p-table [value]="schedules" [tableStyle]="{'min-width': '60rem'}" class="schedule-table">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th pSortableColumn="course.name" style="width:20%">
-                        Name <p-sortIcon field="course.name" />
-                    </th>
-                    <th pSortableColumn="weekDay" style="width:20%">
-                        Week Day <p-sortIcon field="weekDay" />
-                    </th>
-                    <th pSortableColumn="weekParity" style="width:20%">
-                        Week Parity <p-sortIcon field="weekParity" />
-                    </th>
-                    <th pSortableColumn="startTime" style="width:20%">
-                        Start Time <p-sortIcon field="startTime" />
-                    </th>
-                    <th pSortableColumn="endTime" style="width:20%">
-                        End Time <p-sortIcon field="endTime" />
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-schedule>
-                <tr>
-                    <td>{{ schedule.course.name }}</td>
-                    <td>{{ schedule.weekDay }}</td>
-                    <td>{{ schedule.weekParity }}</td>
-                    <td>{{ schedule.startTime }}</td>
-                    <td>{{ schedule.endTime }}</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
-	<div *ngIf="!schedules || schedules.length === 0" class="empty-message">
-		No schedules available.
+	<div *ngIf="showEditForm && !readOnly" class="edit-form-container">
+		<form (submit)="onEditFormSubmit()" class="edit-form">
+			<label for="editPriority">Edit Priority: </label>
+			<input type="number" id="editPriority" name="editPriority" [(ngModel)]="editedPriority" required><br>
+
+			<button type="submit" class="btn-save">Save</button>
+			<button class="btn-cancel" type="button" (click)="cancelEdit()">Cancel</button>
+		</form>
 	</div>
 </div>
 
-<div *ngIf="studentId && readOnly && schedules.length != 0" class="button-extract-container">
-	<button class="btn-extract" (click)="exportPDF(studentId)">Export Schedule</button>
-</div>
-
-<div *ngIf="showEditForm && !readOnly" class="edit-form-container">
-	<form (submit)="onEditFormSubmit()" class="edit-form">
-		<label for="editPriority">Edit Priority: </label>
-		<input type="number" id="editPriority" name="editPriority" [(ngModel)]="editedPriority" required><br>
-
-		<button type="submit" class="btn-save">Save</button>
-		<button class="btn-cancel" type="button" (click)="cancelEdit()">Cancel</button>
-	</form>
+<div class="btn-schedule-container">
+	<button *ngIf="studentId && !showClassmates && !showSchedules && readOnly" (click)="getStudentSchedules(studentId)" class="btn-schedule">View Schedules</button>
 </div>

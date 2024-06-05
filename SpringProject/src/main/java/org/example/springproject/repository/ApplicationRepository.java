@@ -70,8 +70,13 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 	TODO: RESOLVE QUERY FOR RETRIEVING STUDENT CLASSMATES WITHOUT HIM
 	 */
 	@Query("SELECT DISTINCT a2.student FROM Application a " +
-			"JOIN Application a2 ON a.course.id = a2.course.id " +
-			"WHERE a.student.id != :studentId AND a.course.id = :courseId AND a.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)")
+			"JOIN a.course c " +
+			"JOIN Application a2 ON c.id = a2.course.id " +
+			"WHERE a.student.id = :studentId " +
+			"AND a2.course.id = :courseId " +
+			"AND a2.student.id != :studentId " +
+			"AND a2.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)")
 	List<Student> getStudentClassmatesOnCourse(@Param("courseId") Long courseId, @Param("studentId") Long studentId);
+
 
 }

@@ -8,6 +8,7 @@ import { ApplicationsService } from '../../services/applications.service';
 import { ExtractorPdfService } from '../../services/extractor-pdf.service';
 import { StudentService } from '../../services/student.service';
 import { Student } from '../../model/student.model';
+import { Course } from '../../model/course.model';
 @Component({
 	selector: 'app-get-applications',
 	templateUrl: './get-applications.component.html',
@@ -29,6 +30,8 @@ export class GetApplicationsComponent implements OnInit {
 	showSchedules: boolean = false;
 	errorMessage: string = '';
 	classmates: Student[] = [];
+	selectedCourse: Course | undefined;
+	showClassmates: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -204,15 +207,26 @@ export class GetApplicationsComponent implements OnInit {
 	}
 
 	getStudentClassmates(studentId: number, courseId: number) {
+		console.log("Student id: " + studentId)
+		console.log("Course id: " + courseId)
 		this.studentService.getStudentClassmates(studentId, courseId).subscribe(
 			(res: Student[]) => {
 				console.log(typeof(res))
 				this.classmates = res
 				console.log(this.classmates)
+				this.showClassmates = true
 			},
 			(err) => {
 				console.log(err)
 			}
 		)
+	}
+
+	toggleClassmatesTable(): void { 
+		this.showClassmates = !this.showClassmates;
+	}
+
+	toggleSchedulesTable(): void { 
+		this.showSchedules = !this.showSchedules;
 	}
 }
