@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { ReadOnlyService } from '../../services/read-only.service';
 import { ApplicationsService } from '../../services/applications.service';
 import { ExtractorPdfService } from '../../services/extractor-pdf.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-get-courses',
@@ -31,7 +32,8 @@ export class GetCoursesComponent implements OnInit {
     private readonlyService: ReadOnlyService,
     private applicationService: ApplicationsService,
     private messageService: MessageService,
-    private extractPDF: ExtractorPdfService
+    private extractPDF: ExtractorPdfService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -188,5 +190,9 @@ export class GetCoursesComponent implements OnInit {
 				console.error("Error exporting PDF:", error);
 			}
 		)
+  }
+
+  addSchedule(courseName: string) {
+    this.router.navigate(["/admin/schedule/post"], { queryParams: { courseName: courseName } })
   }
 }

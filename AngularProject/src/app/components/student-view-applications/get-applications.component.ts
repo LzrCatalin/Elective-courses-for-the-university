@@ -32,6 +32,7 @@ export class GetApplicationsComponent implements OnInit {
 	classmates: Student[] = [];
 	selectedCourse: Course | undefined;
 	showClassmates: boolean = false;
+	showExportButton: boolean = false;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -165,6 +166,7 @@ export class GetApplicationsComponent implements OnInit {
 
         if (this.showSchedules) {
             this.showSchedules = false;
+			this.showExportButton = false;
         } else {
             this.scheduleService.displayStudentSchedules(studentId).subscribe(
                 (res) => {
@@ -172,6 +174,7 @@ export class GetApplicationsComponent implements OnInit {
                     console.log(res);
                     this.schedules = res; 
                     this.showSchedules = true;
+					this.showExportButton = res.length > 0;
                 },
                 (error) => {
                     console.log("Error", error);
@@ -228,5 +231,8 @@ export class GetApplicationsComponent implements OnInit {
 
 	toggleSchedulesTable(): void { 
 		this.showSchedules = !this.showSchedules;
+		if (!this.showSchedules) {
+			this.showExportButton = false;
+		}
 	}
 }
