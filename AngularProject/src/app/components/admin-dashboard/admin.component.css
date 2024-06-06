@@ -78,7 +78,7 @@
 }
 
 .first-container p-button {
-    margin-top: 30px; 
+    margin-top: 30px;
 }
 
 .chart {
@@ -87,8 +87,9 @@
     max-width: 800px;
     height: 4   30px; 
     margin: 0 auto; 
-    background: linear-gradient(to right, #4C3D40, #C8B4D0);
+    background: linear-gradient(to right, #bea0a6, #C8B4D0);
     border-radius: 30px;
+    color: white;
   }
 
 .chart:before {
@@ -114,10 +115,10 @@
     justify-content: center;
     padding: 20px;
     border-radius: 30px;
-    background: linear-gradient(to right, #4C3D40, #C8B4D0); /* Gradient background */
+    background: linear-gradient(to right, #bea0a6, #C8B4D0);
     width: 100%;
-    max-width: 800px; /* Ensure it doesn't get too wide */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add some shadow for depth */
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 div.p-card.p-component{

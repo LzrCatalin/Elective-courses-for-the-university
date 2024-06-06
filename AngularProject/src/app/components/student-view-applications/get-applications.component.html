@@ -41,8 +41,9 @@
 		</p-table>
 	</div>
 
+	<h1 class="title" *ngIf="showClassmates">View Classmates</h1>
+
 	<div class="classmates-container" *ngIf="showClassmates">
-		<button (click)="toggleClassmatesTable()">X</button>
 		<p-table 
 		[value]="classmates" 
 		[scrollable]="true" 
@@ -64,9 +65,13 @@
 			</ng-template>
 		</p-table>
 	</div>
+	<div class="button-x-container" *ngIf="showClassmates">
+		<button (click)="toggleClassmatesTable()" class="button-x">X</button>
+	</div>
+
+	<h1 class="title" *ngIf="showSchedules">These are the schedules</h1>
 
 	<div class="schedule-container" *ngIf="showSchedules">
-		<button (click)="toggleSchedulesTable()">X</button>
 		<p-table [value]="schedules" [tableStyle]="{'min-width': '60rem'}" class="schedule-table">
 			<ng-template pTemplate="header">
 				<tr>
@@ -96,8 +101,20 @@
 					<td>{{ schedule.endTime }}</td>
 				</tr>
 			</ng-template>
+			<div class="viewsch" *ngIf="showSchedules">
+				<div class="noschav" *ngIf="!schedules || schedules.length === 0" class="empty-message">
+					No schedules available.
+				</div>
+			</div>
 		</p-table>
-		<div *ngIf="!schedules || schedules.length === 0" class="empty-message">
+	</div>
+
+	<div *ngIf="showSchedules">
+		<button class="btxsch" (click)="toggleSchedulesTable()">X</button>
+	</div>
+
+	<div class="viewsch" *ngIf="showSchedules">
+		<div class="noschav" *ngIf="!schedules || schedules.length === 0" class="empty-message">
 			No schedules available.
 		</div>
 	</div>
