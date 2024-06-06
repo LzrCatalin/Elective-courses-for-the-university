@@ -33,11 +33,13 @@
 }
 .btn-logout{
     background: url('https://cdn.iconscout.com/icon/premium/png-256-thumb/logout-2030711-1713351.png?f=webp') no-repeat center center;
-    width: 24px; /* Adjust width as needed */
-    height: 24px; /* Adjust height as needed */
+    width: 35px; /* Adjust width as needed */
+    height: 35px; /* Adjust height as needed */
     border: none;
     cursor: pointer;
     background-size: cover;
+    background-color: white;
+    border-radius: 1rem;
 }
 .btn-container {
     align-items: center;
