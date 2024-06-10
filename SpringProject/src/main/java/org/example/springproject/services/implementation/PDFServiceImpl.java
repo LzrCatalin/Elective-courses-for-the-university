@@ -292,6 +292,7 @@ public class PDFServiceImpl implements PDFService {
 					Paragraph coursesText = new Paragraph();
 					for (CourseSchedule course : courses) {
 						coursesText.add(new Phrase(course.getCourse().getName(), font));
+						coursesText.add(new Phrase("\n"));
 						coursesText.add(new Phrase(course.getWeekParity().toString(), font));
 						coursesText.add(Chunk.NEWLINE);
 					}

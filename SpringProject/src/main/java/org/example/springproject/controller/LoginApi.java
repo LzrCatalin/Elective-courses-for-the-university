@@ -1,6 +1,8 @@
 package org.example.springproject.controller;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.example.springproject.dto.StudentDTO;
+import org.example.springproject.dto.UserDTO;
 import org.example.springproject.entity.Admin;
 import org.example.springproject.entity.Student;
 import org.example.springproject.entity.User;
@@ -30,7 +32,7 @@ public class LoginApi {
     public StudentService studentService;
 
     @PostMapping("/verify")
-    public ResponseEntity<String> verifyCredentials(@RequestBody Map<String, Object> requestBody) {
+    public ResponseEntity<UserDTO> verifyCredentials(@RequestBody Map<String, Object> requestBody) {
 
         logger.info("Inside login ...");
         String email = (String) requestBody.get("email");
@@ -39,15 +41,17 @@ public class LoginApi {
         Student student = studentService.getStudent(email);
         if (student != null) {
             logger.info("Student name : " + student.getName());
-            return new ResponseEntity<>("student", HttpStatus.OK);
+            UserDTO userDTO = new UserDTO(student.getId(), student.getName(), student.getEmail(), student.getRole());
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
         }
 
         Admin admin = adminService.getAdmin(email);
         if (admin != null) {
             logger.info("Admin name : " + admin.getName());
-            return new ResponseEntity<>("admin", HttpStatus.OK);
+            UserDTO userDTO = new UserDTO(admin.getId(), admin.getName(), admin.getEmail(), admin.getRole());
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("Error", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 }

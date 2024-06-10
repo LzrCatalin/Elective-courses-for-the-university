@@ -130,7 +130,7 @@ export class GetApplicationsComponent implements OnInit {
 				(res) => {
 					console.log('Successfully updated application');
 					console.log(res)
-					// location.reload()
+					location.reload()
 					
 				},
 				error => {

@@ -15,7 +15,6 @@ import { LoginComponent } from './components/login/login.component';
 const routes: Routes = [
 
   {path: '', component : LoginComponent},
-  {path : 'home', component : HomeComponent},
   {path : 'course', component : CourseComponent},
   {path : 'admin', component: AdminComponent},
   {path : 'admin/courses', component: GetCoursesComponent},
@@ -23,6 +22,7 @@ const routes: Routes = [
   {path : 'admin/schedule', component: GetSchedulesComponent},
   {path : 'admin/schedule/post', component : PostScheduleComponent},
   {path : 'admin/students', component: GetStudentsComponent},
+  {path : 'home/:studentId', component : HomeComponent},
   {path : 'student/applications', component : GetApplicationsComponent},
   {path : 'student/:studentId/applications', component : GetApplicationsComponent}, 
   {path : 'student/:studentId/myprofile', component : MyprofileComponent},
