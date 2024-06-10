@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
+import { Student } from '../../model/student.model';
+import { User } from '../../model/user.model';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -10,10 +13,12 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   loginForm: FormGroup = new FormGroup({});
+  loggedUser: User | undefined;
 
   constructor(private loginService: LoginService,
     private fb:FormBuilder,
-    private router: Router
+    private router: Router,
+    private userService: UserService
     ) { }
     
   ngOnInit(){
@@ -24,29 +29,31 @@ export class LoginComponent {
   }
 
   login() {
-    console.log("\nAm apasat pe login...");
-    console.log("\nEmailul: ")
-    console.log(this.loginForm.value.email);
-    console.log("\nParola: ")
-    console.log(this.loginForm.value.password);
+    // console.log("\nAm apasat pe login...");
+    // console.log("\nEmailul: ")
+    // console.log(this.loginForm.value.email);
+    // console.log("\nParola: ")
+    // console.log(this.loginForm.value.password);
 
     this.loginService.loginRequest(this.loginForm.value.email).subscribe(
       (res) => {
         console.log("Successfully made request")
-        console.log(res)
+        this.loggedUser = res;
+        console.log(this.loggedUser?.role)
 
-        if (res == "student") {
-          this.router.navigate(["/home"])
-        } else {
-          this.router.navigate(["/admin"])
-        }
+        if (this.loggedUser) {
+          this.userService.setUser(this.loggedUser);
 
+          if (this.loggedUser.role === "student") {
+            this.router.navigate([`/home/${this.loggedUser.id}`]);
+          } else {
+            this.router.navigate([`/admin`]);
+          }
+        } 
       },
       (err) => {
         console.log("Error", err);
       }
     )
   }
-
-
 }

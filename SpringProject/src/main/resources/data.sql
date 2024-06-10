@@ -1,4 +1,4 @@
-INSERT INTO admins (name, email, role) VALUES ('andrei', 'andrei@gmail.com', 'admin');
+INSERT INTO admins (name, email, role) VALUES ('admin', 'admin@gmail.com', 'admin');
 
 INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.1, 2, 'Florin Lazar', 'student', 'florin.lazar02@e-uvt.ro');
 INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.7, 2, 'Andrei Popescu', 'student', 'andrei.popescue-uvt.ro');
@@ -143,4 +143,119 @@ INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, tea
 INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 100, 2, 'Sisteme de Operare', 'Sisteme de Operare', 'Dumitrescu', 52);
 
 INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 100, 1, 'Logica', 'Limbaje Formale', 'Dumitrescu', 51);
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 60, 1, 'Introducere în Programare', 'Introducere în Programare', 'Popescu', 55);
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 70, 1, 'Introducere în Programare', 'Programare Orientată pe Obiecte', 'Ionescu', 65);
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 80, 1, 'Introducere în Programare', 'Algoritmi și Structuri de Date', 'Georgescu', 60);
+
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 50, 1, 'Matematică', 'Algebră', 'Popescu', 45);
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 70, 1, 'Matematică', 'Analiză Matematică', 'Ionescu', 50);
+
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 90, 1, 'Fizică', 'Fizică Generală', 'Dumitrescu', 65);
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 55, 1, 'Fizică', 'Fizică Experimentală', 'Georgescu', 40);
+
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 65, 1, 'Informatică', 'Bazele Informatice', 'Marinescu', 55);
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 85, 1, 'Informatică', 'Introducere în Baze de Date', 'Marinescu', 70);
+
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 100, 1, 'Sisteme de Calcul', 'Arhitectura Sistemelor de Calcul', 'Dumitrescu', 80);
+
+
 INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 100, 3, 'Logica', 'Logica Computationala', 'Dumitrescu', 60);
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 75, 3, 'Dezvoltare Software', 'Proiecte Software', 'Popescu', 68);
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 60, 3, 'Dezvoltare Software', 'Programare Avansată', 'Ionescu', 63);
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 80, 3, 'Dezvoltare Software', 'Proiectare și Testare Software', 'Georgescu', 58);
+
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 50, 3, 'Inteligență Artificială', 'Inteligență Artificială Avansată', 'Popescu', 60);
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 70, 3, 'Inteligență Artificială', 'Tehnici de Învațare Profundă', 'Ionescu', 72);
+
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 90, 3, 'Baze de Date', 'Managementul Bazelor de Date', 'Dumitrescu', 70);
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 55, 3, 'Baze de Date', 'NoSQL și Big Data', 'Georgescu', 53);
+
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 65, 3, 'Rețele de Calculatoare', 'Securitate în Rețele', 'Marinescu', 65);
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 85, 3, 'Rețele de Calculatoare', 'Administrarea Rețelelor', 'Marinescu', 75);
+
+INSERT INTO courses (facultysection, maxcapacity, studyyear, category, name, teacher, applicationsCount) VALUES ('FMI_IR', 100, 3, 'Sisteme Distribuite', 'Introducere în Sisteme Distribuite', 'Dumitrescu', 80);
+
+
+-- Studenti anu 1 si 3
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.5, 1, 'Andrei Popescu', 'student', 'andrei.popescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.7, 1, 'Maria Ionescu', 'student', 'maria.ionescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.2, 1, 'Radu Georgescu', 'student', 'radu.georgescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 6.8, 1, 'Ana Mihai', 'student', 'ana.mihai@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.3, 1, 'Ionut Marinescu', 'student', 'ionut.marinescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.9, 1, 'Elena Serban', 'student', 'elena.serban@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.5, 1, 'Florin Tudor', 'student', 'florin.tudor@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.8, 1, 'Simona Popa', 'student', 'simona.popa@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.0, 1, 'Cristian Stoica', 'student', 'cristian.stoica@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 6.9, 1, 'Larisa Dumitru', 'student', 'larisa.dumitru@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.6, 1, 'Mihai Ene', 'student', 'mihai.ene@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.3, 1, 'Bianca Vasilescu', 'student', 'bianca.vasilescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.0, 1, 'Alexandru Dinu', 'student', 'alexandru.dinu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.2, 1, 'Laura Pop', 'student', 'laura.pop@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.8, 1, 'Dragos Olteanu', 'student', 'dragos.olteanu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.3, 1, 'Gabriela Vasiliu', 'student', 'gabriela.vasiliu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.4, 1, 'Dan Nicolae', 'student', 'dan.nicolae@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.1, 1, 'Irina Stefan', 'student', 'irina.stefan@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.4, 1, 'Vlad Ciobanu', 'student', 'vlad.ciobanu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.9, 1, 'Alexandra Ene', 'student', 'alexandra.ene@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.2, 1, 'Ionel Georgescu', 'student', 'ionel.georgescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 6.7, 1, 'Madalina Iordache', 'student', 'madalina.iordache@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.1, 1, 'Nicolae Tudor', 'student', 'nicolae.tudor@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.4, 1, 'Sorina Popescu', 'student', 'sorina.popescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.1, 1, 'Eugen Dragomir', 'student', 'eugen.dragomir@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.0, 1, 'Loredana Muntean', 'student', 'loredana.muntean@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.5, 1, 'Marius Balan', 'student', 'marius.balan@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.6, 1, 'Teodora Zamfir', 'student', 'teodora.zamfir@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.7, 1, 'Silviu Iacob', 'student', 'silviu.iacob@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.6, 1, 'Ioana Roman', 'student', 'ioana.roman@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.7, 1, 'Paul Toma', 'student', 'paul.toma@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 6.6, 1, 'Monica Stan', 'student', 'monica.stan@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.7, 1, 'Victor Cojocaru', 'student', 'victor.cojocaru@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.8, 1, 'Andreea Neagu', 'student', 'andreea.neagu@e-uvt.ro');
+
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.8, 3, 'Cristina Matei', 'student', 'cristina.matei@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.4, 3, 'George Stan', 'student', 'george.stan@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.1, 3, 'Ramona Neacsu', 'student', 'ramona.neacsu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.5, 3, 'Andrei Dumitrescu', 'student', 'andrei.dumitrescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.9, 3, 'Violeta Radu', 'student', 'violeta.radu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.4, 3, 'Dragos Manea', 'student', 'dragos.manea@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.2, 3, 'Cristina Toma', 'student', 'cristina.toma@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.6, 3, 'Florin Pop', 'student', 'florin.pop@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.2, 3, 'Irina Voicu', 'student', 'irina.voicu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.4, 3, 'Sergiu Barbu', 'student', 'sergiu.barbu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.7, 3, 'Raluca Ionescu', 'student', 'raluca.ionescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.5, 3, 'Bogdan Munteanu', 'student', 'bogdan.munteanu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.1, 3, 'Adriana Ene', 'student', 'adriana.ene@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.8, 3, 'Stefan Rusu', 'student', 'stefan.rusu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.6, 3, 'Gabriela Tataru', 'student', 'gabriela.tataru@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.3, 3, 'Dan Petrescu', 'student', 'dan.petrescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.5, 3, 'Ana-Maria Dinu', 'student', 'ana-maria.dinu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.3, 3, 'Sorin Gheorghe', 'student', 'sorin.gheorghe@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.0, 3, 'Laura Mihai', 'student', 'laura.mihai@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.3, 3, 'Ionut Popescu', 'student', 'ionut.popescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.0, 3, 'Gabriela Andrei', 'student', 'gabriela.andrei@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.6, 3, 'Florin Stefan', 'student', 'florin.stefan@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.2, 3, 'Silvia Marin', 'student', 'silvia.marin@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.7, 3, 'Mihai Tudor', 'student', 'mihai.tudor@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.9, 3, 'Raluca Dumitru', 'student', 'raluca.dumitru@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.1, 3, 'Ionela Vasilescu', 'student', 'ionela.vasilescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.8, 3, 'Alexandru Ciobanu', 'student', 'alexandru.ciobanu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 6.8, 3, 'Monica Popa', 'student', 'monica.popa@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.7, 3, 'Sergiu Stan', 'student', 'sergiu.stan@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.9, 3, 'Gabriel Ilie', 'student', 'gabriel.ilie@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.2, 3, 'Marina Ene', 'student', 'marina.ene@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.3, 3, 'Vlad Dima', 'student', 'vlad.dima@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.6, 3, 'Iulian Marin', 'student', 'iulian.marin@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.3, 3, 'Raluca Stan', 'student', 'raluca.stan@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.2, 3, 'Cezar Stoica', 'student', 'cezar.stoica@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.4, 3, 'Andreea Tudor', 'student', 'andreea.tudor@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.0, 3, 'Mihnea Pop', 'student', 'mihnea.pop@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.8, 3, 'Ioana Rusu', 'student', 'ioana.rusu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.3, 3, 'Andrei Gheorghe', 'student', 'andrei.gheorghe@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.1, 3, 'Maria Nicolae', 'student', 'maria.nicolae@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.5, 3, 'Cosmin Tudor', 'student', 'cosmin.tudor@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.7, 3, 'Sorina Dima', 'student', 'sorina.dima@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 9.4, 3, 'Vasile Alexandru', 'student', 'vasile.alexandru@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.9, 3, 'Ana Marinescu', 'student', 'ana.marinescu@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 8.0, 3, 'Cristian Ene', 'student', 'cristian.ene@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 6.7, 3, 'Elena Tudor', 'student', 'elena.tudor@e-uvt.ro');
+INSERT INTO students (facultysection, grade, studyyear, name, role, email) VALUES ('FMI_IR', 7.1, 3, 'Mihai Popescu', 'student', 'test@gmail.com');

@@ -195,7 +195,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 //		logger.info("New course capacity: " + newCourse.getMaxCapacity());
 
 		List<String> studentEnrolledCategories = applicationRepository.findAcceptedCourseCategoriesByStudentId(studentId);
-		studentEnrolledCategories.remove(course.getCategory());
+//		studentEnrolledCategories.remove(course.getCategory());
 
 		if (application == wantedApplication) {
 			throw new DuplicateCourseAssignmentException("Can not assign student at the same course.");
