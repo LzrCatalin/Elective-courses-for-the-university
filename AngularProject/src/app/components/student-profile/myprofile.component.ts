@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { StudentService } from '../../services/student.service';
 import { ActivatedRoute } from '@angular/router';
 import { ExtractorPdfService } from '../../services/extractor-pdf.service';
+import { User } from '../../model/user.model';
+import { UserService } from '../../services/user.service';
+import { Student } from '../../model/student.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-myprofile',
@@ -9,17 +13,25 @@ import { ExtractorPdfService } from '../../services/extractor-pdf.service';
   styleUrl: './myprofile.component.css'
 })
 export class MyprofileComponent implements OnInit {
-	student: any;
+	student: Student | undefined;
 	studentId?: number;
+	user: User | null = null;
 
-	constructor(private studentService: StudentService, 
+	constructor(
+		private studentService: StudentService, 
 		private route: ActivatedRoute,
-		private extractorPDF: ExtractorPdfService
-	) {
+		private router: Router,
+		private extractorPDF: ExtractorPdfService,
+		private userService: UserService
+	) 
+	{
 		this.student;
 	}
 
 	ngOnInit(): void {
+		this.user = this.userService.getUser();
+    	console.log(this.user)
+
 		this.route.params.subscribe(params => {
 			this.studentId = +params['studentId']; 
 			if (this.studentId) {
@@ -47,9 +59,13 @@ export class MyprofileComponent implements OnInit {
 		console.log('Button clicked!');
 	}
 
+	moveToApplications() {
+		this.router.navigate([`/student/${this.user?.id}/applications`])
+	}
+
 	// Export certificate
-	exportPDF(id: number) {
-		this.extractorPDF.exportStudentCertificate(id).subscribe(
+	exportPDF() {
+		this.extractorPDF.exportStudentCertificate(this.studentId!).subscribe(
 			(res) => {
 				console.log("Successfully received PDF response.");
 				const blob = new Blob([res], { type: 'application/pdf' });

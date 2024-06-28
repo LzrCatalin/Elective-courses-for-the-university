@@ -12,33 +12,33 @@
             <div class="profile-details">
                 <div class="profile-details-row">
                     <label>Student ID:</label>
-                    <p class="data">{{ 'I' + student.id }}</p>
+                    <p class="data">{{ 'I' + student?.id }}</p>
                 </div>
                 <div class="profile-details-row">
                     <label>Name:</label>
-                    <p class="data">{{ student.name }}</p>
+                    <p class="data">{{ student?.name }}</p>
                 </div>
                 <div class="profile-details-row">
                     <label>Email:</label>
-                    <p class="data">{{ student.email }}</p>
+                    <p class="data">{{ student?.email }}</p>
                 </div>
                 <div class="profile-details-row">
                     <label>Faculty Section:</label>
-                    <p class="data">{{ student.facultySection }}</p>
+                    <p class="data">{{ student?.facultySection }}</p>
                 </div>
                 <div class="profile-details-row">
                     <label>Study Year:</label>
-                    <p class="data">{{ student.studyYear }}</p>
+                    <p class="data">{{ student?.studyYear }}</p>
                 </div>
                 <div class="profile-details-row">
                     <label>Grade:</label>
-                    <p class="data">{{ student.grade }}</p>
+                    <p class="data">{{ student?.grade }}</p>
                 </div>
             </div>
         </div>
         <div class="button-container">
-            <a routerLink="/student/1/applications" class="p-button font-bold">View Application</a>
-            <a (click)="exportPDF(student.id)" class="p-button font-bold">Certificate PDF</a>
+            <a class="p-button font-bold" (click)="moveToApplications()">View Application</a>
+            <a *ngIf="student?.id !== undefined" (click)="exportPDF()" class="p-button font-bold">Certificate PDF</a>
         </div>
     </div>
 </div>
