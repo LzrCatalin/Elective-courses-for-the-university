@@ -1,6 +1,7 @@
 package org.example.springproject.controller;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.example.springproject.dto.ApplicationDTO;
 import org.example.springproject.dto.StudentDTO;
 import org.example.springproject.entity.Application;
 import org.example.springproject.entity.Student;
@@ -67,28 +68,30 @@ public class ApplicationApi {
 	}
 
 	@PostMapping("/stud")
-	public ResponseEntity<String> addApplication(@RequestBody Map<String, Object> requestBody){
+	public ResponseEntity<Object> addApplication(@RequestBody Map<String, Object> requestBody){
 		try {
 			if (DBState.getInstance().isReadOnly()) {
-				return new ResponseEntity<>("Read-Only is ON. Can not modify anything.", HttpStatus.BAD_REQUEST);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Read-Only is enable."));
 			}
 
 			Long studentId = Long.valueOf((Integer) requestBody.get("studentId"));
 			logger.debug("Received student id: " + studentId);
-			String courseName = (String) requestBody.get("courseName");
-			logger.debug("Received course name: " + courseName);
+			Long courseId = Long.valueOf((Integer) requestBody.get("courseId"));
+			logger.debug("Received course name: " + courseId);
 			Integer priority = (Integer) requestBody.get("priority");
 			logger.debug("Received priority: " + priority);
-			applicationService.addApplicationAsStudent(studentId, courseName, priority);
-			emailService.sendNewApplicationMail(studentId, courseName, priority);
-			return new ResponseEntity<>("Application added successfully.", HttpStatus.CREATED);
+			Application application = applicationService.addApplication(studentId, courseId);
+//			emailService.sendNewApplicationMail(studentId, courseName, priority);
+			ApplicationDTO applicationDTO = new ApplicationDTO(application.getId(), application.getStudent().getId(), application.getCourse().getId(),
+					application.getPriority(), application.getStatus().toString());
+			return new ResponseEntity<>(applicationDTO, HttpStatus.CREATED);
 
 		} catch (EntityNotFoundException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
 
 		} catch (MismatchedFacultySectionException | MismatchedIdTypeException | InvalidStudyYearException | DuplicatePriorityException | IllegalArgumentException
 		| InvalidPriorityException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", e.getMessage()));
 		}
 	}
 

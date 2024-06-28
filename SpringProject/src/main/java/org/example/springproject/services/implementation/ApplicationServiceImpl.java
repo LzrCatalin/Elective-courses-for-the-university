@@ -56,7 +56,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public Application addApplication(Long studentId, Long courseId, Integer priority) {
+	public Application addApplication(Long studentId, Long courseId) {
 		// Verify inserted IDs
 		if (!(studentId instanceof Long) && !(courseId instanceof Long)) {
 			throw new MismatchedIdTypeException("IDs must be of type Long.");
@@ -69,51 +69,24 @@ public class ApplicationServiceImpl implements ApplicationService {
 		}
 
 		// Retrieve data based on IDs
-		Student addedStudent = studentRepository.findById(studentId).orElseThrow(EntityNotFoundException::new);
-		Course addedCourse = courseRepository.findById(courseId).orElseThrow(EntityNotFoundException::new);
+		Student student = studentRepository.findById(studentId).orElseThrow(EntityNotFoundException::new);
+		Course course = courseRepository.findById(courseId).orElseThrow(EntityNotFoundException::new);
 
 		// Check existing ids
-		if(addedStudent == null && addedCourse == null) {
+		if(student == null && course == null) {
 			throw new EntityNotFoundException("Student id: " + studentId + ", Course id: " + courseId + " not found.");
 
-		} else if (addedStudent == null) {
+		} else if (student == null) {
 			throw new EntityNotFoundException("Student with id:" + studentId + " not found");
 
-		} else if (addedCourse == null) {
+		} else if (course == null) {
 			throw new EntityNotFoundException("Course with id:" + courseId + " not found");
-		}
-
-		/*
-		Check if faculty section is the same for student and course
-		 */
-		if (!addedStudent.getFacultySection().equals(addedCourse.getFacultySection())) {
-			throw new MismatchedFacultySectionException("Can not assign application for different faculty section.");
-		}
-
-		// All the above will be featured by unique constraint :)
-		Application addApplication = new Application(addedStudent, addedCourse, priority);
-		addApplication.setStatus(Status.PENDING);
-		return applicationRepository.save(addApplication);
-	}
-
-	@Override
-	public Application addApplicationAsStudent(Long studentId, String courseName, Integer priority) {
-		Student student = studentRepository.findById(studentId).orElseThrow(EntityNotFoundException::new);
-		Course course = courseRepository.findByName(courseName);
-
-		if (course == null) {
-			throw new EntityNotFoundException("Course name: " + courseName + " not found.");
 		}
 
 		// Verify for duplicate course try
 		List<Long> appliedCoursesIDs = applicationRepository.findStudentAppliedCoursesId(studentId);
 		if (appliedCoursesIDs.contains(course.getId())) {
 			throw new IllegalArgumentException("Student has already applied for this course.");
-		}
-
-		// Verify priority input
-		if (priority <= 0 || priority > 100) {
-			throw new InvalidPriorityException("Priority needs to be greater than 0.");
 		}
 
 		// Verify facultySection
@@ -126,19 +99,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 			throw new InvalidStudyYearException("Can not assign application for different study year.");
 		}
 
-		// Verify if wanted priority is free
-		List<Integer> studentPriorities = applicationRepository.findStudentPriorities(studentId);
-		if (studentPriorities.contains(priority)) {
-			throw new DuplicatePriorityException("Wanted priority: " + priority + " is taken.");
-		}
-
 		int studentApplicationsCount = applicationRepository.getStudentApplicationsCount(studentId);
-		logger.info("Student applications until now: " + studentApplicationsCount);
-		if (studentApplicationsCount + 1 < priority) {
-			throw new InvalidPriorityException("Last priority: " + studentApplicationsCount + ". Can not add priority: " + priority);
-		}
 
-		Application addApplication = new Application(student, course, priority);
+		Application addApplication = new Application(student, course, studentApplicationsCount + 1);
 		addApplication.setStatus(Status.PENDING);
 
 		// Increase counter after an application add

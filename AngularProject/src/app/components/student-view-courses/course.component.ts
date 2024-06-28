@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApplicationsService } from '../../services/applications.service';
 import { MessageService } from 'primeng/api';
 import { ReadOnlyService } from '../../services/read-only.service';
+import { Course } from '../../model/course.model';
+import { User } from '../../model/user.model';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -15,18 +18,20 @@ import { ReadOnlyService } from '../../services/read-only.service';
 
 })
 export class CourseComponent implements OnInit {
+    user: User | null = null;
     cols: any[] = [];
     loading: boolean = false;
-    courses: any[] = [];
+    courses: Course[] = [];
     matchModeOptions!: SelectItem[];
     studentId?: number;
     readOnly: boolean = false; 
     showForm: boolean = false;
     priority: number = 0;
-    selectedCourse: any;
+    selectedCourse: Course | undefined;
     errorMessage: string = '';
     
     constructor(
+        private userService: UserService,
         private courseService: CourseService, 
         private filterService: FilterService,
         private route: ActivatedRoute,
@@ -39,6 +44,10 @@ export class CourseComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+
+        this.user = this.userService.getUser();
+        console.log(this.user)
+
         this.route.params.subscribe(params => {
             this.studentId = +params['studentId'];
         });
@@ -73,46 +82,22 @@ export class CourseComponent implements OnInit {
             }
         )
     }
-    
-    toggleFormVisibility(course: any): void {
-        this.showForm = !this.showForm;
-        this.selectedCourse = course;
-        
-        if (!this.showForm) {
-            this.resetForm();
-        }
-    }
 
-    resetForm(): void {
-        this.priority = 0;
-    }
-
-    onFormSubmit(): void {
-        this.addApplication();
-        this.showForm = false;
-        this.resetForm();
-    }
-
-    // Add aplication implementation
-    addApplication(): void {
-        if (this.studentId !== undefined && this.selectedCourse) {
-            this.applicationsService.addApplication(this.studentId, this.selectedCourse.name, this.priority).subscribe(
-                (res) => {
-                    console.log('Successfully added new application');
-                    console.log(res);
-                    // Navigate to student applications page after adding new application
-                    this.router.navigate(["/student/" + this.studentId + "/applications"])
-                },
-                (error) => {
-                    console.error('Error adding application:', error);
-                    // Display the error message
-                    this.errorMessage = error.error;
-					this.showMessage('error', 'Add Application Error', this.errorMessage);
-                }
-            );
-        } else {
-            console.error('Student ID or selected course is undefined.');
-        }
+    addApplication(course: Course, studentId: number) {
+        this.applicationsService.addApplication(studentId, course.id!).subscribe(
+            (res) => {
+                console.log("Successfully added new application")
+                console.log(res)
+                this.router.navigate(["/student/" + this.studentId + "/applications"])
+            },
+            (error) => {
+                console.error('Error adding application:', error);
+               // Display the error message
+                this.errorMessage = error.error.error;
+                console.log(this.errorMessage)
+				this.showMessage('error', 'Add Application Error', this.errorMessage);
+            }
+        )
     }
 
     // Display error messages sent from backend
@@ -123,5 +108,6 @@ export class CourseComponent implements OnInit {
 
     handleButtonClick(): void {
         console.log('Button clicked!');
+        
     }
 }

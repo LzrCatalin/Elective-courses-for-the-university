@@ -35,7 +35,7 @@
                 <td>{{ rowData.applicationsCount }}</td> 
                 <td>
                     <div *ngIf="studentId && !readOnly">
-                        <button class="btn-add" (click)="toggleFormVisibility(rowData)">Add</button>
+                        <button *ngIf="studentId" class="btn-add" (click)="addApplication(rowData, studentId)">Add</button>
                     </div>
                 </td>
             </tr> 
@@ -43,17 +43,6 @@
     </p-table>
 </div>
 <div class="btn-container">
-    <button class="btn-display-app" routerLink="/student/1/applications" (click)="handleButtonClick()">View Applications</button>
+    <button class="btn-display-app" [routerLink]="['/student', studentId, 'applications']" (click)="handleButtonClick()">View Applications</button>
 </div>
 
-<div *ngIf="showForm && !readOnly" class="add-form-container">
-    <form (submit)="onFormSubmit()" class="add-form">
-        <label for="courseName">Course Name: </label>
-        <input type="text" id="courseName" name="courseName" [(ngModel)]="selectedCourse.name" required readonly><br>
-
-        <label for="priority">Priority: </label>
-        <input class="input-priority" type="number" id="priority" name="priority" [(ngModel)]="priority" required><br>
-
-        <button class="btn-submit" type="submit">Submit</button>
-    </form>
-</div>
