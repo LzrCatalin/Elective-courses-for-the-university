@@ -78,5 +78,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 			"AND a2.status IN (org.example.springproject.enums.Status.ACCEPTED, org.example.springproject.enums.Status.REASSIGNED)")
 	List<Student> getStudentClassmatesOnCourse(@Param("courseId") Long courseId, @Param("studentId") Long studentId);
 
-
+	@Query("SELECT a FROM Application a WHERE a.student.id = :studentId ORDER BY a.priority ASC")
+	List<Application> findByStudentIdOrderByPriorityAsc(@Param("studentId") Long studentId);
 }

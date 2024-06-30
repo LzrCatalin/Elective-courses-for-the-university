@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Application } from '../model/application.model';
 
 const BASIC_URL = ["http://localhost:8080"];
 
@@ -23,22 +24,22 @@ export class ApplicationsService {
 		return this.http.delete(`${BASIC_URL}/applications/${id}`)
 	}
 
-	addApplication(studentId: number, courseName: string, priority: number): Observable<any> {
+	addApplication(studentId: number, courseId: number): Observable<Application> {
 		const body = {
 			studentId: studentId,
-			courseName: courseName,
-			priority: priority,
+			courseId: courseId,
 		};
-		return this.http.post(`${BASIC_URL}/applications/stud`, body, { responseType: 'text' });
+
+		return this.http.post<Application>(`${BASIC_URL}/applications/stud`, body);
 	}
 	
-	updateApplicationAsAdmin(studentId: number, courseName: string, newCourseName: string): Observable<any> {
+	updateApplicationAsAdmin(studentId: number, courseName: string, newCourseName: string): Observable<Application> {
 		const body = {
 			studentId: studentId,
 			courseName: courseName,
 			newCourseName: newCourseName
 		}
-		return this.http.put(`${BASIC_URL}/applications/admin`, body, { responseType: 'text' })
+		return this.http.put<Application>(`${BASIC_URL}/applications/admin`, body)
 	}
 
 	updateApplicationAsStudent(id: number, priority: number): Observable<any> {
