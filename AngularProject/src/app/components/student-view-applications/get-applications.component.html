@@ -23,7 +23,7 @@
 				<tr>
 					<td>
 						<a *ngIf="studentId" (click)="getStudentClassmates(studentId, application.course.id)">
-							{{ application.course.name }}
+							{{ application.course?.name }}
 						</a>
 					</td>
 					<td>

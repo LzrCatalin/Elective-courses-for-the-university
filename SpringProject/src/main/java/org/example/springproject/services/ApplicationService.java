@@ -16,6 +16,6 @@ public interface ApplicationService {
 	Application addApplication(Long studentId, Long courseId);
 	Application updateApplication(Long id, Long studentId, Long courseId, Integer priority, Status status);
 	Application updateApplicationAsAdmin(Long studentId, String courseName, String newCourseName);
-	Application updateApplicationAsStudent(Long id, Integer priority);
+	List<Application> updateApplicationAsStudent(Long id, Integer priority);
 	void deleteApplication(Long id);
 }

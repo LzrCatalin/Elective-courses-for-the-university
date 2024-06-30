@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.management.InvalidAttributeValueException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
@@ -173,7 +174,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 		}
 
 		if (newCourseEnrolls == newCourse.getMaxCapacity()) {
-			logger.info("New Course enrolls: " + newCourseEnrolls);
+			logger.debug("New Course enrolls: " + newCourseEnrolls);
 			throw new CourseCapacityExceededException("The course " + newCourseName + " has no more available seats.");
 		}
 
@@ -183,7 +184,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 			if (wantedApplication == null) {
 
-				logger.info("Can not find any application for the new course assign.");
+				logger.debug("Can not find any application for the new course assign.");
 				application.setStudent(student);
 				application.setCourse(newCourse);
 				application.setPriority(0);
@@ -192,7 +193,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 				return applicationRepository.save(application);
 
 			} else {
-				logger.info("Found application for the new course assign.");
+				logger.debug("Found application for the new course assign.");
 				wantedApplication.setStatus(Status.REASSIGNED);
 				wantedApplication.setPriority(0);
 
@@ -208,33 +209,65 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public Application updateApplicationAsStudent(Long id, Integer priority) {
-		logger.info("Wanted priority: " + priority);
+	public List<Application> updateApplicationAsStudent(Long id, Integer newPriority) {
+		logger.debug("Wanted priority: " + newPriority);
 		Application application = applicationRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		int currentPriority = application.getPriority();
 
-		if (priority <= 0 || priority > 100) {
+		if (newPriority <= 0 || newPriority > 100) {
 			throw new InvalidPriorityException("Priority needs to be greater than 0.");
 		}
 
-		List<Integer> studentPriorities = applicationRepository.findStudentPriorities(application.getStudent().getId());
-		logger.info("Priorities: " + studentPriorities);
-		// Verify if wanted priority is free
-		if (studentPriorities.contains(priority)) {
-			logger.info("Inside taken path: ... ");
-			// TAKEN PATH: Switch priorities between wanted application and founded one
-			Application foundApplication = applicationRepository.findByPriorityAndStudentId(priority, application.getStudent().getId());
-			logger.info("Found application: " + foundApplication);
-			foundApplication.setPriority(application.getPriority());
-			logger.info("Found application new priority: " + application.getPriority());
-			application.setPriority(priority);
+		Long studentId = application.getStudent().getId();
+		List<Application> studentApplications = applicationRepository.findByStudentIdOrderByPriorityAsc(studentId);
 
+		logger.debug("Current priorities: " + studentApplications.stream().map(Application::getPriority).toList());
+
+		boolean isPriorityTaken = studentApplications.stream().anyMatch(app -> app.getPriority().equals(newPriority));
+
+		if (isPriorityTaken) {
+			if (newPriority > currentPriority) {
+				logger.debug("Branch where newPriority greater than current");
+				// Adjust priorities to make room for the new priority
+				for (Application app : studentApplications) {
+					logger.debug("Target application priority: " + app.getPriority());
+					logger.debug("Wanted application priority: " + application.getPriority());
+					if (app.getId().equals(id)) {
+						logger.debug("Found application. Set new priority.");
+						app.setPriority(newPriority);
+
+					} else if (app.getPriority() <= newPriority && app.getPriority() >= currentPriority) {
+						logger.debug("Decrease priority to re-establish priorities.");
+						app.setPriority(app.getPriority() - 1);
+					}
+				}
+
+			} else {
+				logger.debug("Branch where newPriority less than current");
+				// Adjust priorities to make room for the new priority
+				for (Application app : studentApplications) {
+					logger.debug("Target application priority: " + app.getPriority());
+					logger.debug("Wanted application priority: " + application.getPriority());
+					if (app.getId().equals(id)) {
+						logger.debug("Found application. Set new priority.");
+						app.setPriority(newPriority);
+
+					} else if (app.getPriority() >= newPriority && app.getPriority() <= currentPriority) {
+						logger.debug("Decrease priority to re-establish priorities.");
+						app.setPriority(app.getPriority() + 1);
+					}
+				}
+			}
 		} else {
-			logger.info("Inside free path: ... ");
-			// FREE PATH: Just apply the new priority to application
-			application.setPriority(priority);
+			// If the new priority is free, just set it
+			application.setPriority(newPriority);
 		}
 
-		return applicationRepository.save(application);
+		// Save all changes
+		applicationRepository.saveAll(studentApplications);
+
+		// Re-fetch the updated list of applications for the student
+		return applicationRepository.findByStudentIdOrderByPriorityAsc(studentId);
 	}
 
 	@Override

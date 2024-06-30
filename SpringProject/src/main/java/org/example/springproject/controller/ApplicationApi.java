@@ -159,7 +159,7 @@ public class ApplicationApi {
 	}
 
 	@PutMapping("/stud/{id}")
-	public ResponseEntity<String> updateApplicationAsStudent(@PathVariable("id") Long id,
+	public ResponseEntity<Object> updateApplicationAsStudent(@PathVariable("id") Long id,
 															 @RequestBody Map<String, Object> requestBody) {
 		try {
 			if (DBState.getInstance().isReadOnly()) {
@@ -167,9 +167,10 @@ public class ApplicationApi {
 			}
 
 			Integer priority = (Integer) requestBody.get("priority");
-			applicationService.updateApplicationAsStudent(id, priority);
-			emailService.sendUpdateApplicationMail(id, priority);
-			return new ResponseEntity<>(gson.toJson(requestBody), HttpStatus.OK);
+			List<Application> receivedApplications = applicationService.updateApplicationAsStudent(id, priority);
+//			emailService.sendUpdateApplicationMail(id, priority);
+			List<ApplicationDTO> applicationsDTO = ApplicationDTO.convertToDTO(receivedApplications);
+			return new ResponseEntity<>(applicationsDTO, HttpStatus.OK);
 
 		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>("Application id: " + id + " not found.", HttpStatus.NOT_FOUND);
