@@ -271,15 +271,32 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public void deleteApplication(Long id) {
+	public List<Application> deleteApplication(Long id) {
 		// Check if application exists by id
 		Application application = applicationRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+		// Retrieve student
+		long studentId = application.getStudent().getId();
+
+		// Delete application
+		applicationRepository.delete(application);
+
+		// Retrieve student list of applications
+		List<Application> studentApplications = applicationRepository.findByStudentIdOrderByPriorityAsc(studentId);
+
+		// Re-establish priorities
+		studentApplications.stream()
+				.filter(app -> app.getPriority() > application.getPriority())
+				.forEach(app -> app.setPriority(app.getPriority() - 1));
 
 		// Decrease counter after an application deletion
 		Course course = application.getCourse();
 		int courseCount = applicationRepository.getCourseApplicationsCount(course.getId());
 		course.setApplicationsCount(courseCount - 1);
 
-		applicationRepository.delete(application);
+		applicationRepository.saveAll(studentApplications);
+
+		// Re-fetch updated list of applications
+		return applicationRepository.findApplicationsByStudentId(studentId);
 	}
 }
