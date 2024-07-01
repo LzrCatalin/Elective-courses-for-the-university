@@ -141,23 +141,6 @@ public class ApplicationApi {
 		}
 	}
 
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteApplication(@PathVariable("id") Long id) {
-		try {
-			if (DBState.getInstance().isReadOnly()) {
-				return new ResponseEntity<>("Read-Only is ON. Can not modify anything.", HttpStatus.BAD_REQUEST);
-			}
-
-			emailService.sendDeleteApplicationMail(id);
-			applicationService.deleteApplication(id);
-			return new ResponseEntity<>(gson.toJson("Application with id:" + id + " successfully deleted."), HttpStatus.OK);
-
-		} catch (EntityNotFoundException e) {
-			logger.info("Inside exception...");
-			return new ResponseEntity<>("Application id: " + id + " not found.", HttpStatus.NOT_FOUND);
-		}
-	}
-
 	@PutMapping("/stud/{id}")
 	public ResponseEntity<Object> updateApplicationAsStudent(@PathVariable("id") Long id,
 															 @RequestBody Map<String, Object> requestBody) {
@@ -173,10 +156,26 @@ public class ApplicationApi {
 			return new ResponseEntity<>(applicationsDTO, HttpStatus.OK);
 
 		} catch (EntityNotFoundException e) {
-			return new ResponseEntity<>("Application id: " + id + " not found.", HttpStatus.NOT_FOUND);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Application not found."));
 
 		} catch (InvalidPriorityException e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", e.getMessage()));
+		}
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> deleteApplication(@PathVariable("id") Long id) {
+		try {
+			if (DBState.getInstance().isReadOnly()) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Read-Only is enable."));
+			}
+
+//			emailService.sendDeleteApplicationMail(id);
+			List<ApplicationDTO> applicationsDTO = ApplicationDTO.convertToDTO(applicationService.deleteApplication(id));
+			return new ResponseEntity<>(applicationsDTO, HttpStatus.OK);
+
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
 		}
 	}
 }

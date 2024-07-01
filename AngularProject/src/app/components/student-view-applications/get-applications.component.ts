@@ -171,11 +171,12 @@ export class GetApplicationsComponent implements OnInit {
 				(res) => {
 					console.log('Application deleted successfully.');
 					console.log(res)
-					location.reload();
+					// Re-fetch student applications after update
+					this.getApplicationsForStudent(this.studentId!);
 				},
 				(error) => {
 					console.error('Error deleting application:', error);
-					this.errorMessage = error.error;
+					this.errorMessage = error.error.error;
 					this.showMessage('error', 'Delete Application Error', this.errorMessage);
 				}
 			);
