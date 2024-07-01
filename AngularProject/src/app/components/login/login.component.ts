@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Student } from '../../model/student.model';
 import { User } from '../../model/user.model';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent {
   constructor(private loginService: LoginService,
     private fb:FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService
     ) { }
     
   ngOnInit(){
@@ -42,6 +44,7 @@ export class LoginComponent {
         console.log(this.loggedUser?.role)
 
         if (this.loggedUser) {
+          this.authService.login(this.loggedUser);
           this.userService.setUser(this.loggedUser);
 
           if (this.loggedUser.role === "student") {
